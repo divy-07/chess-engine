@@ -1,4 +1,4 @@
 package chess.engine;
 
-public class Swamy {
+public class Hari {
 }
