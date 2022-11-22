@@ -1,6 +1,6 @@
 package chess.board;
 
-import chess.moves.MoveGeneration;
+import chess.moves.PossibleMoves;
 
 // Credit: Logic Crazy Chess
 public class DebugBoard {
@@ -11,7 +11,7 @@ public class DebugBoard {
         long[] boardArray = arrayToBitboards(stringBoard, wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk);
         drayArray(boardArray);
 
-        String possMoves = MoveGeneration.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        String possMoves = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false);
         System.out.println("WP moves:" + possMoves);
