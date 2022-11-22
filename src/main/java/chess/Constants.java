@@ -1,6 +1,6 @@
 package chess;
 
-public final class Constant {
+public final class Constants {
 
     // board constants
     public static final long FILE_A = 72340172838076673L;

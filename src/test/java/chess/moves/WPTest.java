@@ -165,7 +165,7 @@ public class WPTest {
     }
 
     @Test
-    public void test08PromoteRight() {
+    public void test09PromoteRight() {
         String[][] stringBoard = new String[][]{
                 {" ", " ", "r", "b", " ", " ", " ", " "},
                 {" ", " ", "P", " ", " ", " ", " ", " "},
@@ -185,7 +185,7 @@ public class WPTest {
     }
 
     @Test
-    public void test08PromoteLeft() {
+    public void test10PromoteLeft() {
         String[][] stringBoard = new String[][]{
                 {" ", " ", " ", " ", " ", " ", "n", "k"},
                 {" ", " ", " ", " ", " ", " ", " ", "P"},
