@@ -133,5 +133,4 @@ public class MoveGeneration {
         StringBuilder moves = new StringBuilder();
         return moves.toString();
     }
-
 }

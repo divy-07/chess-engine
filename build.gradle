@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'checkstyle'
 }
 
 group 'chess'
@@ -7,6 +8,17 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+checkstyle {
+    toolVersion = '10.3'
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled = true
+        html.enabled = false
+    }
 }
 
 dependencies {
