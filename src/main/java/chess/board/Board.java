@@ -13,20 +13,6 @@ public class Board {
      * King --> K/k
      */
 
-    // starting position bitboards
-    public static long startWP = 71776119061217280L;
-    public static long startWN = 4755801206503243776L;
-    public static long startWB = 2594073385365405696L;
-    public static long startWR = -9151314442816847872L;
-    public static long startWQ = 576460752303423488L;
-    public static long startWK = 1152921504606846976L;
-    public static long startBP = 65280L;
-    public static long startBN = 66L;
-    public static long startBB = 36L;
-    public static long startBR = 129L;
-    public static long startBQ = 8L;
-    public static long startBK = 16L;
-
     /**
      * Updates the engine with the new board state
      *
@@ -35,7 +21,7 @@ public class Board {
      *                  // TODO: add impacts on the engine/frame conditions
      */
     public static void importFEN(String fenString) {
-        return; // TODO: implement this method
+        // TODO: implement this method
     }
 
     /**
