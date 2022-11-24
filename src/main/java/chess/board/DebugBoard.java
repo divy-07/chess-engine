@@ -8,7 +8,7 @@ public class DebugBoard {
     public static void main(String[] args) {
         long wp = 0L, wn = 0L, wb = 0L, wr = 0L, wq = 0L, wk = 0L, bp = 0L, bn = 0L, bb = 0L, br = 0L, bq = 0L, bk = 0L;
         String[][] stringBoard = get2dStringBoard();
-        long[] boardArray = arrayToBitboards(stringBoard, wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk);
+        long[] boardArray = arrayToBitboards(stringBoard);
         drayArray(boardArray);
 
         String possMoves = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
@@ -35,7 +35,9 @@ public class DebugBoard {
                 boardArray[6], boardArray[7], boardArray[8], boardArray[9], boardArray[10], boardArray[11]);
     }
 
-    public static long[] arrayToBitboards(String[][] chessBoard, long wp, long wn, long wb, long wr, long wq, long wk, long bp, long bn, long bb, long br, long bq, long bk) {
+    public static long[] arrayToBitboards(String[][] chessBoard) {
+        long wp = 0L, wn = 0L, wb = 0L, wr = 0L, wq = 0L, wk = 0L,
+                bp = 0L, bn = 0L, bb = 0L, br = 0L, bq = 0L, bk = 0L;
         String binaryString;
         for (int i = 0; i < 64; i++) {
             binaryString = "0000000000000000000000000000000000000000000000000000000000000000";

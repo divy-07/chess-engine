@@ -20,7 +20,7 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", "p", "p"},
                 {" ", " ", " ", " ", " ", " ", "P", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
-        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         String expected = "6657";
         String actual = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
@@ -39,7 +39,7 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", "p", "p", " "},
                 {" ", " ", " ", " ", " ", " ", "P", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
-        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         String expected = "6655";
         String actual = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
@@ -58,7 +58,7 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", "P", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
-        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         String expected = "5646";
         String actual = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
@@ -77,7 +77,7 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", "P", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
-        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         String expected = "63536343"; // could also be "63436353"
         String actual = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
@@ -96,7 +96,7 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", "P", " ", " ", "P", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
-        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         String expected = "";
         String actual = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
@@ -115,7 +115,7 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
-        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         String expected = "23WE";
         // make EP = BP since only one pawn on board
         String actual = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
@@ -135,7 +135,7 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
-        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         String expected = "43WE";
         // make EP = BP since only one pawn on board
         String actual = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
@@ -155,7 +155,7 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
-        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         String expected = "22QP22RP22BP22NP";
         String actual = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
@@ -174,7 +174,7 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
-        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         String expected = "23QP23RP23BP23NP";
         String actual = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
@@ -193,7 +193,7 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
-        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+        long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         String expected = "76QP76RP76BP76NP";
         String actual = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
