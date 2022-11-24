@@ -297,27 +297,27 @@ public class PossibleMoves {
         return moves.toString();
     }
 
-    protected static String possibleN(long wn) {
+    protected static String possibleN(long n) {
         StringBuilder moves = new StringBuilder();
         return moves.toString();
     }
 
-    protected static String possibleB(long wb) {
+    protected static String possibleB(long b) {
         StringBuilder moves = new StringBuilder();
         return moves.toString();
     }
 
-    protected static String possibleR(long wr) {
+    protected static String possibleR(long r) {
         StringBuilder moves = new StringBuilder();
         return moves.toString();
     }
 
-    protected static String possibleQ(long wq) {
+    protected static String possibleQ(long q) {
         StringBuilder moves = new StringBuilder();
         return moves.toString();
     }
 
-    protected static String possibleK(long wk) {
+    protected static String possibleK(long k) {
         StringBuilder moves = new StringBuilder();
         return moves.toString();
     }

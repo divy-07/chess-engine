@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import chess.board.DebugBoard;
 
 
-public class WPTest {
+public class WhitePawnPossibleMoveTest {
 
     @Test
     public void test01CaptureRight() {
