@@ -24,8 +24,9 @@ public class RookPossibleMoveTest {
         PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String expected = "";
         String actual = PossibleMoves.possibleR(boardArray[3]);
+        String expected = "";
+
         assertEquals(expected, actual);
     }
 
@@ -53,6 +54,7 @@ public class RookPossibleMoveTest {
         assertTrue(actual.contains("7475"));
         assertTrue(actual.contains("7476"));
         assertTrue(actual.contains("7477"));
+        assertEquals(28, actual.length());
     }
 
     @Test
@@ -79,6 +81,7 @@ public class RookPossibleMoveTest {
         assertTrue(actual.contains("4252"));
         assertTrue(actual.contains("4262"));
         assertTrue(actual.contains("4272"));
+        assertEquals(28, actual.length());
     }
 
     @Test
@@ -112,5 +115,6 @@ public class RookPossibleMoveTest {
         assertTrue(actual.contains("1555"));
         assertTrue(actual.contains("1565"));
         assertTrue(actual.contains("1575"));
+        assertEquals(56, actual.length());
     }
 }

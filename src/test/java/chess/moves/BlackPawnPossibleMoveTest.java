@@ -4,6 +4,7 @@ import chess.board.DebugBoard;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BlackPawnPossibleMoveTest {
 
@@ -19,10 +20,11 @@ public class BlackPawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        String expected = "2435";
         String actual = PossibleMoves.possibleMovesB(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false);
+        String expected = "2435";
+
         assertEquals(expected, actual);
     }
 
@@ -38,10 +40,11 @@ public class BlackPawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        String expected = "1120";
         String actual = PossibleMoves.possibleMovesB(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false);
+        String expected = "1120";
+
         assertEquals(expected, actual);
     }
 
@@ -57,10 +60,11 @@ public class BlackPawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        String expected = "3343";
         String actual = PossibleMoves.possibleMovesB(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false);
+        String expected = "3343";
+
         assertEquals(expected, actual);
     }
 
@@ -76,11 +80,13 @@ public class BlackPawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        String expected = "17271737"; // could also be "17371727"
         String actual = PossibleMoves.possibleMovesB(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false);
-        assertEquals(expected, actual);
+
+        assertTrue(actual.contains("1727"));
+        assertTrue(actual.contains("1737"));
+        assertEquals(8, actual.length());
     }
 
     @Test
@@ -95,10 +101,11 @@ public class BlackPawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        String expected = "";
         String actual = PossibleMoves.possibleMovesB(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false);
+        String expected = "";
+
         assertEquals(expected, actual);
     }
 
@@ -114,11 +121,12 @@ public class BlackPawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        String expected = "01BE";
         // make EP = WP since only one pawn on board
         String actual = PossibleMoves.possibleMovesB(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], boardArray[0], false, false, false, false);
+        String expected = "01BE";
+
         assertEquals(expected, actual);
     }
 
@@ -134,11 +142,12 @@ public class BlackPawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        String expected = "54BE";
         // make EP = WP since only one pawn on board
         String actual = PossibleMoves.possibleMovesB(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], boardArray[0], false, false, false, false);
+        String expected = "54BE";
+
         assertEquals(expected, actual);
     }
 
@@ -154,11 +163,15 @@ public class BlackPawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", "p"},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        String expected = "77qP77rP77bP77nP";
         String actual = PossibleMoves.possibleMovesB(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false);
-        assertEquals(expected, actual);
+
+        assertTrue(actual.contains("77qP"));
+        assertTrue(actual.contains("77rP"));
+        assertTrue(actual.contains("77bP"));
+        assertTrue(actual.contains("77nP"));
+        assertEquals(16, actual.length());
     }
 
     @Test
@@ -173,11 +186,15 @@ public class BlackPawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", "p", " ", " "},
                 {" ", " ", " ", " ", " ", "R", "B", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        String expected = "56qP56rP56bP56nP";
         String actual = PossibleMoves.possibleMovesB(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false);
-        assertEquals(expected, actual);
+
+        assertTrue(actual.contains("56qP"));
+        assertTrue(actual.contains("56rP"));
+        assertTrue(actual.contains("56bP"));
+        assertTrue(actual.contains("56nP"));
+        assertEquals(16, actual.length());
     }
 
     @Test
@@ -192,10 +209,14 @@ public class BlackPawnPossibleMoveTest {
                 {" ", " ", " ", "p", " ", " ", " ", " "},
                 {" ", " ", "Q", "K", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        String expected = "32qP32rP32bP32nP";
         String actual = PossibleMoves.possibleMovesB(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false);
-        assertEquals(expected, actual);
+
+        assertTrue(actual.contains("32qP"));
+        assertTrue(actual.contains("32rP"));
+        assertTrue(actual.contains("32bP"));
+        assertTrue(actual.contains("32nP"));
+        assertEquals(16, actual.length());
     }
 }
