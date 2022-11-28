@@ -9,7 +9,7 @@ public class DebugBoard {
         long wp = 0L, wn = 0L, wb = 0L, wr = 0L, wq = 0L, wk = 0L, bp = 0L, bn = 0L, bb = 0L, br = 0L, bq = 0L, bk = 0L;
         String[][] stringBoard = get2dStringBoard();
         long[] boardArray = arrayToBitboards(stringBoard);
-        drayArray(boardArray);
+        drawArray(boardArray);
 
         String possMoves = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
@@ -30,7 +30,7 @@ public class DebugBoard {
                 {"R", "N", "B", "Q", "K", "B", "N", "R"}};
     }
 
-    public static void drayArray(long[] boardArray) {
+    public static void drawArray(long[] boardArray) {
         Board.drawBoard(boardArray[0], boardArray[1], boardArray[2], boardArray[3], boardArray[4], boardArray[5],
                 boardArray[6], boardArray[7], boardArray[8], boardArray[9], boardArray[10], boardArray[11]);
     }
