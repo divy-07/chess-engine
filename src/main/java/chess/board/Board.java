@@ -1,6 +1,6 @@
 package chess.board;
 
-import java.util.*;
+import java.util.Arrays;
 
 public class Board {
     /*
@@ -12,6 +12,30 @@ public class Board {
      * Queen --> Q/q
      * King --> K/k
      */
+    /*
+     * Bitboards:
+     * the first bit of the long is the h1 square and last is the a8 square.
+     * So the long 64b0000000000000000000000000000000000000000000000000000000000000001
+     * would correspond to the board:
+     *
+     *      |-----|-----|-----|-----|-----|-----|-----|-----|
+     *      |  P  |     |     |     |     |     |     |     |
+     *      |-----|-----|-----|-----|-----|-----|-----|-----|
+     *      |     |     |     |     |     |     |     |     |
+     *      |-----|-----|-----|-----|-----|-----|-----|-----|
+     *      |     |     |     |     |     |     |     |     |
+     *      |-----|-----|-----|-----|-----|-----|-----|-----|
+     *      |     |     |     |     |     |     |     |     |
+     *      |-----|-----|-----|-----|-----|-----|-----|-----|
+     *      |     |     |     |     |     |     |     |     |
+     *      |-----|-----|-----|-----|-----|-----|-----|-----|
+     *      |     |     |     |     |     |     |     |     |
+     *      |-----|-----|-----|-----|-----|-----|-----|-----|
+     *      |     |     |     |     |     |     |     |     |
+     *      |-----|-----|-----|-----|-----|-----|-----|-----|
+     *      |     |     |     |     |     |     |     |     |
+     *      |-----|-----|-----|-----|-----|-----|-----|-----|
+     */
 
     /**
      * Updates the engine with the new board state
@@ -21,7 +45,7 @@ public class Board {
      *                  // TODO: add impacts on the engine/frame conditions
      */
     public static void importFEN(String fenString) {
-        return; // TODO: implement this method
+        // TODO: implement this method
     }
 
     /**
