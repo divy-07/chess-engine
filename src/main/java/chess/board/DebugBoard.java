@@ -11,6 +11,8 @@ public class DebugBoard {
         long[] boardArray = arrayToBitboards(stringBoard);
         drawArray(boardArray);
 
+        drawArray(new long[]{wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk});
+
         String possMoves = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false);

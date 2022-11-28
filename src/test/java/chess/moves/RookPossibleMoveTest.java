@@ -88,7 +88,7 @@ public class RookPossibleMoveTest {
     public void test04VerticalAndHorizontal() {
         String[][] stringBoard = new String[][]{
                 {" ", " ", " ", " ", " ", " ", " ", " "},
-                {" ", " ", " ", " ", " ", "r", " ", " "},
+                {" ", " ", " ", "P", " ", "r", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "},
@@ -101,9 +101,6 @@ public class RookPossibleMoveTest {
                 boardArray[10], boardArray[11], 0L, false, false, false, false);
         String actual = PossibleMoves.possibleR(boardArray[9]);
 
-        assertTrue(actual.contains("1510"));
-        assertTrue(actual.contains("1511"));
-        assertTrue(actual.contains("1512"));
         assertTrue(actual.contains("1513"));
         assertTrue(actual.contains("1514"));
         assertTrue(actual.contains("1516"));
@@ -115,6 +112,6 @@ public class RookPossibleMoveTest {
         assertTrue(actual.contains("1555"));
         assertTrue(actual.contains("1565"));
         assertTrue(actual.contains("1575"));
-        assertEquals(56, actual.length());
+        assertEquals(44, actual.length());
     }
 }
