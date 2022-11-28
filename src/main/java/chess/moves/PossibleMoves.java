@@ -76,13 +76,13 @@ public class PossibleMoves {
      * @param bp black pawn bitboard
      * @param ep en passant bitboard - has 1 for pawn that was moved 2 squares
      * @return a String with all possible pawn moves.<br>
-     *         The order of moves is as follows: single pushes, double pushes, right captures, left captures, promotions, en passant captures.
-     *         Further, the moves are sorted from top to bottom and left to right.
-     *         Promotion moves are sorted by piece type: queen, rook, bishop, knight.<br>
-     *         The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br><br>
-     *         If the move is push/capture the characters are: destination rank, destination file, origin rank, origin file.<br>
-     *         If the move is a promotion, the characters are: origin file, destination file, promotion type("Q", "R", "B", "N"), "P".<br>
-     *         If the move is an en passant capture, the character are: origin file, destination file, "W", "E".<br>
+     * - The order of moves is as follows: single pushes, double pushes, right captures, left captures, promotions, en passant captures.
+     * - Further, the moves are sorted from top to bottom and left to right.
+     * - Promotion moves are sorted by piece type: queen, rook, bishop, knight.<br>
+     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br><br>
+     * - If the move is push/capture the characters are: destination rank, destination file, origin rank, origin file.<br>
+     * - If the move is a promotion, the characters are: origin file, destination file, promotion type("Q", "R", "B", "N"), "P".<br>
+     * - If the move is an en passant capture, the character are: origin file, destination file, "W", "E".<br>
      */
     protected static String possibleWP(long wp, long bp, long ep) {
         /*
@@ -196,13 +196,13 @@ public class PossibleMoves {
      * @param wp white pawn bitboard
      * @param ep en passant bitboard - has 1 for pawn that was moved 2 squares
      * @return a String with all possible pawn moves.<br>
-     *         The order of moves is as follows: single pushes, double pushes, right captures, left captures, promotions, en passant captures.
-     *         Further, the moves are sorted from top to bottom and left to right.
-     *         Promotion moves are sorted by piece type: queen, rook, bishop, knight.<br>
-     *         The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br><br>
-     *         If the move is push/capture the characters are: destination rank, destination file, origin rank, origin file.<br>
-     *         If the move is a promotion, the characters are: origin file, destination file, promotion type("q", "r", "b", "n"), "P".<br>
-     *         If the move is an en passant capture, the character are: origin file, destination file, "B", "E".<br>
+     * - The order of moves is as follows: single pushes, double pushes, right captures, left captures, promotions, en passant captures.
+     * - Further, the moves are sorted from top to bottom and left to right.
+     * - Promotion moves are sorted by piece type: queen, rook, bishop, knight.<br>
+     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br><br>
+     * - If the move is push/capture the characters are: destination rank, destination file, origin rank, origin file.<br>
+     * - If the move is a promotion, the characters are: origin file, destination file, promotion type("q", "r", "b", "n"), "P".<br>
+     * - If the move is an en passant capture, the character are: origin file, destination file, "B", "E".<br>
      */
     protected static String possibleBP(long bp, long wp, long ep) {
         // similar to possibleWP, but with black pieces

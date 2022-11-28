@@ -1,12 +1,10 @@
 package chess.moves;
 
+import chess.board.DebugBoard;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import chess.board.DebugBoard;
-
 
 public class WhitePawnPossibleMoveTest {
 
