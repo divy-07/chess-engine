@@ -16,6 +16,10 @@ public final class Constants {
     public static final long KING_SIDE = -1085102592571150096L;
     public static final long QUEEN_SIDE = 1085102592571150095L;
 
+    // destination squares for king and knight moves
+    public static long KING_SPAN=460039L;
+    public static long KNIGHT_SPAN=43234889994L;
+
     // starting position bitboards
     public static long startWP = 71776119061217280L;
     public static long startWN = 4755801206503243776L;

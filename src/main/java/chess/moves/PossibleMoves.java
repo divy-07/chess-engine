@@ -318,12 +318,12 @@ public class PossibleMoves {
         long possibility;
 
         while (i != 0) {
-            int iLocation = Long.numberOfTrailingZeros(i);
-            possibility = diagonalMoves(iLocation) & notMyPieces;
+            int currCell = Long.numberOfTrailingZeros(i);
+            possibility = diagonalMoves(currCell) & notMyPieces;
             long j = possibility & -possibility;
             while (j != 0) {
                 int index = Long.numberOfTrailingZeros(j);
-                moves.append(iLocation / 8).append(iLocation % 8).append(index / 8).append(index % 8);
+                moves.append(currCell / 8).append(currCell % 8).append(index / 8).append(index % 8);
                 possibility &= ~j;
                 j = possibility & -possibility;
             }
@@ -350,12 +350,12 @@ public class PossibleMoves {
         long possibility;
 
         while (i != 0) {
-            int iLocation = Long.numberOfTrailingZeros(i);
-            possibility = horizontalAndVerticalMoves(iLocation) & notMyPieces;
+            int currCell = Long.numberOfTrailingZeros(i);
+            possibility = horizontalAndVerticalMoves(currCell) & notMyPieces;
             long j = possibility & -possibility;
             while (j != 0) {
                 int index = Long.numberOfTrailingZeros(j);
-                moves.append(iLocation / 8).append(iLocation % 8).append(index / 8).append(index % 8);
+                moves.append(currCell / 8).append(currCell % 8).append(index / 8).append(index % 8);
                 possibility &= ~j;
                 j = possibility & -possibility;
             }
@@ -366,13 +366,46 @@ public class PossibleMoves {
         return moves.toString();
     }
 
-    protected static String possibleQ(long q) {
-        StringBuilder moves = new StringBuilder();
-        return moves.toString();
+    /**
+     * Returns all possible queen moves.
+     *
+     * @param queen the queen bitboard
+     * @return a String with all possible queen moves.<br>
+     * - The primary move order is: diagonal moves then horizontal/vertical moves.<br>
+     * - The moves are further sorted from top to bottom and left to right.<br>
+     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
+     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
+     * - Capturing moves are included with similar format.<br>
+     */
+    protected static String possibleQ(long queen) {
+        return possibleB(queen) + possibleR(queen);
     }
 
     protected static String possibleK(long k) {
         StringBuilder moves = new StringBuilder();
+        long possibility;
+
+        int currPos = Long.numberOfTrailingZeros(k);
+        if (currPos > 9) {
+            // if not in the 8th rank
+            possibility = KING_SPAN << (currPos - 9);
+        } else {
+            possibility = KING_SPAN >> (9 - currPos);
+        }
+        if (currPos % 8 < 4) {
+            possibility &= ~FILE_GH & notMyPieces;
+        } else {
+            possibility &= ~FILE_AB & notMyPieces;
+        }
+
+        long j = possibility & -possibility;
+        while (j != 0) {
+            int index = Long.numberOfTrailingZeros(j);
+            moves.append(currPos / 8).append(currPos % 8).append(index / 8).append(index % 8);
+            possibility &= ~j;
+            j = possibility & -possibility;
+        }
+
         return moves.toString();
     }
 
