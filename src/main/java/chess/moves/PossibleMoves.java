@@ -188,7 +188,6 @@ public class PossibleMoves {
         return moves.toString();
     }
 
-
     /**
      * Returns all possible pawn moves for black.
      *
@@ -297,8 +296,46 @@ public class PossibleMoves {
         return moves.toString();
     }
 
-    protected static String possibleN(long n) {
+    /**
+     * Returns a string with all possible moves for the knights.<br>
+     *
+     * @param knight The knight bitboard.
+     * @return A string with all possible moves for the knights.<br>
+     * - The moves are sorted from top to bottom and left to right.<br>
+     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
+     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
+     * - Capturing moves are included with similar format.<br>
+     */
+    protected static String possibleN(long knight) {
         StringBuilder moves = new StringBuilder();
+        long i = knight & -knight;
+        long possibility;
+
+        // accounting for all both knights on the board
+        while (i != 0) {
+            int currCell = Long.numberOfTrailingZeros(i);
+            if (currCell > 18) {
+                possibility = KNIGHT_SPAN << (currCell - 18);
+            } else {
+                possibility = KNIGHT_SPAN >> (18 - currCell);
+            }
+            if (currCell % 8 < 4) {
+                possibility &= ~FILE_GH & notMyPieces;
+            } else {
+                possibility &= ~FILE_AB & notMyPieces;
+            }
+
+            long j = possibility & -possibility;
+            while (j != 0) {
+                int index = Long.numberOfTrailingZeros(j);
+                moves.append(currCell / 8).append(currCell % 8).append(index / 8).append(index % 8);
+                possibility &= ~j;
+                j = possibility & -possibility;
+            }
+            knight &= ~i;
+            i = knight & -knight;
+        }
+
         return moves.toString();
     }
 
@@ -381,11 +418,11 @@ public class PossibleMoves {
         return possibleB(queen) + possibleR(queen);
     }
 
-    protected static String possibleK(long k) {
+    protected static String possibleK(long king) {
         StringBuilder moves = new StringBuilder();
         long possibility;
 
-        int currPos = Long.numberOfTrailingZeros(k);
+        int currPos = Long.numberOfTrailingZeros(king);
         if (currPos > 9) {
             // if not in the 8th rank
             possibility = KING_SPAN << (currPos - 9);
@@ -449,7 +486,7 @@ public class PossibleMoves {
      * <p>
      * Credit: Logic Crazy Chess
      */
-    static long diagonalMoves(int s) {
+    private static long diagonalMoves(int s) {
         long binaryS = 1L << s;
         long possibilitiesDiagonal = ((occupiedSquares & DiagonalMasks8[(s / 8) + (s % 8)]) - (2 * binaryS)) ^
                 Long.reverse(Long.reverse(occupiedSquares & DiagonalMasks8[(s / 8) + (s % 8)]) - (2 * Long.reverse(binaryS)));
