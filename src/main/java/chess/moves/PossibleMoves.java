@@ -501,11 +501,11 @@ public class PossibleMoves {
      */
     private static long diagonalMoves(int s) {
         long binaryS = 1L << s;
-        long possibilitiesDiagonal = ((occupiedSquares & DiagonalMasks8[(s / 8) + (s % 8)]) - (2 * binaryS)) ^
-                Long.reverse(Long.reverse(occupiedSquares & DiagonalMasks8[(s / 8) + (s % 8)]) - (2 * Long.reverse(binaryS)));
-        long possibilitiesAntiDiagonal = ((occupiedSquares & AntiDiagonalMasks8[(s / 8) + 7 - (s % 8)]) - (2 * binaryS)) ^
-                Long.reverse(Long.reverse(occupiedSquares & AntiDiagonalMasks8[(s / 8) + 7 - (s % 8)]) - (2 * Long.reverse(binaryS)));
-        return (possibilitiesDiagonal & DiagonalMasks8[(s / 8) + (s % 8)]) | (possibilitiesAntiDiagonal & AntiDiagonalMasks8[(s / 8) + 7 - (s % 8)]);
+        long possibilitiesDiagonal = ((occupiedSquares & diagonals[(s / 8) + (s % 8)]) - (2 * binaryS)) ^
+                Long.reverse(Long.reverse(occupiedSquares & diagonals[(s / 8) + (s % 8)]) - (2 * Long.reverse(binaryS)));
+        long possibilitiesAntiDiagonal = ((occupiedSquares & antiDiagonals[(s / 8) + 7 - (s % 8)]) - (2 * binaryS)) ^
+                Long.reverse(Long.reverse(occupiedSquares & antiDiagonals[(s / 8) + 7 - (s % 8)]) - (2 * Long.reverse(binaryS)));
+        return (possibilitiesDiagonal & diagonals[(s / 8) + (s % 8)]) | (possibilitiesAntiDiagonal & antiDiagonals[(s / 8) + 7 - (s % 8)]);
     }
 
 }
