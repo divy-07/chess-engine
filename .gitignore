@@ -41,4 +41,4 @@ gradlew
 *.bat
 soln.txt
 *hprof*
-
+config/

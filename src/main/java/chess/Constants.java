@@ -19,7 +19,13 @@ public final class Constants {
     public static final long KING_SIDE = -1085102592571150096L;
     public static final long QUEEN_SIDE = 1085102592571150095L;
 
-    // starting position bitboards
+    // destination squares for king and knight moves
+    public static long KING_SPAN=460039L;
+    public static long KNIGHT_SPAN=43234889994L;
+
+    /**
+     * Bitboards for files from A -> H; length = 8
+     */
     public static final long startWP = 71776119061217280L;
     public static final long startWN = 4755801206503243776L;
     public static final long startWB = 2594073385365405696L;
@@ -37,4 +43,34 @@ public final class Constants {
             0x101010101010101L, 0x202020202020202L, 0x404040404040404L, 0x808080808080808L,
             0x1010101010101010L, 0x2020202020202020L, 0x4040404040404040L, 0x8080808080808080L
     };
+
+    /**
+     * Bitboards for ranks from 8 -> 1; length = 8
+     */
+    public static long[] ranks = {
+            0xFFL, 0xFF00L, 0xFF0000L, 0xFF000000L, 0xFF00000000L, 0xFF0000000000L, 0xFF000000000000L, 0xFF00000000000000L
+    };
+
+    /**
+     * Bitboards for top left to bottom right diagonals.<br>
+     * Includes the diagonals, in order:
+     * a8-a8, a7-b8, a6-c8, a5-d8, a4-e8, a3-f8, a2-g8, a1-h8, b1-h7, c1-h6, d1-h5, e1-h4, f1-h3, g1-h2, h1-h1
+     */
+    public static long[] DiagonalMasks8 = {
+            0x1L, 0x102L, 0x10204L, 0x1020408L, 0x102040810L, 0x10204081020L, 0x1020408102040L,
+            0x102040810204080L, 0x204081020408000L, 0x408102040800000L, 0x810204080000000L,
+            0x1020408000000000L, 0x2040800000000000L, 0x4080000000000000L, 0x8000000000000000L
+    };
+
+    /**
+     * Bitboards for top right to bottom left diagonals.<br>
+     * Includes the diagonals, in order:
+     * h8-h8, g8-h7, f8-h6, e8-h5, d8-h4, c8-h3, b8-h2, a8-h1, a7-g1, a6-f1, a5-e1, a4-d1, a3-c1, a2-b1, a1-a1
+     */
+    public static long[] AntiDiagonalMasks8 = {
+            0x80L, 0x8040L, 0x804020L, 0x80402010L, 0x8040201008L, 0x804020100804L, 0x80402010080402L,
+            0x8040201008040201L, 0x4020100804020100L, 0x2010080402010000L, 0x1008040201000000L,
+            0x804020100000000L, 0x402010000000000L, 0x201000000000000L, 0x100000000000000L
+    };
+
 }
