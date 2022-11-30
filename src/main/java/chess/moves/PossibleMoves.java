@@ -313,13 +313,13 @@ public class PossibleMoves {
 
         // accounting for all both knights on the board
         while (i != 0) {
-            int currCell = Long.numberOfTrailingZeros(i);
-            if (currCell > 18) {
-                possibility = KNIGHT_SPAN << (currCell - 18);
+            int currPos = Long.numberOfTrailingZeros(i);
+            if (currPos > 18) {
+                possibility = KNIGHT_SPAN << (currPos - 18);
             } else {
-                possibility = KNIGHT_SPAN >> (18 - currCell);
+                possibility = KNIGHT_SPAN >> (18 - currPos);
             }
-            if (currCell % 8 < 4) {
+            if (currPos % 8 < 4) {
                 possibility &= ~FILE_GH & notMyPieces;
             } else {
                 possibility &= ~FILE_AB & notMyPieces;
@@ -328,7 +328,7 @@ public class PossibleMoves {
             long j = possibility & -possibility;
             while (j != 0) {
                 int index = Long.numberOfTrailingZeros(j);
-                moves.append(currCell / 8).append(currCell % 8).append(index / 8).append(index % 8);
+                moves.append(currPos / 8).append(currPos % 8).append(index / 8).append(index % 8);
                 possibility &= ~j;
                 j = possibility & -possibility;
             }
@@ -355,12 +355,12 @@ public class PossibleMoves {
         long possibility;
 
         while (i != 0) {
-            int currCell = Long.numberOfTrailingZeros(i);
-            possibility = diagonalMoves(currCell) & notMyPieces;
+            int currPos = Long.numberOfTrailingZeros(i);
+            possibility = diagonalMoves(currPos) & notMyPieces;
             long j = possibility & -possibility;
             while (j != 0) {
                 int index = Long.numberOfTrailingZeros(j);
-                moves.append(currCell / 8).append(currCell % 8).append(index / 8).append(index % 8);
+                moves.append(currPos / 8).append(currPos % 8).append(index / 8).append(index % 8);
                 possibility &= ~j;
                 j = possibility & -possibility;
             }
@@ -387,12 +387,12 @@ public class PossibleMoves {
         long possibility;
 
         while (i != 0) {
-            int currCell = Long.numberOfTrailingZeros(i);
-            possibility = horizontalAndVerticalMoves(currCell) & notMyPieces;
+            int currPos = Long.numberOfTrailingZeros(i);
+            possibility = horizontalAndVerticalMoves(currPos) & notMyPieces;
             long j = possibility & -possibility;
             while (j != 0) {
                 int index = Long.numberOfTrailingZeros(j);
-                moves.append(currCell / 8).append(currCell % 8).append(index / 8).append(index % 8);
+                moves.append(currPos / 8).append(currPos % 8).append(index / 8).append(index % 8);
                 possibility &= ~j;
                 j = possibility & -possibility;
             }

@@ -1,5 +1,9 @@
 package chess.board;
 
+import chess.engine.Hari;
+
+import static chess.Constants.*;
+
 import java.util.Arrays;
 
 public class Board {
@@ -41,11 +45,83 @@ public class Board {
      * Updates the engine with the new board state
      *
      * @param fenString the new board state in FEN notation
-     *                  (<a href="https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">format specifications</a>)
-     *                  // TODO: add impacts on the engine/frame conditions
+     *                  (<a href="https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">
+     *                  format specifications</a>)<p>
+     *                  Changes the state of the engine to the new given board state.
      */
     public static void importFEN(String fenString) {
-        // TODO: implement this method
+        Hari.WP = 0L;
+        Hari.WN = 0L;
+        Hari.WB = 0L;
+        Hari.WR = 0L;
+        Hari.WQ = 0L;
+        Hari.WK = 0L;
+        Hari.BP = 0L;
+        Hari.BN = 0L;
+        Hari.BB = 0L;
+        Hari.BR = 0L;
+        Hari.BQ = 0L;
+        Hari.BK = 0L;
+        Hari.CWK = false;
+        Hari.CWQ = false;
+        Hari.CBK = false;
+        Hari.CBQ = false;
+
+        int charIndex = 0;
+        int boardIndex = 0;
+
+        // parse the board state
+        while (fenString.charAt(charIndex) != ' ') {
+            switch (fenString.charAt(charIndex++)) {
+                case 'P' -> Hari.WP |= (1L << boardIndex++);
+                case 'p' -> Hari.BP |= (1L << boardIndex++);
+                case 'N' -> Hari.WN |= (1L << boardIndex++);
+                case 'n' -> Hari.BN |= (1L << boardIndex++);
+                case 'B' -> Hari.WB |= (1L << boardIndex++);
+                case 'b' -> Hari.BB |= (1L << boardIndex++);
+                case 'R' -> Hari.WR |= (1L << boardIndex++);
+                case 'r' -> Hari.BR |= (1L << boardIndex++);
+                case 'Q' -> Hari.WQ |= (1L << boardIndex++);
+                case 'q' -> Hari.BQ |= (1L << boardIndex++);
+                case 'K' -> Hari.WK |= (1L << boardIndex++);
+                case 'k' -> Hari.BK |= (1L << boardIndex++);
+                case '1' -> boardIndex++;
+                case '2' -> boardIndex += 2;
+                case '3' -> boardIndex += 3;
+                case '4' -> boardIndex += 4;
+                case '5' -> boardIndex += 5;
+                case '6' -> boardIndex += 6;
+                case '7' -> boardIndex += 7;
+                case '8' -> boardIndex += 8;
+            }
+        }
+
+        // decide whose turn it is
+        Hari.whiteToMove = (fenString.charAt(++charIndex) == 'w');
+
+        // set castling rights
+        charIndex += 2;
+        while (fenString.charAt(charIndex) != ' ') {
+            switch (fenString.charAt(charIndex++)) {
+                case 'K' -> Hari.CWK = true;
+                case 'Q' -> Hari.CWQ = true;
+                case 'k' -> Hari.CBK = true;
+                case 'q' -> Hari.CBQ = true;
+            }
+        }
+
+        // set en passant square
+        if (fenString.charAt(++charIndex) != '-') {
+            Hari.EP = files[fenString.charAt(charIndex) - 'a'];
+        }
+
+        // half-move
+        charIndex += 3;
+        Hari.halfMoveCount = Integer.parseInt(fenString.substring(charIndex, fenString.indexOf(' ', charIndex)));
+
+        // full move
+        charIndex = fenString.indexOf(' ', charIndex) + 1;
+        Hari.fullMoveCount = Integer.parseInt(fenString.substring(charIndex));
     }
 
     /**

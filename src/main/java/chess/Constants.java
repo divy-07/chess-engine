@@ -2,6 +2,9 @@ package chess;
 
 public final class Constants {
 
+    // Engine name
+    public static final String ENGINE_NAME = "Hari";
+
     // board constants
     public static final long FILE_A = 72340172838076673L;
     public static final long FILE_H = -9187201950435737472L;
@@ -20,24 +23,22 @@ public final class Constants {
     public static long KING_SPAN=460039L;
     public static long KNIGHT_SPAN=43234889994L;
 
-    // starting position bitboards
-    public static long startWP = 71776119061217280L;
-    public static long startWN = 4755801206503243776L;
-    public static long startWB = 2594073385365405696L;
-    public static long startWR = -9151314442816847872L;
-    public static long startWQ = 576460752303423488L;
-    public static long startWK = 1152921504606846976L;
-    public static long startBP = 65280L;
-    public static long startBN = 66L;
-    public static long startBB = 36L;
-    public static long startBR = 129L;
-    public static long startBQ = 8L;
-    public static long startBK = 16L;
-
-
     /**
      * Bitboards for files from A -> H; length = 8
      */
+    public static final long startWP = 71776119061217280L;
+    public static final long startWN = 4755801206503243776L;
+    public static final long startWB = 2594073385365405696L;
+    public static final long startWR = -9151314442816847872L;
+    public static final long startWQ = 576460752303423488L;
+    public static final long startWK = 1152921504606846976L;
+    public static final long startBP = 65280L;
+    public static final long startBN = 66L;
+    public static final long startBB = 36L;
+    public static final long startBR = 129L;
+    public static final long startBQ = 8L;
+    public static final long startBK = 16L;
+
     public static long[] files = {
             0x101010101010101L, 0x202020202020202L, 0x404040404040404L, 0x808080808080808L,
             0x1010101010101010L, 0x2020202020202020L, 0x4040404040404040L, 0x8080808080808080L
