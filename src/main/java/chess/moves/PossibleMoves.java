@@ -5,10 +5,10 @@ import static chess.Constants.*;
 public class PossibleMoves {
 
     // useful trackers
-    private static long notMyPieces;
-    private static long myPieces;
-    private static long occupiedSquares;
-    private static long emptySquares;
+    private static long notMyPieces; // every square except my pieces + opponent's king
+    private static long myPieces; // squares with my pieces - my king
+    private static long occupiedSquares; // squares with pieces
+    private static long emptySquares; // squares without any pieces
 
     /**
      * Returns a string of all possible moves by white pieces
@@ -418,6 +418,17 @@ public class PossibleMoves {
         return possibleB(queen) + possibleR(queen);
     }
 
+    /**
+     * Returns all possible non-castling king moves.
+     *
+     * @param king the king bitboard.
+     * @return a String with all possible non-castling king moves.<br>
+     * - The moves are sorted from top to bottom and left to right.<br>
+     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
+     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
+     * - Capturing moves are included with similar format.<br>
+     * - Castling moves are not included.<br>
+     */
     protected static String possibleK(long king) {
         StringBuilder moves = new StringBuilder();
         long possibility;
@@ -450,6 +461,7 @@ public class PossibleMoves {
                                        long bp, long bn, long bb, long br, long bq, long bk,
                                        boolean cwk, boolean cwq) {
         StringBuilder moves = new StringBuilder();
+        // TODO (#8): Implement white castling moves
         return moves.toString();
     }
 
@@ -457,6 +469,7 @@ public class PossibleMoves {
                                        long bp, long bn, long bb, long br, long bq, long bk,
                                        boolean cwk, boolean cwq) {
         StringBuilder moves = new StringBuilder();
+        // TODO (#8): Implement black castling moves
         return moves.toString();
     }
 
