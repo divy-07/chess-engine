@@ -1,6 +1,9 @@
 package chess.communications;
 
+import chess.board.Board;
+
 import java.util.Scanner;
+
 import static chess.Constants.*;
 
 public class UCI {
@@ -66,12 +69,13 @@ public class UCI {
         input = input.substring(9).concat(" ");
         if (input.contains("startpos ")) {
             input = input.substring(9);
-            // TODO: set board to starting position
+            Board.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         } else if (input.contains("fen")) {
             input = input.substring(4);
-            // TODO: set board to given fen position
+            Board.importFEN(input);
         }
 
+        // apply moves
         if (input.contains("moves")) {
             input = input.substring(input.indexOf("moves") + 6);
             while (input.length() > 0) {
