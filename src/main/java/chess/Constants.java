@@ -20,8 +20,8 @@ public final class Constants {
     public static final long QUEEN_SIDE = 1085102592571150095L;
 
     // destination squares for king and knight moves
-    public static long KING_SPAN=460039L;
-    public static long KNIGHT_SPAN=43234889994L;
+    public static long KING_SPAN = 460039L;
+    public static long KNIGHT_SPAN = 43234889994L;
 
     /**
      * Bitboards for files from A -> H; length = 8
