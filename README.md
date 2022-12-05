@@ -6,9 +6,10 @@
 
 1. [Contributors](#contributors)
 2. [Description](#description)
-2. [Using the Engine](#using-the-engine)
-3. [Architecture](#architecture)
-4. [Contributing](#contributing-to-the-project)
+3. [Using the Engine](#using-the-engine)
+4. [Architecture](#architecture)
+5. [Contributing](#contributing-to-the-project)
+6. [Contact](#contact)
 
 ---
 
@@ -17,7 +18,7 @@
 1. [Divy Patel](https://github.com/divy-07) (owner)
 2. [Arnav Prasad](https://github.com/arnavpd) (owner)
 
-Special mention: Jonathan Warkentin, some code was reused from his chess engine Orion.
+Special mention: Jonathan Warkentin, some code was reused from his chess engine, Orion.
 
 ---
 
@@ -29,13 +30,13 @@ Note: Although the engine is currently under construction, a big chunk of the wo
 
 Current rating: WIP
 
-The motive behind this project was to create a chess engine that can beat us the creators, rated around 1200.
-We expect the engine to be able to beat us in the very near future, once the engine is completely implemented.
-Apart from our passion for chess, we also wanted to apply the knowledge we have gained in our Software Engineering courses to a real world problem.
-This includes the use of object-oriented programming, unit testing, concurrency, and other software engineering practices.
+The motive behind this project was to create a chess engine that can beat us, the creators, rated around 1200.
+We expect the engine to be able to beat us in the near future, once the engine is fully implemented.
+Apart from our passion for chess, we also wanted to apply the knowledge we have gained in our Software Engineering courses to a real world application.
+This includes the use of object-oriented programming, unit testing, concurrency, and other software engineering principles.
 
-The choice of language was Java, as not only is it a nice mix between C++(speed) and Python(readability).
-But also because it is a language that we are both familiar with.
+The project is created using Java, as it is a nice mix between C++(speed) and Python(readability).
+It is also a language that we are both familiar with.
 
 [Back to top](#hari--the-chess-engine)
 
@@ -43,9 +44,9 @@ But also because it is a language that we are both familiar with.
 
 ## Using the Engine
 
-Using the engine currently requires Java 14 and gradle 7.5 or higher. 
+Using the engine currently requires Java 14 and gradle 7.5 or higher.
 Steps:
-- Clone/download the repository
+- Clone/download the repository to your local machine.
 - Open a terminal in the root directory of the project
 - Run `./gradlew clean build` to create the jar file
 - Use any UCI-supporting GUI to play against the engine. We recommend [Arena](http://www.playwitharena.de/)
@@ -82,7 +83,7 @@ Steps:
  --------------   -----------------
 ```
 
-The engine is composed of: 
+The engine is composed of:
 - The UCI interface (communicates with the GUI)
 - Hari (the engine, holds the board and the game state)
 - MoveGeneration (generates the best next move)
@@ -107,5 +108,12 @@ To contribute to the project, please follow the steps below:
 
 Good luck and thank you for contributing to the project!
 As a reward, you will be added to the contributors list.
+
+## Contact
+
+Any questions or concerns? Feel free to contact each of us at:
+
+- Divy Patel: www.divy07.com/contact
+- Arnav Prasad: [arnavpd@gmail.com](mailto:arnavpd@gmail.com)
 
 [Back to top](#hari--the-chess-engine)
