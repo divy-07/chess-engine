@@ -17,11 +17,17 @@
 1. [Divy Patel](https://github.com/divy-07) (owner)
 2. [Arnav Prasad](https://github.com/arnavpd) (owner)
 
+Special mention: Jonathan Warkentin, some code was reused from his chess engine Orion.
+
+---
+
 ## Description
 
 [//]: # "Edit this section when implementation is complete"
 
 Note: Although the engine is currently under construction, a big chunk of the work is done.
+
+Current rating: WIP
 
 The motive behind this project was to create a chess engine that can beat us the creators, rated around 1200.
 We expect the engine to be able to beat us in the very near future, once the engine is completely implemented.
@@ -30,6 +36,10 @@ This includes the use of object-oriented programming, unit testing, concurrency,
 
 The choice of language was Java, as not only is it a nice mix between C++(speed) and Python(readability).
 But also because it is a language that we are both familiar with.
+
+[Back to top](#hari--the-chess-engine)
+
+---
 
 ## Using the Engine
 
@@ -42,11 +52,46 @@ Steps:
 - Register the engine with GUI using the .jar file in the build/libs directory
 - Play against the engine!
 
+[Back to top](#hari--the-chess-engine)
+
+---
+
 ## Architecture
 
 [//]: # "Edit this section when architecture is changed"
 
+```
+             -------
+             | GUI |
+             -------
+                |
+             -------
+             | UCI |
+             -------
+                |  
+            --------
+            | Hari |
+            --------
+                |
+       ------------------
+       | MoveGeneration |
+       ------------------
+             /     \
+ --------------   -----------------
+ | Evaluation |   | PossibleMoves |
+ --------------   -----------------
+```
 
+The engine is composed of: 
+- The UCI interface (communicates with the GUI)
+- Hari (the engine, holds the board and the game state)
+- MoveGeneration (generates the best next move)
+- Evaluation (evaluates the board position)
+- PossibleMoves (generates all possible moves for a given board position)
+
+[Back to top](#hari--the-chess-engine)
+
+---
 
 ## Contributing to the Project
 
@@ -63,3 +108,4 @@ To contribute to the project, please follow the steps below:
 Good luck and thank you for contributing to the project!
 As a reward, you will be added to the contributors list.
 
+[Back to top](#hari--the-chess-engine)
