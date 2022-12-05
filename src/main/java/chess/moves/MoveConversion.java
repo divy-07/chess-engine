@@ -1,6 +1,7 @@
 package chess.moves;
 
 import chess.engine.Hari;
+import chess.engine.MakeMove;
 
 import static chess.Constants.files;
 import static chess.Constants.ranks;
@@ -99,19 +100,19 @@ public class MoveConversion {
                             Hari.CBQ = false;
                         }
                     }
-                    Hari.EP = MoveGeneration.makeMoveEP(Hari.WP | Hari.BP, moves.substring(i, i + 4));
-                    Hari.WP = MoveGeneration.makeMove(Hari.WP, moves.substring(i, i + 4), 'P');
-                    Hari.WN = MoveGeneration.makeMove(Hari.WN, moves.substring(i, i + 4), 'N');
-                    Hari.WB = MoveGeneration.makeMove(Hari.WB, moves.substring(i, i + 4), 'B');
-                    Hari.WR = MoveGeneration.makeMove(Hari.WR, moves.substring(i, i + 4), 'R');
-                    Hari.WQ = MoveGeneration.makeMove(Hari.WQ, moves.substring(i, i + 4), 'Q');
-                    Hari.WK = MoveGeneration.makeMove(Hari.WK, moves.substring(i, i + 4), 'K');
-                    Hari.BP = MoveGeneration.makeMove(Hari.BP, moves.substring(i, i + 4), 'p');
-                    Hari.BN = MoveGeneration.makeMove(Hari.BN, moves.substring(i, i + 4), 'n');
-                    Hari.BB = MoveGeneration.makeMove(Hari.BB, moves.substring(i, i + 4), 'b');
-                    Hari.BR = MoveGeneration.makeMove(Hari.BR, moves.substring(i, i + 4), 'r');
-                    Hari.BQ = MoveGeneration.makeMove(Hari.BQ, moves.substring(i, i + 4), 'q');
-                    Hari.BK = MoveGeneration.makeMove(Hari.BK, moves.substring(i, i + 4), 'k');
+                    Hari.EP = MakeMove.makeMoveEP(Hari.WP | Hari.BP, moves.substring(i, i + 4));
+                    Hari.WP = MakeMove.makeMove(Hari.WP, moves.substring(i, i + 4), 'P');
+                    Hari.WN = MakeMove.makeMove(Hari.WN, moves.substring(i, i + 4), 'N');
+                    Hari.WB = MakeMove.makeMove(Hari.WB, moves.substring(i, i + 4), 'B');
+                    Hari.WR = MakeMove.makeMove(Hari.WR, moves.substring(i, i + 4), 'R');
+                    Hari.WQ = MakeMove.makeMove(Hari.WQ, moves.substring(i, i + 4), 'Q');
+                    Hari.WK = MakeMove.makeMove(Hari.WK, moves.substring(i, i + 4), 'K');
+                    Hari.BP = MakeMove.makeMove(Hari.BP, moves.substring(i, i + 4), 'p');
+                    Hari.BN = MakeMove.makeMove(Hari.BN, moves.substring(i, i + 4), 'n');
+                    Hari.BB = MakeMove.makeMove(Hari.BB, moves.substring(i, i + 4), 'b');
+                    Hari.BR = MakeMove.makeMove(Hari.BR, moves.substring(i, i + 4), 'r');
+                    Hari.BQ = MakeMove.makeMove(Hari.BQ, moves.substring(i, i + 4), 'q');
+                    Hari.BK = MakeMove.makeMove(Hari.BK, moves.substring(i, i + 4), 'k');
                     Hari.whiteToMove = !Hari.whiteToMove;
                     break;
                 }
