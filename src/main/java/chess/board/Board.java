@@ -115,13 +115,14 @@ public class Board {
             Hari.EP = files[fenString.charAt(charIndex) - 'a'];
         }
 
-        // half-move
-        charIndex += 3;
-        Hari.halfMoveCount = Integer.parseInt(fenString.substring(charIndex, fenString.indexOf(' ', charIndex)));
+        // TODO: fix setting halfmove and fullmove number then uncomment the following lines
+        // // half-move
+        // charIndex += 3;
+        // Hari.halfMoveCount = Integer.parseInt(fenString.substring(charIndex, fenString.indexOf(' ', charIndex)));
 
-        // full move
-        charIndex = fenString.indexOf(' ', charIndex) + 1;
-        Hari.fullMoveCount = Integer.parseInt(fenString.substring(charIndex));
+        // // full move
+        // charIndex = fenString.indexOf(' ', charIndex) + 1;
+        // Hari.fullMoveCount = Integer.parseInt(fenString.substring(charIndex));
     }
 
     /**

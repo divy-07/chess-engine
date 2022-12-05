@@ -1,6 +1,10 @@
 package chess.communications;
 
 import chess.board.Board;
+import chess.engine.Hari;
+import chess.moves.MoveGeneration;
+import chess.moves.PossibleMoves;
+import chess.moves.MoveConversion;
 
 import java.util.Scanner;
 
@@ -80,6 +84,13 @@ public class UCI {
             input = input.substring(input.indexOf("moves") + 6);
             while (input.length() > 0) {
                 // TODO: make move
+                String moves;
+                if (Hari.whiteToMove) {
+                    moves = PossibleMoves.possibleMovesW(Hari.WP, Hari.WN, Hari.WB, Hari.WR, Hari.WQ, Hari.WK, Hari.BP, Hari.BN, Hari.BB, Hari.BR, Hari.BQ, Hari.BK, Hari.EP, Hari.CWK, Hari.CWQ, Hari.CBK, Hari.CBQ);
+                } else {
+                    moves = PossibleMoves.possibleMovesB(Hari.WP, Hari.WN, Hari.WB, Hari.WR, Hari.WQ, Hari.WK, Hari.BP, Hari.BN, Hari.BB, Hari.BR, Hari.BQ, Hari.BK, Hari.EP, Hari.CWK, Hari.CWQ, Hari.CBK, Hari.CBQ);
+                }
+                MoveConversion.algebraToMove(input, moves);
                 input = input.substring(input.indexOf(' ') + 1);
             }
         }
@@ -89,7 +100,10 @@ public class UCI {
      * Starts the search for the best move.
      */
     private static void inputGo() {
-        // TODO: search and print the best move
+        String move = MoveGeneration.basicPlySearch(Hari.WP, Hari.WN, Hari.WB, Hari.WR, Hari.WQ, Hari.WK,
+                Hari.BP, Hari.BN, Hari.BB, Hari.BR, Hari.BQ, Hari.BK, Hari.EP, Hari.CWK, Hari.CWQ, Hari.CBK, Hari.CBQ,
+                Hari.whiteToMove, 4);
+        System.out.println("bestmove " + MoveConversion.moveToAlgebra(move));
     }
 
     /**
