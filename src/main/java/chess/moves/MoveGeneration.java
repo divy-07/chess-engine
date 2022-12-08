@@ -2,12 +2,13 @@ package chess.moves;
 
 import chess.board.Evaluation;
 
-import static chess.engine.MakeMove.*;
+import chess.engine.MakeMove;
 
 public class MoveGeneration {
 
     /**
      * Calculates the best move for the current position.
+     * Currently using a basic <a href="https://www.chessprogramming.org/Minimax">minimax algorithm</a>
      *
      * @return the best move found with basic mini-max search;
      * the string is in the format "e2e4" or "e7e8q" for promotion
@@ -35,18 +36,18 @@ public class MoveGeneration {
         for (int i = 0; i < possible.length(); i += 4) {
             String move = possible.substring(i, i + 4);
             // update position
-            long wp_temp = makeMove(wp, move, 'P');
-            long wn_temp = makeMove(wn, move, 'N');
-            long wb_temp = makeMove(wb, move, 'B');
-            long wr_temp = makeMove(wr, move, 'R');
-            long wq_temp = makeMove(wq, move, 'Q');
-            long wk_temp = makeMove(wk, move, 'K');
-            long bp_temp = makeMove(bp, move, 'p');
-            long bn_temp = makeMove(bn, move, 'n');
-            long bb_temp = makeMove(bb, move, 'b');
-            long br_temp = makeMove(br, move, 'r');
-            long bq_temp = makeMove(bq, move, 'q');
-            long bk_temp = makeMove(bk, move, 'k');
+            long wp_temp = MakeMove.makeMove(wp, move, 'P');
+            long wn_temp = MakeMove.makeMove(wn, move, 'N');
+            long wb_temp = MakeMove.makeMove(wb, move, 'B');
+            long wr_temp = MakeMove.makeMove(wr, move, 'R');
+            long wq_temp = MakeMove.makeMove(wq, move, 'Q');
+            long wk_temp = MakeMove.makeMove(wk, move, 'K');
+            long bp_temp = MakeMove.makeMove(bp, move, 'p');
+            long bn_temp = MakeMove.makeMove(bn, move, 'n');
+            long bb_temp = MakeMove.makeMove(bb, move, 'b');
+            long br_temp = MakeMove.makeMove(br, move, 'r');
+            long bq_temp = MakeMove.makeMove(bq, move, 'q');
+            long bk_temp = MakeMove.makeMove(bk, move, 'k');
 
             // min for next if white
             if (whiteToMove) {
@@ -97,18 +98,18 @@ public class MoveGeneration {
         for (int i = 0; i < possible.length(); i += 4) {
             String move = possible.substring(i, i + 4);
             // update position
-            long wp_temp = makeMove(wp, move, 'P');
-            long wn_temp = makeMove(wn, move, 'N');
-            long wb_temp = makeMove(wb, move, 'B');
-            long wr_temp = makeMove(wr, move, 'R');
-            long wq_temp = makeMove(wq, move, 'Q');
-            long wk_temp = makeMove(wk, move, 'K');
-            long bp_temp = makeMove(bp, move, 'p');
-            long bn_temp = makeMove(bn, move, 'n');
-            long bb_temp = makeMove(bb, move, 'b');
-            long br_temp = makeMove(br, move, 'r');
-            long bq_temp = makeMove(bq, move, 'q');
-            long bk_temp = makeMove(bk, move, 'k');
+            long wp_temp = MakeMove.makeMove(wp, move, 'P');
+            long wn_temp = MakeMove.makeMove(wn, move, 'N');
+            long wb_temp = MakeMove.makeMove(wb, move, 'B');
+            long wr_temp = MakeMove.makeMove(wr, move, 'R');
+            long wq_temp = MakeMove.makeMove(wq, move, 'Q');
+            long wk_temp = MakeMove.makeMove(wk, move, 'K');
+            long bp_temp = MakeMove.makeMove(bp, move, 'p');
+            long bn_temp = MakeMove.makeMove(bn, move, 'n');
+            long bb_temp = MakeMove.makeMove(bb, move, 'b');
+            long br_temp = MakeMove.makeMove(br, move, 'r');
+            long bq_temp = MakeMove.makeMove(bq, move, 'q');
+            long bk_temp = MakeMove.makeMove(bk, move, 'k');
             // score the new position
             int score = max(wp_temp, wn_temp, wb_temp, wr_temp, wq_temp, wk_temp,
                     bp_temp, bn_temp, bb_temp, br_temp, bq_temp, bk_temp,
@@ -140,18 +141,18 @@ public class MoveGeneration {
         for (int i = 0; i < possible.length(); i += 4) {
             String move = possible.substring(i, i + 4);
             // update position
-            long wp_temp = makeMove(wp, move, 'P');
-            long wn_temp = makeMove(wn, move, 'N');
-            long wb_temp = makeMove(wb, move, 'B');
-            long wr_temp = makeMove(wr, move, 'R');
-            long wq_temp = makeMove(wq, move, 'Q');
-            long wk_temp = makeMove(wk, move, 'K');
-            long bp_temp = makeMove(bp, move, 'p');
-            long bn_temp = makeMove(bn, move, 'n');
-            long bb_temp = makeMove(bb, move, 'b');
-            long br_temp = makeMove(br, move, 'r');
-            long bq_temp = makeMove(bq, move, 'q');
-            long bk_temp = makeMove(bk, move, 'k');
+            long wp_temp = MakeMove.makeMove(wp, move, 'P');
+            long wn_temp = MakeMove.makeMove(wn, move, 'N');
+            long wb_temp = MakeMove.makeMove(wb, move, 'B');
+            long wr_temp = MakeMove.makeMove(wr, move, 'R');
+            long wq_temp = MakeMove.makeMove(wq, move, 'Q');
+            long wk_temp = MakeMove.makeMove(wk, move, 'K');
+            long bp_temp = MakeMove.makeMove(bp, move, 'p');
+            long bn_temp = MakeMove.makeMove(bn, move, 'n');
+            long bb_temp = MakeMove.makeMove(bb, move, 'b');
+            long br_temp = MakeMove.makeMove(br, move, 'r');
+            long bq_temp = MakeMove.makeMove(bq, move, 'q');
+            long bk_temp = MakeMove.makeMove(bk, move, 'k');
             // score the new position
             int score = min(wp_temp, wn_temp, wb_temp, wr_temp, wq_temp, wk_temp,
                     bp_temp, bn_temp, bb_temp, br_temp, bq_temp, bk_temp,
