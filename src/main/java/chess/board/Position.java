@@ -1,6 +1,7 @@
 package chess.board;
 
 import chess.moves.Move;
+import chess.moves.MoveGeneration;
 
 import java.util.List;
 
@@ -87,7 +88,7 @@ public class Position {
 
     /**
      * Makes a move on the current position.
-     * Does not change the current position.
+     * Does not change this position object.
      *
      * @param move the move to make.
      * @return the new position after the move.
@@ -103,8 +104,7 @@ public class Position {
      * @return the best move for this position.
      */
     public Move getBestMove() {
-        // TODO: implement
-        return null;
+        return MoveGeneration.getBestMove(this);
     }
 
     /**
@@ -113,6 +113,43 @@ public class Position {
      * @return a list of all legal moves for this position.
      */
     public List<Move> getLegalMoves() {
+        if (whiteToMove) {
+            return getLegalWhiteMoves();
+        } else {
+            return getLegalBlackMoves();
+        }
+    }
+
+    /**
+     * Returns all possible white moves for this position.
+     * Ignores this.whiteToMove.
+     *
+     * @return a list of all possible white moves for this position.
+     */
+    public List<Move> getLegalWhiteMoves() {
+        // TODO: implement
+        return null;
+    }
+
+    /**
+     * Returns all possible black moves for this position.
+     * Ignores this.whiteToMove.
+     *
+     * @return a list of all possible black moves for this position.
+     */
+    public List<Move> getLegalBlackMoves() {
+        // TODO: implement
+        return null;
+    }
+
+    /**
+     * Applies all moves in a list to the current position.
+     * Does not change this position object.
+     *
+     * @param moves the list of moves to apply.
+     * @return the new position after applying all moves.
+     */
+    public Position applyMoves(List<Move> moves) {
         // TODO: implement
         return null;
     }

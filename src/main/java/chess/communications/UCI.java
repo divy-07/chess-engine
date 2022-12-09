@@ -2,6 +2,7 @@ package chess.communications;
 
 import chess.board.Board;
 import chess.engine.Hari;
+import chess.moves.Move;
 import chess.moves.MoveGeneration;
 import chess.moves.PossibleMoves;
 import chess.moves.MoveConversion;
@@ -100,10 +101,8 @@ public class UCI {
      * Starts the search for the best move.
      */
     private static void inputGo() {
-        String move = MoveGeneration.getBestMove(Hari.WP, Hari.WN, Hari.WB, Hari.WR, Hari.WQ, Hari.WK,
-                Hari.BP, Hari.BN, Hari.BB, Hari.BR, Hari.BQ, Hari.BK, Hari.EP, Hari.CWK, Hari.CWQ, Hari.CBK, Hari.CBQ,
-                Hari.whiteToMove);
-        System.out.println("bestmove " + MoveConversion.moveToAlgebra(move));
+        Move bestMove = Hari.position.getBestMove();
+        System.out.println("bestmove " + bestMove.toAlgebraicNotation());
     }
 
     /**

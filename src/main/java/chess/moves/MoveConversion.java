@@ -49,7 +49,7 @@ public class MoveConversion {
     }
 
     /**
-     * Parses an algebraic move and makes it on the engine.
+     * Parses algebraic moves and makes it on the engine.
      *
      * @param input the input string from the GUI; the moves to be made
      * @param moves the list of possible moves from the current position

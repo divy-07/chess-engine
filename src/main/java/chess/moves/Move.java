@@ -50,16 +50,34 @@ public class Move {
         this.isEnPassant = isEnPassant;
     }
 
+    /**
+     * Creates a move from a string in algebraic notation
+     *
+     * @param move the move in algebraic notation
+     * @return the Move object
+     */
     public static Move fromAlgebraicNotation(String move) {
         // TODO: implement
         return null;
     }
 
+    /**
+     * Converts this move into a string in engine notation.
+     * See docs for more information on engine notation.
+     *
+     * @return the move in engine notation
+     */
     public String toEngineNotation() {
         // TODO: implement
         return null;
     }
 
+    /**
+     * Converts this move into a string in algebraic notation.
+     * See docs for more information on algebraic notation.
+     *
+     * @return the move in algebraic notation
+     */
     public String toAlgebraicNotation() {
         // TODO: implement
         return null;
