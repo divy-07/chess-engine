@@ -128,11 +128,10 @@ public class Board {
     /**
      * Draws the board on terminal.
      * Mostly for debugging purposes, but can be used for manual testing.
-     *
-     * @param wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk bitboards of the chess pieces.
-     *            Must be valid bitboards.
+     * Takes in bitboards for all pieces and prints them out as a chess board.
      */
-    public static void drawBoard(long wp, long wn, long wb, long wr, long wq, long wk, long bp, long bn, long bb, long br, long bq, long bk) {
+    public static void drawBoard(long wp, long wn, long wb, long wr, long wq, long wk,
+                                 long bp, long bn, long bb, long br, long bq, long bk) {
         /*
          * Convert the bitboards to a 2D array of 1-char strings.
          * Add pieces using bit comparisons.

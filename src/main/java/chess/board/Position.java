@@ -83,7 +83,7 @@ public class Position {
      * @return the evaluation of the current position.
      */
     public int getEvaluation() {
-        return Evaluation.evaluate(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep, cwk, cwq, cbk, cbq);
+        return Evaluation.evaluate(this);
     }
 
     /**

@@ -41,7 +41,7 @@ public class Move {
     }
 
     /**
-     * Creates a new en passant move with source, destination, and a promotion piece.
+     * Creates a new en passant move with source, destination, and en passant boolean.
      */
     public Move(int sourceRank, int sourceFile, int destRank, int destFile, boolean isEnPassant) {
         this(sourceRank, sourceFile, destRank, destFile);
