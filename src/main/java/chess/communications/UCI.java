@@ -7,6 +7,7 @@ import chess.moves.MoveGeneration;
 import chess.moves.PossibleMoves;
 import chess.moves.MoveConversion;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static chess.Constants.*;
@@ -85,13 +86,13 @@ public class UCI {
             input = input.substring(input.indexOf("moves") + 6);
             while (input.length() > 0) {
                 // TODO: make move
-                String moves;
+                List<Move> moves;
                 if (Hari.whiteToMove) {
-                    moves = PossibleMoves.possibleMovesW(Hari.WP, Hari.WN, Hari.WB, Hari.WR, Hari.WQ, Hari.WK, Hari.BP, Hari.BN, Hari.BB, Hari.BR, Hari.BQ, Hari.BK, Hari.EP, Hari.CWK, Hari.CWQ, Hari.CBK, Hari.CBQ);
+                    moves = PossibleMoves.possibleMovesW(Hari.position);
                 } else {
-                    moves = PossibleMoves.possibleMovesB(Hari.WP, Hari.WN, Hari.WB, Hari.WR, Hari.WQ, Hari.WK, Hari.BP, Hari.BN, Hari.BB, Hari.BR, Hari.BQ, Hari.BK, Hari.EP, Hari.CWK, Hari.CWQ, Hari.CBK, Hari.CBQ);
+                    moves = PossibleMoves.possibleMovesB(Hari.position);
                 }
-                MoveConversion.algebraToMove(input, moves);
+                // MoveConversion.algebraToMove(input, moves);
                 input = input.substring(input.indexOf(' ') + 1);
             }
         }

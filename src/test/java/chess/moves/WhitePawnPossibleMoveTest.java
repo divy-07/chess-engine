@@ -1,7 +1,11 @@
 package chess.moves;
 
 import chess.board.DebugBoard;
+import chess.board.Position;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,11 +24,12 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", "P", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
-        String expected = "6657";
+                boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
+        List<Move> expected = new ArrayList<>();
+        expected.add(new Move(6, 6, 5, 7));
 
         assertEquals(expected, actual);
     }
@@ -41,11 +46,12 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", "P", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
-        String expected = "6655";
+                boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
+        List<Move> expected = new ArrayList<>();
+        expected.add(new Move(6, 6, 5, 5));
 
         assertEquals(expected, actual);
     }
@@ -62,11 +68,12 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
-        String expected = "5646";
+                boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
+        List<Move> expected = new ArrayList<>();
+        expected.add(new Move(5, 6, 4, 6));
 
         assertEquals(expected, actual);
     }
@@ -83,14 +90,14 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", "P", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
+                boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
 
-        assertTrue(actual.contains("6353"));
-        assertTrue(actual.contains("6343"));
-        assertEquals(8, actual.length());
+        assertTrue(actual.contains(new Move(6, 3, 5, 3)));
+        assertTrue(actual.contains(new Move(6, 3, 4, 3)));
+        assertEquals(8, actual.size());
     }
 
     @Test
@@ -105,13 +112,12 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
-        String expected = "";
+                boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
 
-        assertEquals(expected, actual);
+        assertEquals(0, actual.size());
     }
 
     @Test
@@ -127,11 +133,12 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         // make EP = BP since only one pawn on board
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], boardArray[6], false, false, false, false);
-        String actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], boardArray[6]);
-        String expected = "23WE";
+                boardArray[10], boardArray[11], boardArray[6], false, false, false, false, true);
+        List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], boardArray[6]);
+        List<Move> expected = new ArrayList<>();
+        expected.add(new Move(3, 2, 2, 4));
 
         assertEquals(expected, actual);
     }
@@ -149,11 +156,12 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         // make EP = BP since only one pawn on board
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], boardArray[6], false, false, false, false);
-        String actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], boardArray[6]);
-        String expected = "43WE";
+                boardArray[10], boardArray[11], boardArray[6], false, false, false, false, true);
+        List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], boardArray[6]);
+        List<Move> expected = new ArrayList<>();
+        expected.add(new Move(3, 4, 2, 2));
 
         assertEquals(expected, actual);
     }
@@ -170,16 +178,16 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
+                boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
 
-        assertTrue(actual.contains("22QP"));
-        assertTrue(actual.contains("22RP"));
-        assertTrue(actual.contains("22BP"));
-        assertTrue(actual.contains("22NP"));
-        assertEquals(16, actual.length());
+        assertTrue(actual.contains(new Move(1, 2, 0, 2, 'Q')));
+        assertTrue(actual.contains(new Move(1, 2, 0, 2, 'R')));
+        assertTrue(actual.contains(new Move(1, 2, 0, 2, 'B')));
+        assertTrue(actual.contains(new Move(1, 2, 0, 2, 'N')));
+        assertEquals(4, actual.size());
     }
 
     @Test
@@ -194,16 +202,16 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
+                boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
 
-        assertTrue(actual.contains("23QP"));
-        assertTrue(actual.contains("23RP"));
-        assertTrue(actual.contains("23BP"));
-        assertTrue(actual.contains("23NP"));
-        assertEquals(16, actual.length());
+        assertTrue(actual.contains(new Move(1, 2, 0, 3, 'Q')));
+        assertTrue(actual.contains(new Move(1, 2, 0, 3, 'R')));
+        assertTrue(actual.contains(new Move(1, 2, 0, 3, 'B')));
+        assertTrue(actual.contains(new Move(1, 2, 0, 3, 'N')));
+        assertEquals(4, actual.size());
     }
 
     @Test
@@ -218,15 +226,15 @@ public class WhitePawnPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
+                boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
 
-        assertTrue(actual.contains("76QP"));
-        assertTrue(actual.contains("76RP"));
-        assertTrue(actual.contains("76BP"));
-        assertTrue(actual.contains("76NP"));
-        assertEquals(16, actual.length());
+        assertTrue(actual.contains(new Move(1, 7, 0, 6, 'Q')));
+        assertTrue(actual.contains(new Move(1, 7, 0, 6, 'R')));
+        assertTrue(actual.contains(new Move(1, 7, 0, 6, 'B')));
+        assertTrue(actual.contains(new Move(1, 7, 0, 6, 'N')));
+        assertEquals(4, actual.size());
     }
 }
