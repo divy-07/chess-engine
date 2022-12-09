@@ -25,6 +25,7 @@ public class Move {
         this.sourceFile = sourceFile;
         this.destRank = destRank;
         this.destFile = destFile;
+        this.promotionPiece = ' ';
         this.isPromotion = false;
         this.isEnPassant = false;
     }
@@ -44,6 +45,7 @@ public class Move {
      */
     public Move(int sourceRank, int sourceFile, int destRank, int destFile, boolean isEnPassant) {
         this(sourceRank, sourceFile, destRank, destFile);
+        this.promotionPiece = ' ';
         this.isPromotion = false;
         this.isEnPassant = isEnPassant;
     }
@@ -61,6 +63,32 @@ public class Move {
     public String toAlgebraicNotation() {
         // TODO: implement
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Move move = (Move) o;
+        return sourceRank == move.sourceRank &&
+                sourceFile == move.sourceFile &&
+                destRank == move.destRank &&
+                destFile == move.destFile &&
+                isPromotion == move.isPromotion &&
+                promotionPiece == move.promotionPiece &&
+                isEnPassant == move.isEnPassant;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sourceRank;
+        result = 31 * result + sourceFile;
+        result = 31 * result + destRank;
+        result = 31 * result + destFile;
+        result = 31 * result + (isPromotion ? 1 : 0);
+        result = 31 * result + (int) promotionPiece;
+        result = 31 * result + (isEnPassant ? 1 : 0);
+        return result;
     }
 
 }

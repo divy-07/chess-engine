@@ -4,6 +4,8 @@ import chess.moves.Move;
 
 import java.util.List;
 
+import static chess.Constants.files;
+
 /**
  * An immutable class that represents a position on the chess board.
  * The position is represented by a series of bitboards.
@@ -63,6 +65,18 @@ public class Position {
     }
 
     /**
+     * Creates a new position with empty bitboards.
+     * Castling rights are set to true and it is white's turn to move.
+     *
+     * @return a new empty position
+     */
+    public static Position emptyPosition() {
+        return new Position(0L, 0L, 0L, 0L, 0L, 0L,
+                0L, 0L, 0L, 0L, 0L, 0L, 0L,
+                true, true, true, true, true);
+    }
+
+    /**
      * Calculates the evaluation of the current position.
      *
      * @return the evaluation of the current position.
@@ -103,9 +117,93 @@ public class Position {
         return null;
     }
 
-    public static Position fenToPosition(String fen) {
-        // TODO: implement
-        return null;
+    /**
+     * Converts a FEN string to a position.
+     *
+     * @param fenString the new board state in FEN notation
+     *                  (<a href="https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">
+     *                  format specifications</a>)<p>
+     *                  Changes the state of the engine to the new given board state.
+     * @return a new Position object with the new board state
+     */
+    public static Position fenToPosition(String fenString) {
+        long wp = 0L;
+        long wn = 0L;
+        long wb = 0L;
+        long wr = 0L;
+        long wq = 0L;
+        long wk = 0L;
+        long bp = 0L;
+        long bn = 0L;
+        long bb = 0L;
+        long br = 0L;
+        long bq = 0L;
+        long bk = 0L;
+        long ep = 0L;
+        boolean cwk = false;
+        boolean cwq = false;
+        boolean cbk = false;
+        boolean cbq = false;
+
+        int charIndex = 0;
+        int boardIndex = 0;
+
+        // parse the board state
+        while (fenString.charAt(charIndex) != ' ') {
+            switch (fenString.charAt(charIndex++)) {
+                case 'P' -> wp |= (1L << boardIndex++);
+                case 'p' -> bp |= (1L << boardIndex++);
+                case 'N' -> wn |= (1L << boardIndex++);
+                case 'n' -> bn |= (1L << boardIndex++);
+                case 'B' -> wb |= (1L << boardIndex++);
+                case 'b' -> bb |= (1L << boardIndex++);
+                case 'R' -> wr |= (1L << boardIndex++);
+                case 'r' -> br |= (1L << boardIndex++);
+                case 'Q' -> wq |= (1L << boardIndex++);
+                case 'q' -> bq |= (1L << boardIndex++);
+                case 'K' -> wk |= (1L << boardIndex++);
+                case 'k' -> bk |= (1L << boardIndex++);
+                case '1' -> boardIndex++;
+                case '2' -> boardIndex += 2;
+                case '3' -> boardIndex += 3;
+                case '4' -> boardIndex += 4;
+                case '5' -> boardIndex += 5;
+                case '6' -> boardIndex += 6;
+                case '7' -> boardIndex += 7;
+                case '8' -> boardIndex += 8;
+            }
+        }
+
+        // decide whose turn it is
+        boolean whiteToMove = (fenString.charAt(++charIndex) == 'w');
+
+        // set castling rights
+        charIndex += 2;
+        while (fenString.charAt(charIndex) != ' ') {
+            switch (fenString.charAt(charIndex++)) {
+                case 'K' -> cwk = true;
+                case 'Q' -> cwq = true;
+                case 'k' -> cbk = true;
+                case 'q' -> cbq = true;
+            }
+        }
+
+        // set en passant square
+        if (fenString.charAt(++charIndex) != '-') {
+            ep = files[fenString.charAt(charIndex) - 'a'];
+        }
+
+        // TODO: debug and fix setting half move and full move numbers
+        // half-move
+        // charIndex += 3;
+        // int halfMoveCount = Integer.parseInt(fenString.substring(charIndex, fenString.indexOf(' ', charIndex)));
+
+        // full move
+        // charIndex = fenString.indexOf(' ', charIndex) + 1;
+        // int fullMoveCount = Integer.parseInt(fenString.substring(charIndex));
+
+        return new Position(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep,
+                cwk, cwq, cbk, cbq, whiteToMove);
     }
 
     @Override
@@ -128,6 +226,12 @@ public class Position {
         return (int) (wp ^ wn ^ wb ^ wr ^ wq ^ wk ^ bp ^ bn ^ bb ^ br ^ bq ^ bk ^ ep
                 ^ (cwk ? 1 : 0) ^ (cwq ? 2 : 0) ^ (cbk ? 4 : 0) ^ (cbq ? 8 : 0)
                 ^ (whiteToMove ? 16 : 0));
+    }
+
+    @Override
+    public Position clone() {
+        return new Position(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep,
+                cwk, cwq, cbk, cbq, whiteToMove);
     }
 
 }

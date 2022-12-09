@@ -4,7 +4,17 @@ import chess.board.Evaluation;
 
 import chess.engine.MakeMove;
 
+import static chess.Constants.*;
+
 public class MoveGeneration {
+
+    public static String getBestMove(long wp, long wn, long wb, long wr, long wq, long wk,
+                                     long bp, long bn, long bb, long br, long bq, long bk,
+                                     long ep, boolean cwk, boolean cwq, boolean cbk, boolean cbq,
+                                     boolean whiteToMove) {
+        return basicPlySearch(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep,
+                cwk, cwq, cbk, cbq, whiteToMove, MAX_DEPTH);
+    }
 
     /**
      * Calculates the best move for the current position.
@@ -14,7 +24,7 @@ public class MoveGeneration {
      * the string is in the format "e2e4" or "e7e8q" for promotion
      * @author Divy Pratel
      */
-    public static String basicPlySearch(long wp, long wn, long wb, long wr, long wq, long wk,
+    private static String basicPlySearch(long wp, long wn, long wb, long wr, long wq, long wk,
                                         long bp, long bn, long bb, long br, long bq, long bk,
                                         long ep, boolean cwk, boolean cwq, boolean cbk, boolean cbq,
                                         boolean whiteToMove, int depth) {
