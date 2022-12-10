@@ -102,7 +102,7 @@ public class UCI {
     private static void inputGo() {
         String move = MoveGeneration.basicPlySearch(Hari.WP, Hari.WN, Hari.WB, Hari.WR, Hari.WQ, Hari.WK,
                 Hari.BP, Hari.BN, Hari.BB, Hari.BR, Hari.BQ, Hari.BK, Hari.EP, Hari.CWK, Hari.CWQ, Hari.CBK, Hari.CBQ,
-                Hari.whiteToMove, 4);
+                Hari.whiteToMove, MAX_DEPTH);
         System.out.println("bestmove " + MoveConversion.moveToAlgebra(move));
     }
 
