@@ -35,7 +35,7 @@ public class Position {
     private final long emptySquares; // squares without any pieces
 
     // possible move object
-    private final PossibleMoves possibleMoves;
+    public final PossibleMoves possibleMoves;
 
     /**
      * Creates a new position with bitboards and castling rights.

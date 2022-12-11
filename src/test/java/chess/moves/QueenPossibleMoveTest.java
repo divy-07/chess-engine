@@ -27,8 +27,7 @@ public class QueenPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
-        PossibleMoves.possibleMovesW(position);
-        List<Move> actual = PossibleMoves.possibleQ(boardArray[4]);
+        List<Move> actual = position.possibleMoves.possibleQ(boardArray[4]);
         List<Move> expected = new ArrayList<>();
 
         assertEquals(expected, actual);
@@ -49,8 +48,7 @@ public class QueenPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleQ(boardArray[10]);
+        List<Move> actual = position.possibleMoves.possibleQ(boardArray[10]);
 
         assertTrue(actual.contains(new Move(1, 2, 1, 0)));
         assertTrue(actual.contains(new Move(1, 2, 1, 1)));
@@ -77,8 +75,7 @@ public class QueenPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleQ(boardArray[10]);
+        List<Move> actual = position.possibleMoves.possibleQ(boardArray[10]);
 
         assertTrue(actual.contains(new Move(1, 2, 0, 2)));
         assertTrue(actual.contains(new Move(1, 2, 2, 2)));
@@ -105,8 +102,7 @@ public class QueenPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleQ(boardArray[10]);
+        List<Move> actual = position.possibleMoves.possibleQ(boardArray[10]);
 
         assertTrue(actual.contains(new Move(3, 3, 0, 0)));
         assertTrue(actual.contains(new Move(3, 3, 1, 1)));
@@ -133,8 +129,7 @@ public class QueenPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleQ(boardArray[10]);
+        List<Move> actual = position.possibleMoves.possibleQ(boardArray[10]);
 
         assertTrue(actual.contains(new Move(3, 3, 0, 6)));
         assertTrue(actual.contains(new Move(3, 3, 1, 5)));
@@ -160,8 +155,7 @@ public class QueenPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
-        PossibleMoves.possibleMovesW(position);
-        List<Move> actual = PossibleMoves.possibleQ(boardArray[4]);
+        List<Move> actual = position.possibleMoves.possibleQ(boardArray[4]);
 
         assertTrue(actual.contains(new Move(5, 2, 5, 0)));
         assertTrue(actual.contains(new Move(5, 2, 5, 1)));
@@ -203,8 +197,7 @@ public class QueenPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
-        PossibleMoves.possibleMovesW(position);
-        List<Move> actual = PossibleMoves.possibleQ(boardArray[4]);
+        List<Move> actual = position.possibleMoves.possibleQ(boardArray[4]);
 
         assertTrue(actual.contains(new Move(3, 3, 2, 2)));
         assertTrue(actual.contains(new Move(3, 3, 2, 3)));

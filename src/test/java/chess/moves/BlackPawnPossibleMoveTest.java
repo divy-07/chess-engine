@@ -27,8 +27,7 @@ public class BlackPawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
+        List<Move> actual = position.possibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
         List<Move> expected = new ArrayList<>(List.of(new Move(2, 4, 3, 5)));
 
         assertEquals(expected, actual);
@@ -49,8 +48,7 @@ public class BlackPawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
+        List<Move> actual = position.possibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
         List<Move> expected = new ArrayList<>(List.of(new Move(1, 1, 2, 0)));
 
         assertEquals(expected, actual);
@@ -71,8 +69,7 @@ public class BlackPawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
+        List<Move> actual = position.possibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
         List<Move> expected = new ArrayList<>(List.of(new Move(3, 3, 4, 3)));
 
         assertEquals(expected, actual);
@@ -93,8 +90,7 @@ public class BlackPawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
+        List<Move> actual = position.possibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
 
         assertTrue(actual.contains(new Move(1, 7, 2, 7)));
         assertTrue(actual.contains(new Move(1, 7, 3, 7)));
@@ -116,8 +112,7 @@ public class BlackPawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
+        List<Move> actual = position.possibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
         List<Move> expected = new ArrayList<>();
 
         assertEquals(expected, actual);
@@ -139,8 +134,7 @@ public class BlackPawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], boardArray[0], false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleBP(boardArray[6], boardArray[0], boardArray[0]);
+        List<Move> actual = position.possibleMoves.possibleBP(boardArray[6], boardArray[0], boardArray[0]);
         List<Move> expected = new ArrayList<>(List.of(new Move(4, 0, 5, 1, true)));
 
         assertEquals(expected, actual);
@@ -162,8 +156,7 @@ public class BlackPawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], boardArray[0], false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleBP(boardArray[6], boardArray[0], boardArray[0]);
+        List<Move> actual = position.possibleMoves.possibleBP(boardArray[6], boardArray[0], boardArray[0]);
         List<Move> expected = new ArrayList<>(List.of(new Move(4, 5, 5, 4, true)));
 
         assertEquals(expected, actual);
@@ -184,8 +177,7 @@ public class BlackPawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
+        List<Move> actual = position.possibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
 
         assertTrue(actual.contains(new Move(6, 7, 7, 7, 'q')));
         assertTrue(actual.contains(new Move(6, 7, 7, 7, 'r')));
@@ -209,8 +201,7 @@ public class BlackPawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
+        List<Move> actual = position.possibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
 
         assertTrue(actual.contains(new Move(6, 5, 7, 6, 'q')));
         assertTrue(actual.contains(new Move(6, 5, 7, 6, 'r')));
@@ -234,8 +225,7 @@ public class BlackPawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        PossibleMoves.possibleMovesB(position);
-        List<Move> actual = PossibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
+        List<Move> actual = position.possibleMoves.possibleBP(boardArray[6], boardArray[0], 0L);
 
         assertTrue(actual.contains(new Move(6, 3, 7, 2, 'q')));
         assertTrue(actual.contains(new Move(6, 3, 7, 2, 'r')));

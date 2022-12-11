@@ -1,6 +1,7 @@
 package chess.communications;
 
 import chess.board.Board;
+import chess.board.Position;
 import chess.engine.Hari;
 import chess.moves.Move;
 import chess.moves.MoveGeneration;
@@ -73,12 +74,13 @@ public class UCI {
      */
     private static void inputPosition(String input) {
         input = input.substring(9).concat(" ");
+        Position position = Position.emptyPosition();
         if (input.contains("startpos ")) {
             input = input.substring(9);
-            Board.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+            position = Position.fenToPosition(input);
         } else if (input.contains("fen")) {
             input = input.substring(4);
-            Board.importFEN(input);
+            position = Position.fenToPosition(input);
         }
 
         // apply moves
@@ -86,12 +88,7 @@ public class UCI {
             input = input.substring(input.indexOf("moves") + 6);
             while (input.length() > 0) {
                 // TODO: make move
-                List<Move> moves;
-                if (Hari.whiteToMove) {
-                    moves = PossibleMoves.possibleMovesW(Hari.position);
-                } else {
-                    moves = PossibleMoves.possibleMovesB(Hari.position);
-                }
+                List<Move> moves = position.getLegalMoves();
                 // MoveConversion.algebraToMove(input, moves);
                 input = input.substring(input.indexOf(' ') + 1);
             }
