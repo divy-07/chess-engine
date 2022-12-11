@@ -1,11 +1,8 @@
 package chess.communications;
 
-import chess.board.Board;
 import chess.board.Position;
 import chess.engine.Hari;
 import chess.moves.Move;
-import chess.moves.MoveGeneration;
-import chess.moves.PossibleMoves;
 import chess.moves.MoveConversion;
 
 import java.util.List;
@@ -83,16 +80,19 @@ public class UCI {
             position = Position.fenToPosition(input);
         }
 
-        // apply moves
+        // get moves
         if (input.contains("moves")) {
             input = input.substring(input.indexOf("moves") + 6);
             while (input.length() > 0) {
-                // TODO: make move
+                // convert and apply moves
                 List<Move> moves = position.getLegalMoves();
-                // MoveConversion.algebraToMove(input, moves);
+                position = MoveConversion.applyAlgebraMoves(input, moves, position);
                 input = input.substring(input.indexOf(' ') + 1);
             }
         }
+
+        // set position in Hari
+        Hari.position = position;
     }
 
     /**

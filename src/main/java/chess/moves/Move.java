@@ -8,14 +8,14 @@ package chess.moves;
 public class Move {
 
     // representation of the move
-    private final int sourceRank, sourceFile, destRank, destFile;
+    public final int sourceRank, sourceFile, destRank, destFile;
 
     // promotion move
-    public boolean isPromotion;
-    private char promotionPiece;
+    public final boolean isPromotion;
+    public final char promotionPiece;
 
     // en passant move
-    public boolean isEnPassant;
+    public final boolean isEnPassant;
 
     /**
      * Creates a new move with source and destination squares.
@@ -34,7 +34,10 @@ public class Move {
      * Creates a new promotion move with source, destination, and a promotion piece.
      */
     public Move(int sourceRank, int sourceFile, int destRank, int destFile, char promotionPiece) {
-        this(sourceRank, sourceFile, destRank, destFile);
+        this.sourceRank = sourceRank;
+        this.sourceFile = sourceFile;
+        this.destRank = destRank;
+        this.destFile = destFile;
         this.promotionPiece = promotionPiece;
         this.isPromotion = true;
         this.isEnPassant = false;
@@ -44,7 +47,10 @@ public class Move {
      * Creates a new en passant move with source, destination, and en passant boolean.
      */
     public Move(int sourceRank, int sourceFile, int destRank, int destFile, boolean isEnPassant) {
-        this(sourceRank, sourceFile, destRank, destFile);
+        this.sourceRank = sourceRank;
+        this.sourceFile = sourceFile;
+        this.destRank = destRank;
+        this.destFile = destFile;
         this.promotionPiece = ' ';
         this.isPromotion = false;
         this.isEnPassant = isEnPassant;
@@ -68,8 +74,28 @@ public class Move {
      * @return the move in engine notation
      */
     public String toEngineNotation() {
-        // TODO: implement
-        return null;
+        StringBuilder sb = new StringBuilder();
+
+        // normal move
+        if (!isPromotion && !isEnPassant) {
+            sb.append(sourceRank);
+            sb.append(sourceFile);
+            sb.append(destRank);
+            sb.append(destFile);
+        } else if (isPromotion) {
+            // promotion move
+            sb.append(sourceFile);
+            sb.append(destFile);
+            sb.append(promotionPiece);
+            sb.append(sourceRank == 1 ? 'P' : 'p');
+        } else {
+            // en passant move
+            sb.append(sourceFile);
+            sb.append(destFile);
+            sb.append(sourceRank == 3 ? 'W' : 'B');
+            sb.append('e');
+        }
+        return sb.toString();
     }
 
     /**
@@ -79,8 +105,7 @@ public class Move {
      * @return the move in algebraic notation
      */
     public String toAlgebraicNotation() {
-        // TODO: implement
-        return null;
+        return MoveConversion.moveToAlgebra(toEngineNotation());
     }
 
     @Override

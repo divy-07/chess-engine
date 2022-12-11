@@ -4,16 +4,48 @@ import chess.moves.Move;
 import chess.moves.MoveGeneration;
 import chess.moves.PossibleMoves;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import static chess.Constants.files;
+import static chess.Constants.*;
 
 /**
  * An immutable class that represents a position on the chess board.
  * The position is represented by a series of bitboards.
  */
 public class Position {
+    /*
+     * UPPERCASE = WHITE, lowercase = black
+     * pawn --> P/p
+     * knight --> N/n
+     * bishop --> B/b
+     * rook --> R/r
+     * Queen --> Q/q
+     * King --> K/k
+     */
+    /*
+     * Bitboards:
+     * the first bit of the long is the h1 square and last is the a8 square.
+     * So the long 64b0000000000000000000000000000000000000000000000000000000000000001
+     * would correspond to the board:
+     *          a     b     c     d     e     f     g     h
+     *       |-----|-----|-----|-----|-----|-----|-----|-----|
+     *    8  |  P  |     |     |     |     |     |     |     |
+     *       |-----|-----|-----|-----|-----|-----|-----|-----|
+     *    7  |     |     |     |     |     |     |     |     |
+     *       |-----|-----|-----|-----|-----|-----|-----|-----|
+     *    6  |     |     |     |     |     |     |     |     |
+     *       |-----|-----|-----|-----|-----|-----|-----|-----|
+     *    5  |     |     |     |     |     |     |     |     |
+     *       |-----|-----|-----|-----|-----|-----|-----|-----|
+     *    4  |     |     |     |     |     |     |     |     |
+     *       |-----|-----|-----|-----|-----|-----|-----|-----|
+     *    3  |     |     |     |     |     |     |     |     |
+     *       |-----|-----|-----|-----|-----|-----|-----|-----|
+     *    2  |     |     |     |     |     |     |     |     |
+     *       |-----|-----|-----|-----|-----|-----|-----|-----|
+     *    1  |     |     |     |     |     |     |     |     |
+     *       |-----|-----|-----|-----|-----|-----|-----|-----|
+     */
 
     // bitboards
     public final long wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep;
@@ -87,18 +119,6 @@ public class Position {
         this(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep, cwk, cwq, cbk, cbq, whiteToMove);
         this.halfMoveCount = halfMoveCount;
         this.fullMoveCount = fullMoveCount;
-    }
-
-    /**
-     * Creates a new position with empty bitboards.
-     * Castling rights are set to true and it is white's turn to move.
-     *
-     * @return a new empty position
-     */
-    public static Position emptyPosition() {
-        return new Position(0L, 0L, 0L, 0L, 0L, 0L,
-                0L, 0L, 0L, 0L, 0L, 0L, 0L,
-                true, true, true, true, true);
     }
 
     /**
@@ -192,6 +212,30 @@ public class Position {
     public Position applyMoves(List<Move> moves) {
         // TODO: implement
         return null;
+    }
+
+    /**
+     * Returns the starting position.
+     * Castling rights are set to true, and it is white's turn to move.
+     *
+     * @return the starting position.
+     */
+    public static Position startingPosition() {
+        return new Position(startWP, startWN, startWB, startWR, startWQ, startWK,
+                startBP, startBN, startBB, startBR, startBQ, startBK, 0,
+                true, true, true, true, true);
+    }
+
+    /**
+     * Creates a new position with empty bitboards.
+     * Castling rights are set to true, and it is white's turn to move.
+     *
+     * @return a new empty position
+     */
+    public static Position emptyPosition() {
+        return new Position(0L, 0L, 0L, 0L, 0L, 0L,
+                0L, 0L, 0L, 0L, 0L, 0L, 0L,
+                true, true, true, true, true);
     }
 
     /**
@@ -309,6 +353,39 @@ public class Position {
     public Position clone() {
         return new Position(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep,
                 cwk, cwq, cbk, cbq, whiteToMove);
+    }
+
+    @Override
+    public String toString() {
+        /*
+         * Convert the bitboards to a 2D array of 1-char strings.
+         * Add pieces using bit comparisons.
+         * Convert to a string using StringBuilder.
+         */
+        String[][] chessBoard = new String[8][8];
+        for (int i = 0; i < 64; i++) {
+            chessBoard[i / 8][i % 8] = " ";
+        }
+        for (int i = 0; i < 64; i++) {
+            if (((wp >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "P";
+            if (((wn >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "N";
+            if (((wb >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "B";
+            if (((wr >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "R";
+            if (((wq >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "Q";
+            if (((wk >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "K";
+            if (((bp >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "p";
+            if (((bn >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "n";
+            if (((bb >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "b";
+            if (((br >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "r";
+            if (((bq >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "q";
+            if (((bk >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "k";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 8; i++) {
+            sb.append(Arrays.toString(chessBoard[i]));
+            sb.append("\n");
+        }
+        return sb.toString();
     }
 
 }

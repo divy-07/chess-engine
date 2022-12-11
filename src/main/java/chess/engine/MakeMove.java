@@ -1,5 +1,7 @@
 package chess.engine;
 
+import chess.moves.Move;
+
 import static chess.Constants.files;
 import static chess.Constants.ranks;
 
@@ -14,41 +16,45 @@ public class MakeMove {
      * @return the new bitboard after the move has been made
      * @credit Logic Crazy Chess
      */
-    public static long makeMove(long board, String move, char type) {
-        if (Character.isDigit(move.charAt(3))) {//'regular' move
-            int start = (Character.getNumericValue(move.charAt(0)) * 8) + (Character.getNumericValue(move.charAt(1)));
-            int end = (Character.getNumericValue(move.charAt(2)) * 8) + (Character.getNumericValue(move.charAt(3)));
+    public static long makeMove(long board, Move move, char type) {
+        if (!move.isPromotion && !move.isEnPassant) {
+            // normal move
+            int start = move.sourceRank * 8 + move.sourceFile;
+            int end = move.destRank * 8 + move.destFile;
             if (((board >>> start) & 1) == 1) {
                 board &= ~(1L << start);
                 board |= (1L << end);
             } else {
                 board &= ~(1L << end);
             }
-        } else if (move.charAt(3) == 'P') {//pawn promotion
+        } else if (move.isPromotion) {
+            // pawn promotion
             int start, end;
-            if (Character.isUpperCase(move.charAt(2))) {
-                start = Long.numberOfTrailingZeros(files[move.charAt(0) - '0'] & ranks[1]);
-                end = Long.numberOfTrailingZeros(files[move.charAt(1) - '0'] & ranks[0]);
+            if (Character.isUpperCase(move.promotionPiece)) {
+                start = Long.numberOfTrailingZeros(files[move.sourceFile] & ranks[1]);
+                end = Long.numberOfTrailingZeros(files[move.destFile] & ranks[0]);
             } else {
-                start = Long.numberOfTrailingZeros(files[move.charAt(0) - '0'] & ranks[6]);
-                end = Long.numberOfTrailingZeros(files[move.charAt(1) - '0'] & ranks[7]);
+                start = Long.numberOfTrailingZeros(files[move.sourceFile] & ranks[6]);
+                end = Long.numberOfTrailingZeros(files[move.destFile] & ranks[7]);
             }
-            if (type == move.charAt(2)) {
+            if (type == move.promotionPiece) {
                 board |= (1L << end);
             } else {
                 board &= ~(1L << start);
                 board &= ~(1L << end);
             }
-        } else if (move.charAt(3) == 'E') {//en passant
+        } else if (move.isEnPassant) {
+            // en passant
             int start, end;
-            if (move.charAt(2) == 'W') {
-                start = Long.numberOfTrailingZeros(files[move.charAt(0) - '0'] & ranks[3]);
-                end = Long.numberOfTrailingZeros(files[move.charAt(1) - '0'] & ranks[2]);
-                board &= ~(files[move.charAt(1) - '0'] & ranks[3]);
+            if (move.sourceRank == 5) {
+                // white
+                start = Long.numberOfTrailingZeros(files[move.sourceFile] & ranks[3]);
+                end = Long.numberOfTrailingZeros(files[move.destFile] & ranks[2]);
+                board &= ~(files[move.destFile] & ranks[3]);
             } else {
-                start = Long.numberOfTrailingZeros(files[move.charAt(0) - '0'] & ranks[4]);
-                end = Long.numberOfTrailingZeros(files[move.charAt(1) - '0'] & ranks[5]);
-                board &= ~(files[move.charAt(1) - '0'] & ranks[4]);
+                start = Long.numberOfTrailingZeros(files[move.sourceFile] & ranks[4]);
+                end = Long.numberOfTrailingZeros(files[move.destFile] & ranks[5]);
+                board &= ~(files[move.destFile] & ranks[4]);
             }
             if (((board >>> start) & 1) == 1) {
                 board &= ~(1L << start);
@@ -69,11 +75,11 @@ public class MakeMove {
      * @return the new en passant bitboard after the move has been made
      * @credit Logic Crazy Chess
      */
-    public static long makeMoveEP(long board, String move) {
-        if (Character.isDigit(move.charAt(3))) {
-            int start = (Character.getNumericValue(move.charAt(0)) * 8) + (Character.getNumericValue(move.charAt(1)));
-            if ((Math.abs(move.charAt(0) - move.charAt(2)) == 2) && (((board >>> start) & 1) == 1)) {
-                return files[move.charAt(1) - '0'];
+    public static long makeMoveEP(long board, Move move) {
+        if (!move.isEnPassant && !move.isPromotion) {
+            int start = move.sourceRank * 8 + move.sourceFile;
+            if ((Math.abs(move.sourceRank - move.destRank) == 2) && (((board >>> start) & 1) == 1)) {
+                return files[move.sourceFile];
             }
         }
         return 0;

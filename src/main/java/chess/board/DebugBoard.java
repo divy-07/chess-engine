@@ -2,6 +2,8 @@ package chess.board;
 
 import chess.moves.PossibleMoves;
 
+import java.util.Arrays;
+
 // Credit: Logic Crazy Chess
 public class DebugBoard {
 
@@ -10,6 +12,9 @@ public class DebugBoard {
         String[][] stringBoard = get2dStringBoard();
         long[] boardArray = arrayToBitboards(stringBoard);
         drawArray(boardArray);
+
+        Position position = Position.startingPosition();
+        System.out.println(position);
     }
 
     public static String[][] get2dStringBoard() {
@@ -26,8 +31,43 @@ public class DebugBoard {
     }
 
     public static void drawArray(long[] boardArray) {
-        Board.drawBoard(boardArray[0], boardArray[1], boardArray[2], boardArray[3], boardArray[4], boardArray[5],
+        drawBoard(boardArray[0], boardArray[1], boardArray[2], boardArray[3], boardArray[4], boardArray[5],
                 boardArray[6], boardArray[7], boardArray[8], boardArray[9], boardArray[10], boardArray[11]);
+    }
+
+    /**
+     * Draws the board on terminal.
+     * Mostly for debugging purposes, but can be used for manual testing.
+     * Takes in bitboards for all pieces and prints them out as a chess board.
+     */
+    public static void drawBoard(long wp, long wn, long wb, long wr, long wq, long wk,
+                                 long bp, long bn, long bb, long br, long bq, long bk) {
+        /*
+         * Convert the bitboards to a 2D array of 1-char strings.
+         * Add pieces using bit comparisons.
+         * And print it to the terminal.
+         */
+        String[][] chessBoard = new String[8][8];
+        for (int i = 0; i < 64; i++) {
+            chessBoard[i / 8][i % 8] = " ";
+        }
+        for (int i = 0; i < 64; i++) {
+            if (((wp >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "P";
+            if (((wn >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "N";
+            if (((wb >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "B";
+            if (((wr >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "R";
+            if (((wq >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "Q";
+            if (((wk >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "K";
+            if (((bp >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "p";
+            if (((bn >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "n";
+            if (((bb >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "b";
+            if (((br >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "r";
+            if (((bq >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "q";
+            if (((bk >> i) & 1) == 1) chessBoard[i / 8][i % 8] = "k";
+        }
+        for (int i = 0; i < 8; i++) {
+            System.out.println(Arrays.toString(chessBoard[i]));
+        }
     }
 
     public static long[] arrayToBitboards(String[][] chessBoard) {
