@@ -24,9 +24,10 @@ public class KingPossibleMoveTest {
                 {" ", " ", " ", " ", " ", "B", "B", "Q"},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleK(boardArray[5]);
         List<Move> expected = new ArrayList<>();
 
@@ -45,9 +46,10 @@ public class KingPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
+        PossibleMoves.possibleMovesB(position);
         List<Move> actual = PossibleMoves.possibleK(boardArray[11]);
 
         assertTrue(actual.contains(new Move(3, 1, 2, 0)));
@@ -73,9 +75,10 @@ public class KingPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleK(boardArray[5]);
 
         assertTrue(actual.contains(new Move(3, 1, 2, 0)));

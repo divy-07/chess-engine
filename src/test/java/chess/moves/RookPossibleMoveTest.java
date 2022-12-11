@@ -25,9 +25,10 @@ public class RookPossibleMoveTest {
                 {"R", "R", "R", "R", "R", "R", "R", "R"}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         // sets up the static fields in PossibleMoves
-        new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleR(boardArray[3]);
         List<Move> expected = new ArrayList<>();
 
@@ -46,9 +47,10 @@ public class RookPossibleMoveTest {
                 {" ", " ", " ", " ", "P", " ", " ", " "},
                 {" ", " ", " ", " ", "R", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleR(boardArray[3]);
 
         assertTrue(actual.contains(new Move(7, 4, 7, 0)));
@@ -58,7 +60,7 @@ public class RookPossibleMoveTest {
         assertTrue(actual.contains(new Move(7, 4, 7, 5)));
         assertTrue(actual.contains(new Move(7, 4, 7, 6)));
         assertTrue(actual.contains(new Move(7, 4, 7, 7)));
-        assertEquals(28, actual.size());
+        assertEquals(7, actual.size());
     }
 
     @Test
@@ -73,9 +75,10 @@ public class RookPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleR(boardArray[3]);
 
         assertTrue(actual.contains(new Move(4, 2, 0, 2)));
@@ -85,7 +88,7 @@ public class RookPossibleMoveTest {
         assertTrue(actual.contains(new Move(4, 2, 5, 2)));
         assertTrue(actual.contains(new Move(4, 2, 6, 2)));
         assertTrue(actual.contains(new Move(4, 2, 7, 2)));
-        assertEquals(28, actual.size());
+        assertEquals(7, actual.size());
     }
 
     @Test
@@ -100,9 +103,10 @@ public class RookPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
+        PossibleMoves.possibleMovesB(position);
         List<Move> actual = PossibleMoves.possibleR(boardArray[9]);
 
         assertTrue(actual.contains(new Move(1, 5, 1, 3)));
@@ -116,6 +120,6 @@ public class RookPossibleMoveTest {
         assertTrue(actual.contains(new Move(1, 5, 5, 5)));
         assertTrue(actual.contains(new Move(1, 5, 6, 5)));
         assertTrue(actual.contains(new Move(1, 5, 7, 5)));
-        assertEquals(44, actual.size());
+        assertEquals(11, actual.size());
     }
 }

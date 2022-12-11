@@ -25,9 +25,10 @@ public class BishopPossibleMoveTest {
                 {"B", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
         // sets up the static fields in PossibleMoves
-        new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleB(boardArray[2]);
         List<Move> expected = new ArrayList<>();
 
@@ -46,9 +47,10 @@ public class BishopPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
+        PossibleMoves.possibleMovesB(position);
         List<Move> actual = PossibleMoves.possibleB(boardArray[8]);
 
         assertTrue(actual.contains(new Move(3, 3, 0, 0)));
@@ -73,9 +75,10 @@ public class BishopPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
+        PossibleMoves.possibleMovesB(position);
         List<Move> actual = PossibleMoves.possibleB(boardArray[8]);
 
         assertTrue(actual.contains(new Move(3, 3, 0, 6)));
@@ -99,9 +102,10 @@ public class BishopPossibleMoveTest {
                 {" ", " ", " ", " ", "B", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleB(boardArray[2]);
 
         assertTrue(actual.contains(new Move(6, 4, 4, 2)));
