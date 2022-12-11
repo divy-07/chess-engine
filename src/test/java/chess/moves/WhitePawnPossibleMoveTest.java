@@ -27,6 +27,7 @@ public class WhitePawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
         List<Move> expected = new ArrayList<>();
         expected.add(new Move(6, 6, 5, 7));
@@ -49,6 +50,7 @@ public class WhitePawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
         List<Move> expected = new ArrayList<>();
         expected.add(new Move(6, 6, 5, 5));
@@ -71,6 +73,7 @@ public class WhitePawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
         List<Move> expected = new ArrayList<>();
         expected.add(new Move(5, 6, 4, 6));
@@ -93,11 +96,12 @@ public class WhitePawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
 
         assertTrue(actual.contains(new Move(6, 3, 5, 3)));
         assertTrue(actual.contains(new Move(6, 3, 4, 3)));
-        assertEquals(8, actual.size());
+        assertEquals(2, actual.size());
     }
 
     @Test
@@ -115,6 +119,7 @@ public class WhitePawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
 
         assertEquals(0, actual.size());
@@ -136,9 +141,10 @@ public class WhitePawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], boardArray[6], false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], boardArray[6]);
         List<Move> expected = new ArrayList<>();
-        expected.add(new Move(3, 2, 2, 4));
+        expected.add(new Move(3, 2, 2, 3, true));
 
         assertEquals(expected, actual);
     }
@@ -159,9 +165,10 @@ public class WhitePawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], boardArray[6], false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], boardArray[6]);
         List<Move> expected = new ArrayList<>();
-        expected.add(new Move(3, 4, 2, 2));
+        expected.add(new Move(3, 4, 2, 3, true));
 
         assertEquals(expected, actual);
     }
@@ -181,6 +188,7 @@ public class WhitePawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
 
         assertTrue(actual.contains(new Move(1, 2, 0, 2, 'Q')));
@@ -205,6 +213,7 @@ public class WhitePawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
 
         assertTrue(actual.contains(new Move(1, 2, 0, 3, 'Q')));
@@ -229,6 +238,7 @@ public class WhitePawnPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        PossibleMoves.possibleMovesW(position);
         List<Move> actual = PossibleMoves.possibleWP(boardArray[0], boardArray[6], 0L);
 
         assertTrue(actual.contains(new Move(1, 7, 0, 6, 'Q')));
