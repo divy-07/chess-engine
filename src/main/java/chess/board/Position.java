@@ -2,7 +2,9 @@ package chess.board;
 
 import chess.moves.Move;
 import chess.moves.MoveGeneration;
+import chess.moves.PossibleMoves;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static chess.Constants.files;
@@ -25,6 +27,15 @@ public class Position {
     // half and full move counters
     public int halfMoveCount;
     public int fullMoveCount;
+
+    // useful bitboards
+    private final long notMyPieces; // every square except my pieces + opponent's king
+    private final long myPieces; // squares with my pieces - my king
+    private final long occupiedSquares; // squares with pieces
+    private final long emptySquares; // squares without any pieces
+
+    // possible move object
+    private final PossibleMoves possibleMoves;
 
     /**
      * Creates a new position with bitboards and castling rights.
@@ -51,6 +62,19 @@ public class Position {
         this.cbk = cbk;
         this.cbq = cbq;
         this.whiteToMove = whiteToMove;
+
+        // set useful bitboards
+        if (whiteToMove) {
+            notMyPieces = ~(wp | wn | wb | wr | wq | wk | bk);
+            myPieces = wp | wn | wb | wr | wq;
+        } else {
+            notMyPieces = ~(bp | bn | bb | br | bq | bk | wk);
+            myPieces = bp | bn | bb | br | bq;
+        }
+        occupiedSquares = wp | wn | wb | wr | wq | wk | bp | bn | bb | br | bq | bk;
+        emptySquares = ~occupiedSquares;
+
+        possibleMoves = new PossibleMoves(notMyPieces, myPieces, occupiedSquares, emptySquares);
     }
 
     /**
@@ -125,10 +149,18 @@ public class Position {
      * Ignores this.whiteToMove.
      *
      * @return a list of all possible white moves for this position.
+     * The order of moves is: pawn, knight, bishop, rook, queen, king, castle
      */
     public List<Move> getLegalWhiteMoves() {
-        // TODO: implement
-        return null;
+        List<Move> move = new ArrayList<>();
+        move.addAll(possibleMoves.possibleWP(wp, bp, ep));
+        move.addAll(possibleMoves.possibleN(wn));
+        move.addAll(possibleMoves.possibleB(wb));
+        move.addAll(possibleMoves.possibleR(wr));
+        move.addAll(possibleMoves.possibleQ(wq));
+        move.addAll(possibleMoves.possibleK(wk));
+        move.addAll(possibleMoves.possibleCW(this));
+        return move;
     }
 
     /**
@@ -136,10 +168,18 @@ public class Position {
      * Ignores this.whiteToMove.
      *
      * @return a list of all possible black moves for this position.
+     * The order of moves is: pawn, knight, bishop, rook, queen, king, castle
      */
     public List<Move> getLegalBlackMoves() {
-        // TODO: implement
-        return null;
+        List<Move> move = new ArrayList<>();
+        move.addAll(possibleMoves.possibleBP(bp, wp, ep));
+        move.addAll(possibleMoves.possibleN(bn));
+        move.addAll(possibleMoves.possibleB(bb));
+        move.addAll(possibleMoves.possibleR(br));
+        move.addAll(possibleMoves.possibleQ(bq));
+        move.addAll(possibleMoves.possibleK(bk));
+        move.addAll(possibleMoves.possibleCB(this));
+        return move;
     }
 
     /**

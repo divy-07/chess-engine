@@ -10,63 +10,16 @@ import static chess.Constants.*;
 public class PossibleMoves {
 
     // useful trackers
-    private static long notMyPieces; // every square except my pieces + opponent's king
-    private static long myPieces; // squares with my pieces - my king
-    private static long occupiedSquares; // squares with pieces
-    private static long emptySquares; // squares without any pieces
+    private long notMyPieces; // every square except my pieces + opponent's king
+    private long myPieces; // squares with my pieces - my king
+    private long occupiedSquares; // squares with pieces
+    private long emptySquares; // squares without any pieces
 
-    /**
-     * Returns a string of all possible moves by white pieces
-     *
-     * @param position the current position
-     * @return list of all possible moves by white pieces
-     * The order of moves is: pawn, knight, bishop, rook, queen, king, castle
-     */
-    public static List<Move> possibleMovesW(Position position) {
-        notMyPieces = ~(position.wp | position.wn | position.wb | position.wr |
-                position.wq | position.wk | position.bk);
-        myPieces = position.wp | position.wn | position.wb | position.wr | position.wq;
-        occupiedSquares = position.wp | position.wn | position.wb | position.wr | position.wq | position.wk |
-                position.bp | position.bn | position.bb | position.br | position.bq | position.bk;
-        emptySquares = ~occupiedSquares;
-
-        // TODO: optimize so that better moves are appended first
-        List<Move> moves = new ArrayList<>();
-        moves.addAll(possibleWP(position.wp, position.bp, position.ep));
-        moves.addAll(possibleN(position.wn));
-        moves.addAll(possibleB(position.wb));
-        moves.addAll(possibleR(position.wr));
-        moves.addAll(possibleQ(position.wq));
-        moves.addAll(possibleK(position.wk));
-        moves.addAll(possibleCW(position));
-        return moves;
-    }
-
-    /**
-     * Returns a string of all possible moves by white pieces
-     *
-     * @param position the current position
-     * @return list of all possible moves by white pieces
-     * The order of moves is: pawn, knight, bishop, rook, queen, king, castle
-     * Each move is 4 characters long, so the length of the string is a multiple of 4
-     */
-    public static List<Move> possibleMovesB(Position position) {
-        notMyPieces = ~(position.bp | position.bn | position.bb | position.br |
-                position.bq | position.bk | position.wk);
-        myPieces = position.bp | position.bn | position.bb | position.br | position.bq;
-        occupiedSquares = position.wp | position.wn | position.wb | position.wr | position.wq | position.wk |
-                position.bp | position.bn | position.bb | position.br | position.bq | position.bk;
-        emptySquares = ~occupiedSquares;
-
-        List<Move> moves = new ArrayList<>();
-        moves.addAll(possibleBP(position.bp, position.wp, position.ep));
-        moves.addAll(possibleN(position.bn));
-        moves.addAll(possibleB(position.bb));
-        moves.addAll(possibleR(position.br));
-        moves.addAll(possibleQ(position.bq));
-        moves.addAll(possibleK(position.bk));
-        moves.addAll(possibleCB(position));
-        return moves;
+    public PossibleMoves(long notMyPieces, long myPieces, long occupiedSquares, long emptySquares) {
+        this.notMyPieces = notMyPieces;
+        this.myPieces = myPieces;
+        this.occupiedSquares = occupiedSquares;
+        this.emptySquares = emptySquares;
     }
 
     /**
@@ -84,7 +37,7 @@ public class PossibleMoves {
      * - If the move is a promotion, the characters are: origin file, destination file, promotion type("Q", "R", "B", "N"), "P".<br>
      * - If the move is an en passant capture, the character are: origin file, destination file, "W", "E".<br>
      */
-    protected static List<Move> possibleWP(long wp, long bp, long ep) {
+    public List<Move> possibleWP(long wp, long bp, long ep) {
         /*
          * moves: stores all moves to be returned
          *
@@ -207,7 +160,7 @@ public class PossibleMoves {
      * - If the move is a promotion, the characters are: origin file, destination file, promotion type("q", "r", "b", "n"), "P".<br>
      * - If the move is an en passant capture, the character are: origin file, destination file, "B", "E".<br>
      */
-    protected static List<Move> possibleBP(long bp, long wp, long ep) {
+    public List<Move> possibleBP(long bp, long wp, long ep) {
         // similar to possibleWP, but with black pieces
 
         List<Move> moves = new ArrayList<>();
@@ -319,7 +272,7 @@ public class PossibleMoves {
      * - The characters are: origin rank, origin file, destination rank, destination file.<br>
      * - Capturing moves are included with similar format.<br>
      */
-    protected static List<Move> possibleN(long knight) {
+    public List<Move> possibleN(long knight) {
         List<Move> moves = new ArrayList<>();
         long i = knight & -knight;
         long possibility;
@@ -362,7 +315,7 @@ public class PossibleMoves {
      * - The characters are: origin rank, origin file, destination rank, destination file.<br>
      * - Capturing moves are included with similar format.<br>
      */
-    protected static List<Move> possibleB(long bishop) {
+    public List<Move> possibleB(long bishop) {
         List<Move> moves = new ArrayList<>();
         long i = bishop & -bishop;
         long possibility;
@@ -394,7 +347,7 @@ public class PossibleMoves {
      * - The characters are: origin rank, origin file, destination rank, destination file.<br>
      * - Capturing moves are included with similar format.<br>
      */
-    protected static List<Move> possibleR(long rook) {
+    public List<Move> possibleR(long rook) {
         List<Move> moves = new ArrayList<>();
         long i = rook & -rook;
         long possibility;
@@ -427,7 +380,7 @@ public class PossibleMoves {
      * - The characters are: origin rank, origin file, destination rank, destination file.<br>
      * - Capturing moves are included with similar format.<br>
      */
-    protected static List<Move> possibleQ(long queen) {
+    public List<Move> possibleQ(long queen) {
         List<Move> moves = possibleB(queen);
         moves.addAll(possibleR(queen));
         return moves;
@@ -444,7 +397,7 @@ public class PossibleMoves {
      * - Capturing moves are included with similar format.<br>
      * - Castling moves are not included.<br>
      */
-    protected static List<Move> possibleK(long king) {
+    public List<Move> possibleK(long king) {
         List<Move> moves = new ArrayList<>();
         long possibility;
 
@@ -472,13 +425,15 @@ public class PossibleMoves {
         return moves;
     }
 
-    protected static List<Move> possibleCW(Position position) {
+    public List<Move> possibleCW(Position position) {
+        // TODO: change the parameter to not take Position object
         List<Move> moves = new ArrayList<>();
         // TODO (#8): Implement white castling moves
         return moves;
     }
 
-    protected static List<Move> possibleCB(Position position) {
+    public List<Move> possibleCB(Position position) {
+        // TODO: change the parameter to not take Position object
         List<Move> moves = new ArrayList<>();
         // TODO (#8): Implement black castling moves
         return moves;
@@ -493,7 +448,7 @@ public class PossibleMoves {
      * <p>
      * Credit: Logic Crazy Chess
      */
-    private static long horizontalAndVerticalMoves(int s) {
+    private long horizontalAndVerticalMoves(int s) {
         long binaryS = 1L << s;
         long possibilitiesHorizontal = (occupiedSquares - 2 * binaryS) ^
                 Long.reverse(Long.reverse(occupiedSquares) - 2 * Long.reverse(binaryS));
@@ -510,7 +465,7 @@ public class PossibleMoves {
      * <p>
      * Credit: Logic Crazy Chess
      */
-    private static long diagonalMoves(int s) {
+    private long diagonalMoves(int s) {
         long binaryS = 1L << s;
         long possibilitiesDiagonal = ((occupiedSquares & diagonals[(s / 8) + (s % 8)]) - (2 * binaryS)) ^
                 Long.reverse(Long.reverse(occupiedSquares & diagonals[(s / 8) + (s % 8)]) - (2 * Long.reverse(binaryS)));
