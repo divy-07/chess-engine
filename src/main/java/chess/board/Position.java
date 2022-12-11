@@ -1,5 +1,6 @@
 package chess.board;
 
+import chess.engine.MakeMove;
 import chess.moves.Move;
 import chess.moves.MoveGeneration;
 import chess.moves.PossibleMoves;
@@ -138,8 +139,24 @@ public class Position {
      * @return the new position after the move.
      */
     public Position makeMove(Move move) {
-        // TODO: implement
-        return null;
+        long new_wp = MakeMove.makeMove(wp, move, 'P');
+        long new_wn = MakeMove.makeMove(wn, move, 'N');
+        long new_wb = MakeMove.makeMove(wb, move, 'B');
+        long new_wr = MakeMove.makeMove(wr, move, 'R');
+        long new_wq = MakeMove.makeMove(wq, move, 'Q');
+        long new_wk = MakeMove.makeMove(wk, move, 'K');
+        long new_bp = MakeMove.makeMove(bp, move, 'p');
+        long new_bn = MakeMove.makeMove(bn, move, 'n');
+        long new_bb = MakeMove.makeMove(bb, move, 'b');
+        long new_br = MakeMove.makeMove(br, move, 'r');
+        long new_bq = MakeMove.makeMove(bq, move, 'q');
+        long new_bk = MakeMove.makeMove(bk, move, 'k');
+        long new_ep = MakeMove.makeMoveEP(wp | bp, move);
+
+        return new Position(new_wp, new_wn, new_wb, new_wr, new_wq, new_wk,
+                            new_bp, new_bn, new_bb, new_br, new_bq, new_bk,
+                            new_ep, cwk, cwq, cbk, cbq, !whiteToMove,
+                            halfMoveCount + 1, fullMoveCount + 1);
     }
 
     /**

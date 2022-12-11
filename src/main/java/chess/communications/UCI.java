@@ -74,7 +74,7 @@ public class UCI {
         Position position = Position.emptyPosition();
         if (input.contains("startpos ")) {
             input = input.substring(9);
-            position = Position.fenToPosition(input);
+            position = Position.startingPosition();
         } else if (input.contains("fen")) {
             input = input.substring(4);
             position = Position.fenToPosition(input);
