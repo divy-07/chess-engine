@@ -8,11 +8,11 @@ import static chess.Constants.ranks;
 public class MakeMove {
 
     /**
-     * Makes a move on the engine's board.
+     * Makes a move on given bitboard and returns the new bitboard.
      *
      * @param board the bitboard to make the move on
-     * @param move  the move to make; in the form "e2e4"
-     * @param type  the type of piece being moved
+     * @param move  the move to make
+     * @param type  the character of type of piece being moved
      * @return the new bitboard after the move has been made
      * @credit Logic Crazy Chess
      */
@@ -67,11 +67,11 @@ public class MakeMove {
     }
 
     /**
-     * Makes En Passant moves on the engine's en passant bitboard.
+     * Makes En Passant moves on the given en passant bitboard.
      *
      * @param board the bitboard to make the move on;
      *              should be (WP | BP)
-     * @param move  the move to make; in the form "e2e4"
+     * @param move  the move to make
      * @return the new en passant bitboard after the move has been made
      * @credit Logic Crazy Chess
      */

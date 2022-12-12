@@ -2,6 +2,7 @@ package chess.board;
 
 import chess.engine.MakeMove;
 import chess.moves.Move;
+import chess.moves.MoveConversion;
 import chess.moves.MoveGeneration;
 import chess.moves.PossibleMoves;
 
@@ -47,6 +48,11 @@ public class Position {
      *    1  |     |     |     |     |     |     |     |     |
      *       |-----|-----|-----|-----|-----|-----|-----|-----|
      */
+
+
+    // keeping the fields public should not be a problem since
+    // they are all primitive type and final
+    // except the move counts, which are private and only accessible through getters
 
     // bitboards
     public final long wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep;
@@ -95,6 +101,8 @@ public class Position {
         this.cbk = cbk;
         this.cbq = cbq;
         this.whiteToMove = whiteToMove;
+        this.fullMoveCount = 0;
+        this.halfMoveCount = 1;
 
         // set useful bitboards
         if (whiteToMove) {
@@ -161,6 +169,7 @@ public class Position {
 
     /**
      * Finds the best move for this position.
+     * Time spent might vary depending on the position and algorithm used.
      *
      * @return the best move for this position.
      */
@@ -174,11 +183,7 @@ public class Position {
      * @return a list of all legal moves for this position.
      */
     public List<Move> getLegalMoves() {
-        if (whiteToMove) {
-            return getLegalWhiteMoves();
-        } else {
-            return getLegalBlackMoves();
-        }
+        return whiteToMove ? getLegalWhiteMoves() : getLegalBlackMoves();
     }
 
     /**
@@ -227,8 +232,14 @@ public class Position {
      * @return the new position after applying all moves.
      */
     public Position applyMoves(List<Move> moves) {
-        // TODO: implement
-        return null;
+        // convert moves to algebraic notation
+        StringBuilder sb = new StringBuilder();
+        for (Move move : moves) {
+            sb.append(move.toAlgebraicNotation());
+        }
+
+        // apply moves and return new position
+        return MoveConversion.applyAlgebraMoves(sb.toString(), getLegalMoves(), this);
     }
 
     /**
@@ -263,6 +274,7 @@ public class Position {
      *                  format specifications</a>)<p>
      *                  Changes the state of the engine to the new given board state.
      * @return a new Position object with the new board state
+     * @credit Jonathan Warkentin
      */
     public static Position fenToPosition(String fenString) {
         long wp = 0L;
@@ -282,6 +294,8 @@ public class Position {
         boolean cwq = false;
         boolean cbk = false;
         boolean cbq = false;
+        int halfMoveCount = 1;
+        int fullMoveCount = 0;
 
         int charIndex = 0;
         int boardIndex = 0;
@@ -334,16 +348,38 @@ public class Position {
         // TODO: debug and fix setting half move and full move numbers
         // half-move
         // charIndex += 3;
-        // int halfMoveCount = Integer.parseInt(fenString.substring(charIndex, fenString.indexOf(' ', charIndex)));
+        // halfMoveCount = Integer.parseInt(fenString.substring(charIndex, fenString.indexOf(' ', charIndex)));
 
         // full move
         // charIndex = fenString.indexOf(' ', charIndex) + 1;
-        // int fullMoveCount = Integer.parseInt(fenString.substring(charIndex));
+        // fullMoveCount = Integer.parseInt(fenString.substring(charIndex));
 
         return new Position(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep,
-                cwk, cwq, cbk, cbq, whiteToMove);
+                cwk, cwq, cbk, cbq, whiteToMove, halfMoveCount, fullMoveCount);
     }
 
+    /**
+     * @return half move count
+     */
+    public int getHalfMoveCount() {
+        return halfMoveCount;
+    }
+
+    /**
+     * @return full move count
+     */
+    public int getFullMoveCount() {
+        return fullMoveCount;
+    }
+
+    /**
+     * Compares this position to o.
+     * If o is of type Position, then the comparison is based on these criteria:
+     * all 12 bitboards, en passant square, castling rights, and whose turn it is.
+     *
+     * @param o the object to compare to
+     * @return true if the objects are equal as stated, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (o == this) {
@@ -359,6 +395,10 @@ public class Position {
                 && whiteToMove == p.whiteToMove;
     }
 
+    /**
+     * @return a hash code for this position based on:
+     * all 12 bitboards, en passant square, castling rights, and whose turn it is
+     */
     @Override
     public int hashCode() {
         return (int) (wp ^ wn ^ wb ^ wr ^ wq ^ wk ^ bp ^ bn ^ bb ^ br ^ bq ^ bk ^ ep
@@ -366,12 +406,18 @@ public class Position {
                 ^ (whiteToMove ? 16 : 0));
     }
 
+    /**
+     * @return a new Position object with the same board state as this one
+     */
     @Override
     public Position clone() {
         return new Position(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep,
                 cwk, cwq, cbk, cbq, whiteToMove);
     }
 
+    /**
+     * @return a "print-friendly" string representation of this position
+     */
     @Override
     public String toString() {
         /*

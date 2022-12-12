@@ -65,7 +65,8 @@ public class UCI {
     }
 
     /**
-     * Sets the position of the board to the specified position.
+     * Sets the position of the board to the specified position
+     * and makes the specified moves.
      *
      * @param input the input string from the GUI
      */
@@ -96,7 +97,7 @@ public class UCI {
     }
 
     /**
-     * Starts the search for the best move.
+     * Starts the search for the best move and prints the best move when found.
      */
     private static void inputGo() {
         Move bestMove = Hari.position.getBestMove();
@@ -104,9 +105,11 @@ public class UCI {
     }
 
     /**
-     * Quits the engine.
+     * Exits the program.
+     * This will only execute once the program is finished searching for the best move.
      */
     private static void inputQuit() {
+        // TODO: parallelize the search so that this can be called at any time
         System.exit(0);
     }
 

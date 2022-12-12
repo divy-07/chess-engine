@@ -10,25 +10,24 @@ public class MoveGeneration {
 
     /**
      * Calculates the best move for the current position.
-     * Currently using a basic <a href="https://www.chessprogramming.org/Minimax">minimax algorithm</a>
      *
      * @param position the position to calculate the best move for
      * @return the best move
      */
     public static Move getBestMove(Position position) {
-        return basicPlySearch(position, MAX_DEPTH);
+        int depth = MAX_DEPTH;
+        return simpleMiniMaxSearch(position, depth);
     }
 
     /**
      * Calculates the best move for given position.
-     * Currently using a basic <a href="https://www.chessprogramming.org/Minimax">minimax algorithm</a>
+     * Uses a basic <a href="https://www.chessprogramming.org/Minimax">minimax algorithm</a>
      *
      * @param position the position to calculate the best move for.
-     * @return the best move found with basic mini-max search;
-     * the string is in the format "e2e4" or "e7e8q" for promotion
-     * @author Divy Pratel
+     * @return the best move found with basic mini-max search
+     * @author Divy Patel
      */
-    private static Move basicPlySearch(Position position, int depth) {
+    private static Move simpleMiniMaxSearch(Position position, int depth) {
         int highestVal = Integer.MIN_VALUE;
         int lowestVal = Integer.MAX_VALUE;
         int currentVal;
@@ -72,6 +71,7 @@ public class MoveGeneration {
      * @param position the position to minimize the score for.
      * @param depth the depth remaining to search
      * @return the minimized value of the position
+     * @author Divy Patel
      */
     private static int min(Position position, int depth) {
         if (depth == 0) {
@@ -100,6 +100,7 @@ public class MoveGeneration {
      * @param position the position to maximize the score for.
      * @param depth the depth remaining to search
      * @return the maximized value of the position
+     * @author Divy Patel
      */
     private static int max(Position position, int depth) {
         if (depth == 0) {
@@ -114,7 +115,7 @@ public class MoveGeneration {
             // update position
             Position newPosition = position.makeMove(move);
             // score the new position
-            int score = min(position, depth - 1);
+            int score = min(newPosition, depth - 1);
             if (score > highestScore) {
                 highestScore = score;
             }

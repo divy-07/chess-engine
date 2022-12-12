@@ -7,9 +7,10 @@ public class Evaluation {
     /**
      * Evaluates the current position.
      *
+     * @param position the position to evaluate
      * @return the evaluation of the current position.
      * Positive values are good for white, negative values are good for black.<br>
-     * Integer.MIN_VALUE < return value < Integer.MAX_VALUE
+     * Integer.MIN_VALUE <= return value <= Integer.MAX_VALUE
      */
     public static int evaluate(Position position) {
         return evaluateMaterial(position);
@@ -18,6 +19,7 @@ public class Evaluation {
     /**
      * Evaluates the current position based on number of pieces.
      *
+     * @param position the position to evaluate
      * @return the material evaluation of the current position.
      */
     private static int evaluateMaterial(Position position) {

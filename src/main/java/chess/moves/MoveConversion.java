@@ -15,7 +15,7 @@ public class MoveConversion {
      *
      * @param move the move to be converted
      * @return the move in algebraic notation
-     * @credit Logic Crazy Chess
+     * @credit Jonathan Warkentin
      */
     public static String moveToAlgebra(String move) {
         String append = "";
@@ -44,21 +44,22 @@ public class MoveConversion {
                 end = Long.numberOfTrailingZeros(files[move.charAt(1) - '0'] & ranks[5]);
             }
         }
-        String returnMove = "";
-        returnMove += (char) ('a' + (start % 8));
-        returnMove += (char) ('8' - (start / 8));
-        returnMove += (char) ('a' + (end % 8));
-        returnMove += (char) ('8' - (end / 8));
-        returnMove += append;
-        return returnMove;
+
+        StringBuilder returnMove = new StringBuilder();
+        returnMove.append((char) ('a' + (start % 8)));
+        returnMove.append((char) ('8' - (start / 8)));
+        returnMove.append((char) ('a' + (end % 8)));
+        returnMove.append((char) ('8' - (end / 8)));
+        returnMove.append(append);
+        return returnMove.toString();
     }
 
     /**
-     * Parses algebraic moves and makes it on the engine.
+     * Parses algebraic moves and applies them to the given position.
      *
      * @param input the input string from the GUI; the moves to be made
      * @param possibleMoves the list of possible moves from the current position
-     * @return the position after the moves have been applied to the position to Hari.position
+     * @return the position after the moves have been applied to the position
      */
     public static Position applyAlgebraMoves(String input, List<Move> possibleMoves, Position position) {
         // copy position values from given position
@@ -90,8 +91,8 @@ public class MoveConversion {
         int destRank = '8' - input.charAt(3);
 
         int start = 0, end = 0;
-        int from = (input.charAt(0) - 'a') + (8 * ('8' - input.charAt(1)));
-        int to = (input.charAt(2) - 'a') + (8 * ('8' - input.charAt(3)));
+        int from = (sourceFile) + (8 * (sourceRank));
+        int to = (destFile) + (8 * (destRank));
         
         // check if the given move is valid, if so make it
         for (Move move : possibleMoves) {

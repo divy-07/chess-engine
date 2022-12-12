@@ -9,11 +9,14 @@ import static chess.Constants.*;
 
 public class PossibleMoves {
 
+    // Credit to Jonathan Warkentin for most of the code in this class
+    // docs are ours
+
     // useful trackers
-    private long notMyPieces; // every square except my pieces + opponent's king
-    private long myPieces; // squares with my pieces - my king
-    private long occupiedSquares; // squares with pieces
-    private long emptySquares; // squares without any pieces
+    private final long notMyPieces; // every square except my pieces + opponent's king
+    private final long myPieces; // squares with my pieces - my king
+    private final long occupiedSquares; // squares with pieces
+    private final long emptySquares; // squares without any pieces
 
     public PossibleMoves(long notMyPieces, long myPieces, long occupiedSquares, long emptySquares) {
         this.notMyPieces = notMyPieces;
@@ -31,11 +34,7 @@ public class PossibleMoves {
      * @return a list of all possible pawn moves.<br>
      * - The order of moves is as follows: single pushes, double pushes, right captures, left captures, promotions, en passant captures.
      * - Further, the moves are sorted from top to bottom and left to right.
-     * - Promotion moves are sorted by piece type: queen, rook, bishop, knight.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br><br>
-     * - If the move is push/capture the characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - If the move is a promotion, the characters are: origin file, destination file, promotion type("Q", "R", "B", "N"), "P".<br>
-     * - If the move is an en passant capture, the character are: origin file, destination file, "W", "E".<br>
+     * - Promotion moves are sorted by piece type: queen, rook, bishop, knight.
      */
     public List<Move> possibleWP(long wp, long bp, long ep) {
         /*
@@ -155,10 +154,6 @@ public class PossibleMoves {
      * - The order of moves is as follows: single pushes, double pushes, right captures, left captures, promotions, en passant captures.
      * - Further, the moves are sorted from top to bottom and left to right.
      * - Promotion moves are sorted by piece type: queen, rook, bishop, knight.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br><br>
-     * - If the move is push/capture the characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - If the move is a promotion, the characters are: origin file, destination file, promotion type("q", "r", "b", "n"), "P".<br>
-     * - If the move is an en passant capture, the character are: origin file, destination file, "B", "E".<br>
      */
     public List<Move> possibleBP(long bp, long wp, long ep) {
         // similar to possibleWP, but with black pieces
@@ -263,14 +258,11 @@ public class PossibleMoves {
     }
 
     /**
-     * Returns a string with all possible moves for the knights.<br>
+     * Returns a list with all possible moves for the knights.<br>
      *
      * @param knight The knight bitboard.
-     * @return A list with all possible moves for the knights.<br>
-     * - The moves are sorted from top to bottom and left to right.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
-     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - Capturing moves are included with similar format.<br>
+     * @return A list with all possible moves for the knights.
+     * The moves are sorted from top to bottom and left to right.
      */
     public List<Move> possibleN(long knight) {
         List<Move> moves = new ArrayList<>();
@@ -309,11 +301,8 @@ public class PossibleMoves {
      * Returns all possible bishop moves.
      *
      * @param bishop the rook bitboard
-     * @return a list with all possible bishop moves.<br>
-     * - The moves are sorted from top to bottom and left to right.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
-     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - Capturing moves are included with similar format.<br>
+     * @return a list with all possible bishop moves.
+     * The moves are sorted from top to bottom and left to right.
      */
     public List<Move> possibleB(long bishop) {
         List<Move> moves = new ArrayList<>();
@@ -341,11 +330,8 @@ public class PossibleMoves {
      * Returns all possible rook moves.
      *
      * @param rook the rook bitboard
-     * @return a list with all possible rook moves.<br>
-     * - The moves are sorted from top to bottom and left to right.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
-     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - Capturing moves are included with similar format.<br>
+     * @return a list with all possible rook moves.
+     * The moves are sorted from top to bottom and left to right.
      */
     public List<Move> possibleR(long rook) {
         List<Move> moves = new ArrayList<>();
@@ -374,11 +360,8 @@ public class PossibleMoves {
      *
      * @param queen the queen bitboard
      * @return a list with all possible queen moves.<br>
-     * - The primary move order is: diagonal moves then horizontal/vertical moves.<br>
-     * - The moves are further sorted from top to bottom and left to right.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
-     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - Capturing moves are included with similar format.<br>
+     * - The primary move order is: diagonal moves then horizontal/vertical moves.
+     * The moves are further sorted from top to bottom and left to right.
      */
     public List<Move> possibleQ(long queen) {
         List<Move> moves = possibleB(queen);
@@ -392,10 +375,7 @@ public class PossibleMoves {
      * @param king the king bitboard.
      * @return a list with all possible non-castling king moves.<br>
      * - The moves are sorted from top to bottom and left to right.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
-     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - Capturing moves are included with similar format.<br>
-     * - Castling moves are not included.<br>
+     * - Castling moves are not included.
      */
     public List<Move> possibleK(long king) {
         List<Move> moves = new ArrayList<>();
@@ -445,8 +425,7 @@ public class PossibleMoves {
      * @param s the square to move from
      * @return bitboard of all possible vertical and horizontal moves from the square,
      * the destination squares are marked with a 1
-     * <p>
-     * Credit: Logic Crazy Chess
+     * @credit Jonathan Warkentin
      */
     private long horizontalAndVerticalMoves(int s) {
         long binaryS = 1L << s;
@@ -462,8 +441,7 @@ public class PossibleMoves {
      *
      * @param s the square to move from
      * @return bitboard of all possible diagonal moves from the square, the destination squares are marked with a 1
-     * <p>
-     * Credit: Logic Crazy Chess
+     * @credit Jonathan Warkentin
      */
     private long diagonalMoves(int s) {
         long binaryS = 1L << s;
@@ -471,7 +449,8 @@ public class PossibleMoves {
                 Long.reverse(Long.reverse(occupiedSquares & diagonals[(s / 8) + (s % 8)]) - (2 * Long.reverse(binaryS)));
         long possibilitiesAntiDiagonal = ((occupiedSquares & antiDiagonals[(s / 8) + 7 - (s % 8)]) - (2 * binaryS)) ^
                 Long.reverse(Long.reverse(occupiedSquares & antiDiagonals[(s / 8) + 7 - (s % 8)]) - (2 * Long.reverse(binaryS)));
-        return (possibilitiesDiagonal & diagonals[(s / 8) + (s % 8)]) | (possibilitiesAntiDiagonal & antiDiagonals[(s / 8) + 7 - (s % 8)]);
+        return (possibilitiesDiagonal & diagonals[(s / 8) + (s % 8)]) |
+                (possibilitiesAntiDiagonal & antiDiagonals[(s / 8) + 7 - (s % 8)]);
     }
 
 }

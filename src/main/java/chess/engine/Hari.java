@@ -5,7 +5,11 @@ import chess.communications.UCI;
 
 public class Hari {
 
-    // current state - used for calculating the best move
+    /**
+     * Current state: used for calculating the best move.<br>
+     * This field should only be updated by UCI.java,
+     * though it can be read from anywhere.
+     */
     public static Position position = Position.startingPosition();
 
     public static void main(String[] args) {
