@@ -9,7 +9,8 @@ import static chess.Constants.*;
 public class MoveGeneration {
 
     /**
-     * Calculates the best move for the given position.
+     * Calculates the best move for the current position.
+     * Currently using a basic <a href="https://www.chessprogramming.org/Minimax">minimax algorithm</a>
      *
      * @param position the position to calculate the best move for
      * @return the best move
