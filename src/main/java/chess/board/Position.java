@@ -1,6 +1,5 @@
 package chess.board;
 
-import chess.engine.MakeMove;
 import chess.moves.Move;
 import chess.moves.MoveConversion;
 import chess.moves.MoveGeneration;

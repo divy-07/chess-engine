@@ -42,12 +42,8 @@ public class MoveGeneration {
             // update position
             Position newPosition = position.makeMove(move);
 
-            // min for next if white
-            if (newPosition.whiteToMove) {
-                currentVal = min(newPosition, depth - 1);
-            } else {
-                currentVal = max(newPosition, depth - 1);
-            }
+            // if white minimize, if black maximize
+            currentVal = position.whiteToMove ? min(newPosition, depth - 1) : max(newPosition, depth - 1);
 
             // update highest/lowest value
             if (newPosition.whiteToMove) {

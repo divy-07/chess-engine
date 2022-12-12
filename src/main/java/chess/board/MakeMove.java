@@ -1,4 +1,4 @@
-package chess.engine;
+package chess.board;
 
 import chess.moves.Move;
 

@@ -1,7 +1,7 @@
 package chess.moves;
 
 import chess.board.Position;
-import chess.engine.MakeMove;
+import chess.board.MakeMove;
 
 import java.util.List;
 
