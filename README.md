@@ -1,7 +1,5 @@
 # Hari: The Chess Engine
 
----
-
 ### Jump to:
 
 1. [Contributors](#contributors)
@@ -11,16 +9,12 @@
 5. [Contributing](#contributing-to-the-project)
 6. [Contact](#contact)
 
----
-
 ## Contributors
 
 1. [Divy Patel](https://github.com/divy-07) (owner)
 2. [Arnav Prasad](https://github.com/arnavpd) (owner)
 
 Special mention: Jonathan Warkentin, some code was reused from his chess engine, Orion.
-
----
 
 ## Description
 
@@ -40,8 +34,6 @@ It is also a language that we are both familiar with.
 
 [Back to top](#hari--the-chess-engine)
 
----
-
 ## Using the Engine
 
 Using the engine currently requires Java 14 and gradle 7.5 or higher.
@@ -54,8 +46,6 @@ Steps:
 - Play against the engine!
 
 [Back to top](#hari--the-chess-engine)
-
----
 
 ## Architecture
 
@@ -91,8 +81,6 @@ The engine is composed of:
 - PossibleMoves (generates all possible moves for a given board position)
 
 [Back to top](#hari--the-chess-engine)
-
----
 
 ## Contributing to the Project
 

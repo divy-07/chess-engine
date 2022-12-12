@@ -1,67 +1,56 @@
 package chess.moves;
 
-import chess.board.Evaluation;
+import chess.board.Position;
 
-import chess.engine.MakeMove;
+import java.util.List;
+
+import static chess.Constants.*;
 
 public class MoveGeneration {
 
     /**
      * Calculates the best move for the current position.
-     * Currently using a basic <a href="https://www.chessprogramming.org/Minimax">minimax algorithm</a>
      *
-     * @return the best move found with basic mini-max search;
-     * the string is in the format "e2e4" or "e7e8q" for promotion
-     * @author Divy Pratel
+     * @param position the position to calculate the best move for
+     * @return the best move
      */
-    public static String basicPlySearch(long wp, long wn, long wb, long wr, long wq, long wk,
-                                        long bp, long bn, long bb, long br, long bq, long bk,
-                                        long ep, boolean cwk, boolean cwq, boolean cbk, boolean cbq,
-                                        boolean whiteToMove, int depth) {
+    public static Move getBestMove(Position position) {
+        int depth = MAX_DEPTH;
+        return simpleMiniMaxSearch(position, depth);
+    }
+
+    /**
+     * Calculates the best move for given position.
+     * Uses a basic <a href="https://www.chessprogramming.org/Minimax">minimax algorithm</a>
+     *
+     * @param position the position to calculate the best move for.
+     * @return the best move found with basic mini-max search
+     * @author Divy Patel
+     */
+    private static Move simpleMiniMaxSearch(Position position, int depth) {
         int highestVal = Integer.MIN_VALUE;
         int lowestVal = Integer.MAX_VALUE;
         int currentVal;
 
-        String bestMove = "";
+        Move bestMove = null;
 
         // get all possible next moves
-        String possible;
-        if (whiteToMove) {
-            possible = PossibleMoves.possibleMovesW(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep, cwk, cwq, cbk, cbq);
-        } else {
-            possible = PossibleMoves.possibleMovesB(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep, cwk, cwq, cbk, cbq);
-        }
+        List<Move> possible = position.getLegalMoves();
 
         // go through all possible moves
-        for (int i = 0; i < possible.length(); i += 4) {
-            String move = possible.substring(i, i + 4);
+        for (Move move : possible) {
             // update position
-            long wp_temp = MakeMove.makeMove(wp, move, 'P');
-            long wn_temp = MakeMove.makeMove(wn, move, 'N');
-            long wb_temp = MakeMove.makeMove(wb, move, 'B');
-            long wr_temp = MakeMove.makeMove(wr, move, 'R');
-            long wq_temp = MakeMove.makeMove(wq, move, 'Q');
-            long wk_temp = MakeMove.makeMove(wk, move, 'K');
-            long bp_temp = MakeMove.makeMove(bp, move, 'p');
-            long bn_temp = MakeMove.makeMove(bn, move, 'n');
-            long bb_temp = MakeMove.makeMove(bb, move, 'b');
-            long br_temp = MakeMove.makeMove(br, move, 'r');
-            long bq_temp = MakeMove.makeMove(bq, move, 'q');
-            long bk_temp = MakeMove.makeMove(bk, move, 'k');
+            Position newPosition = position.makeMove(move);
 
             // min for next if white
-            if (whiteToMove) {
-                currentVal = min(wp_temp, wn_temp, wb_temp, wr_temp, wq_temp, wk_temp,
-                        bp_temp, bn_temp, bb_temp, br_temp, bq_temp, bk_temp,
-                        ep, cwk, cwq, cbk, cbq, false, depth - 1);
+            if (newPosition.whiteToMove) {
+                currentVal = min(newPosition, depth - 1);
             } else {
-                currentVal = max(wp_temp, wn_temp, wb_temp, wr_temp, wq_temp, wk_temp,
-                        bp_temp, bn_temp, bb_temp, br_temp, bq_temp, bk_temp,
-                        ep, cwk, cwq, cbk, cbq, true, depth - 1);
+                currentVal = max(newPosition, depth - 1);
             }
 
             // update highest/lowest value
-            if (whiteToMove) {
+            if (newPosition.whiteToMove) {
                 if (currentVal > highestVal) {
                     highestVal = currentVal;
                     bestMove = move;
@@ -73,47 +62,31 @@ public class MoveGeneration {
                 }
             }
         }
-
         return bestMove;
     }
 
     /**
      * Minimizer for the mini-max search algorithm.
      *
-     * @param whiteToMove whether it is white's turn
+     * @param position the position to minimize the score for.
      * @param depth the depth remaining to search
      * @return the minimized value of the position
+     * @author Divy Patel
      */
-    private static int min(long wp, long wn, long wb, long wr, long wq, long wk,
-                           long bp, long bn, long bb, long br, long bq, long bk,
-                           long ep, boolean cwk, boolean cwq, boolean cbk, boolean cbq,
-                           boolean whiteToMove, int depth) {
+    private static int min(Position position, int depth) {
         if (depth == 0) {
-            return Evaluation.evaluate(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep, cwk, cwq, cbk, cbq);
+            return position.getEvaluation();
         }
 
         int lowestScore = Integer.MAX_VALUE;
         // generate all possible moves
-        String possible = PossibleMoves.possibleMovesB(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep, cwk, cwq, cbk, cbq);
-        for (int i = 0; i < possible.length(); i += 4) {
-            String move = possible.substring(i, i + 4);
+        List<Move> possible = position.getLegalBlackMoves();
+
+        for (Move move : possible) {
             // update position
-            long wp_temp = MakeMove.makeMove(wp, move, 'P');
-            long wn_temp = MakeMove.makeMove(wn, move, 'N');
-            long wb_temp = MakeMove.makeMove(wb, move, 'B');
-            long wr_temp = MakeMove.makeMove(wr, move, 'R');
-            long wq_temp = MakeMove.makeMove(wq, move, 'Q');
-            long wk_temp = MakeMove.makeMove(wk, move, 'K');
-            long bp_temp = MakeMove.makeMove(bp, move, 'p');
-            long bn_temp = MakeMove.makeMove(bn, move, 'n');
-            long bb_temp = MakeMove.makeMove(bb, move, 'b');
-            long br_temp = MakeMove.makeMove(br, move, 'r');
-            long bq_temp = MakeMove.makeMove(bq, move, 'q');
-            long bk_temp = MakeMove.makeMove(bk, move, 'k');
+            Position newPosition = position.makeMove(move);
             // score the new position
-            int score = max(wp_temp, wn_temp, wb_temp, wr_temp, wq_temp, wk_temp,
-                    bp_temp, bn_temp, bb_temp, br_temp, bq_temp, bk_temp,
-                    ep, cwk, cwq, cbk, cbq, true, depth - 1);
+            int score = max(newPosition, depth - 1);
             if (score < lowestScore) {
                 lowestScore = score;
             }
@@ -124,39 +97,25 @@ public class MoveGeneration {
     /**
      * Maximizer for the mini-max search algorithm.
      *
-     * @param whiteToMove whether it is white's turn
+     * @param position the position to maximize the score for.
      * @param depth the depth remaining to search
      * @return the maximized value of the position
+     * @author Divy Patel
      */
-    private static int max(long wp, long wn, long wb, long wr, long wq, long wk,
-                           long bp, long bn, long bb, long br, long bq, long bk,
-                           long ep, boolean cwk, boolean cwq, boolean cbk, boolean cbq,
-                           boolean whiteToMove, int depth) {
+    private static int max(Position position, int depth) {
         if (depth == 0) {
-            return Evaluation.evaluate(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep, cwk, cwq, cbk, cbq);
+            return position.getEvaluation();
         }
+
         int highestScore = Integer.MIN_VALUE;
         // generate all possible moves
-        String possible = PossibleMoves.possibleMovesW(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, ep, cwk, cwq, cbk, cbq);
-        for (int i = 0; i < possible.length(); i += 4) {
-            String move = possible.substring(i, i + 4);
+        List<Move> possible = position.getLegalWhiteMoves();
+
+        for (Move move : possible) {
             // update position
-            long wp_temp = MakeMove.makeMove(wp, move, 'P');
-            long wn_temp = MakeMove.makeMove(wn, move, 'N');
-            long wb_temp = MakeMove.makeMove(wb, move, 'B');
-            long wr_temp = MakeMove.makeMove(wr, move, 'R');
-            long wq_temp = MakeMove.makeMove(wq, move, 'Q');
-            long wk_temp = MakeMove.makeMove(wk, move, 'K');
-            long bp_temp = MakeMove.makeMove(bp, move, 'p');
-            long bn_temp = MakeMove.makeMove(bn, move, 'n');
-            long bb_temp = MakeMove.makeMove(bb, move, 'b');
-            long br_temp = MakeMove.makeMove(br, move, 'r');
-            long bq_temp = MakeMove.makeMove(bq, move, 'q');
-            long bk_temp = MakeMove.makeMove(bk, move, 'k');
+            Position newPosition = position.makeMove(move);
             // score the new position
-            int score = min(wp_temp, wn_temp, wb_temp, wr_temp, wq_temp, wk_temp,
-                    bp_temp, bn_temp, bb_temp, br_temp, bq_temp, bk_temp,
-                    ep, cwk, cwq, cbk, cbq, false, depth - 1);
+            int score = min(newPosition, depth - 1);
             if (score > highestScore) {
                 highestScore = score;
             }

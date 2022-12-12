@@ -1,72 +1,28 @@
 package chess.moves;
 
+import chess.board.Position;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static chess.Constants.*;
 
 public class PossibleMoves {
 
+    // Credit to Jonathan Warkentin for most of the code in this class
+    // docs are ours
+
     // useful trackers
-    private static long notMyPieces; // every square except my pieces + opponent's king
-    private static long myPieces; // squares with my pieces - my king
-    private static long occupiedSquares; // squares with pieces
-    private static long emptySquares; // squares without any pieces
+    private final long notMyPieces; // every square except my pieces + opponent's king
+    private final long myPieces; // squares with my pieces - my king
+    private final long occupiedSquares; // squares with pieces
+    private final long emptySquares; // squares without any pieces
 
-    /**
-     * Returns a string of all possible moves by white pieces
-     *
-     * @param wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk bitboards of all pieces
-     * @param ep  bitboard of en passant square
-     * @param cwk true if castle white king side available
-     * @param cwq true if castle white queen side available
-     * @param cbk true if castle black king side available
-     * @param cbq true if castle black queen side available
-     * @return string of all possible moves by white pieces
-     * The order of moves is: pawn, knight, bishop, rook, queen, king, castle
-     * Each move is 4 characters long, so the length of the string is a multiple of 4
-     */
-    public static String possibleMovesW(long wp, long wn, long wb, long wr, long wq, long wk,
-                                        long bp, long bn, long bb, long br, long bq, long bk,
-                                        long ep, boolean cwk, boolean cwq, boolean cbk, boolean cbq) {
-        notMyPieces = ~(wp | wn | wb | wr | wq | wk | bk); //added bk to avoid illegal capture
-        myPieces = wp | wn | wb | wr | wq; //omitted wk to avoid illegal capture
-        occupiedSquares = wp | wn | wb | wr | wq | wk | bp | bn | bb | br | bq | bk;
-        emptySquares = ~occupiedSquares;
-        // TODO: optimize so that better moves are appended first
-        return possibleWP(wp, bp, ep) +
-                possibleN(wn) +
-                possibleB(wb) +
-                possibleR(wr) +
-                possibleQ(wq) +
-                possibleK(wk) +
-                possibleCW(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, cwk, cwq);
-    }
-
-    /**
-     * Returns a string of all possible moves by white pieces
-     *
-     * @param wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk bitboards of all pieces
-     * @param ep  bitboard of en passant square
-     * @param cwk true if castle white king side available
-     * @param cwq true if castle white queen side available
-     * @param cbk true if castle black king side available
-     * @param cbq true if castle black queen side available
-     * @return string of all possible moves by white pieces
-     * The order of moves is: pawn, knight, bishop, rook, queen, king, castle
-     * Each move is 4 characters long, so the length of the string is a multiple of 4
-     */
-    public static String possibleMovesB(long wp, long wn, long wb, long wr, long wq, long wk,
-                                        long bp, long bn, long bb, long br, long bq, long bk,
-                                        long ep, boolean cwk, boolean cwq, boolean cbk, boolean cbq) {
-        notMyPieces = ~(bp | bn | bb | br | bq | bk | wk);
-        myPieces = bp | bn | bb | br | bq;
-        occupiedSquares = wp | wn | wb | wr | wq | wk | bp | bn | bb | br | bq | bk;
-        emptySquares = ~occupiedSquares;
-        return possibleBP(bp, wp, ep) +
-                possibleN(bn) +
-                possibleB(bb) +
-                possibleR(br) +
-                possibleQ(bq) +
-                possibleK(bk) +
-                possibleCB(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk, cbk, cbq);
+    public PossibleMoves(long notMyPieces, long myPieces, long occupiedSquares, long emptySquares) {
+        this.notMyPieces = notMyPieces;
+        this.myPieces = myPieces;
+        this.occupiedSquares = occupiedSquares;
+        this.emptySquares = emptySquares;
     }
 
     /**
@@ -75,27 +31,21 @@ public class PossibleMoves {
      * @param wp white pawn bitboard
      * @param bp black pawn bitboard
      * @param ep en passant bitboard - has 1 for pawn that was moved 2 squares
-     * @return a String with all possible pawn moves.<br>
+     * @return a list of all possible pawn moves.<br>
      * - The order of moves is as follows: single pushes, double pushes, right captures, left captures, promotions, en passant captures.
      * - Further, the moves are sorted from top to bottom and left to right.
-     * - Promotion moves are sorted by piece type: queen, rook, bishop, knight.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br><br>
-     * - If the move is push/capture the characters are: destination rank, destination file, origin rank, origin file.<br>
-     * - If the move is a promotion, the characters are: origin file, destination file, promotion type("Q", "R", "B", "N"), "P".<br>
-     * - If the move is an en passant capture, the character are: origin file, destination file, "W", "E".<br>
+     * - Promotion moves are sorted by piece type: queen, rook, bishop, knight.
      */
-    protected static String possibleWP(long wp, long bp, long ep) {
+    public List<Move> possibleWP(long wp, long bp, long ep) {
         /*
          * moves: stores all moves to be returned
          *
-         * "this condition": noted by "// condition"  (e.g, // Capture right)
-         *
-         * pawnMoves represents all possible pawns tha can move according to this condition
-         * possibility is a bitboard that represents all possible moves for this condition
-         * possibility = 0, when there are no possible moves for this condition
+         * pawnMoves represents all possible pawns tha can move according to the current condition
+         * possibility is a bitboard that represents all possible moves for the current condition
+         * possibility = 0, when there are no possible moves for the current condition
          */
 
-        StringBuilder moves = new StringBuilder();
+        List<Move> moves = new ArrayList<>();
         long pawnMoves, possibility;
 
         // Single push
@@ -103,7 +53,7 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos / 8 + 1).append(currPos % 8).append(currPos / 8).append(currPos % 8);
+            moves.add(new Move(currPos / 8 + 1, currPos % 8, currPos / 8, currPos % 8));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -113,7 +63,7 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos / 8 + 2).append(currPos % 8).append(currPos / 8).append(currPos % 8);
+            moves.add(new Move(currPos / 8 + 2, currPos % 8, currPos / 8, currPos % 8));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -123,7 +73,7 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos / 8 + 1).append(currPos % 8 - 1).append(currPos / 8).append(currPos % 8);
+            moves.add(new Move(currPos / 8 + 1, currPos % 8 - 1, currPos / 8, currPos % 8));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -133,7 +83,7 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos / 8 + 1).append(currPos % 8 + 1).append(currPos / 8).append(currPos % 8);
+            moves.add(new Move(currPos / 8 + 1, currPos % 8 + 1, currPos / 8, currPos % 8));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -143,8 +93,10 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos % 8).append(currPos % 8).append("QP").append(currPos % 8).append(currPos % 8).append("RP")
-                    .append(currPos % 8).append(currPos % 8).append("BP").append(currPos % 8).append(currPos % 8).append("NP");
+            moves.add(new Move(currPos / 8 + 1, currPos % 8, currPos / 8, currPos % 8, 'Q'));
+            moves.add(new Move(currPos / 8 + 1, currPos % 8, currPos / 8, currPos % 8, 'R'));
+            moves.add(new Move(currPos / 8 + 1, currPos % 8, currPos / 8, currPos % 8, 'B'));
+            moves.add(new Move(currPos / 8 + 1, currPos % 8, currPos / 8, currPos % 8, 'N'));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -154,8 +106,10 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos % 8 - 1).append(currPos % 8).append("QP").append(currPos % 8 - 1).append(currPos % 8).append("RP")
-                    .append(currPos % 8 - 1).append(currPos % 8).append("BP").append(currPos % 8 - 1).append(currPos % 8).append("NP");
+            moves.add(new Move(currPos / 8 + 1, currPos % 8 - 1, currPos / 8, currPos % 8, 'Q'));
+            moves.add(new Move(currPos / 8 + 1, currPos % 8 - 1, currPos / 8, currPos % 8, 'R'));
+            moves.add(new Move(currPos / 8 + 1, currPos % 8 - 1, currPos / 8, currPos % 8, 'B'));
+            moves.add(new Move(currPos / 8 + 1, currPos % 8 - 1, currPos / 8, currPos % 8, 'N'));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -165,8 +119,10 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos % 8 + 1).append(currPos % 8).append("QP").append(currPos % 8 + 1).append(currPos % 8).append("RP")
-                    .append(currPos % 8 + 1).append(currPos % 8).append("BP").append(currPos % 8 + 1).append(currPos % 8).append("NP");
+            moves.add(new Move(currPos / 8 + 1, currPos % 8 + 1, currPos / 8, currPos % 8, 'Q'));
+            moves.add(new Move(currPos / 8 + 1, currPos % 8 + 1, currPos / 8, currPos % 8, 'R'));
+            moves.add(new Move(currPos / 8 + 1, currPos % 8 + 1, currPos / 8, currPos % 8, 'B'));
+            moves.add(new Move(currPos / 8 + 1, currPos % 8 + 1, currPos / 8, currPos % 8, 'N'));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -175,17 +131,17 @@ public class PossibleMoves {
         possibility = (wp << 1) & bp & RANK_5 & ~FILE_A & ep;
         if (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos % 8 - 1).append(currPos % 8).append("WE");
+            moves.add(new Move(currPos / 8, currPos % 8 - 1, currPos / 8 - 1, currPos % 8, true));
         }
 
         // En passant capture left
         possibility = (wp >> 1) & bp & RANK_5 & ~FILE_H & ep;
         if (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos % 8 + 1).append(currPos % 8).append("WE");
+            moves.add(new Move(currPos / 8, currPos % 8 + 1, currPos / 8 - 1, currPos % 8, true));
         }
 
-        return moves.toString();
+        return moves;
     }
 
     /**
@@ -194,19 +150,15 @@ public class PossibleMoves {
      * @param bp black pawn bitboard
      * @param wp white pawn bitboard
      * @param ep en passant bitboard - has 1 for pawn that was moved 2 squares
-     * @return a String with all possible pawn moves.<br>
+     * @return a list with all possible pawn moves.<br>
      * - The order of moves is as follows: single pushes, double pushes, right captures, left captures, promotions, en passant captures.
      * - Further, the moves are sorted from top to bottom and left to right.
      * - Promotion moves are sorted by piece type: queen, rook, bishop, knight.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br><br>
-     * - If the move is push/capture the characters are: destination rank, destination file, origin rank, origin file.<br>
-     * - If the move is a promotion, the characters are: origin file, destination file, promotion type("q", "r", "b", "n"), "P".<br>
-     * - If the move is an en passant capture, the character are: origin file, destination file, "B", "E".<br>
      */
-    protected static String possibleBP(long bp, long wp, long ep) {
+    public List<Move> possibleBP(long bp, long wp, long ep) {
         // similar to possibleWP, but with black pieces
 
-        StringBuilder moves = new StringBuilder();
+        List<Move> moves = new ArrayList<>();
         long pawnMoves, possibility;
 
         // Single push
@@ -214,7 +166,7 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos / 8 - 1).append(currPos % 8).append(currPos / 8).append(currPos % 8);
+            moves.add(new Move(currPos / 8 - 1, currPos % 8, currPos / 8, currPos % 8));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -224,7 +176,7 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos / 8 - 2).append(currPos % 8).append(currPos / 8).append(currPos % 8);
+            moves.add(new Move(currPos / 8 - 2, currPos % 8, currPos / 8, currPos % 8));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -234,7 +186,7 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos / 8 - 1).append(currPos % 8 + 1).append(currPos / 8).append(currPos % 8);
+            moves.add(new Move(currPos / 8 - 1, currPos % 8 + 1, currPos / 8, currPos % 8));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -244,7 +196,7 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos / 8 - 1).append(currPos % 8 - 1).append(currPos / 8).append(currPos % 8);
+            moves.add(new Move(currPos / 8 - 1, currPos % 8 - 1, currPos / 8, currPos % 8));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -254,7 +206,10 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos % 8).append(currPos % 8).append("qP").append(currPos % 8).append(currPos % 8).append("rP").append(currPos % 8).append(currPos % 8).append("bP").append(currPos % 8).append(currPos % 8).append("nP");
+            moves.add(new Move(currPos / 8 - 1, currPos % 8, currPos / 8, currPos % 8, 'q'));
+            moves.add(new Move(currPos / 8 - 1, currPos % 8, currPos / 8, currPos % 8, 'r'));
+            moves.add(new Move(currPos / 8 - 1, currPos % 8, currPos / 8, currPos % 8, 'b'));
+            moves.add(new Move(currPos / 8 - 1, currPos % 8, currPos / 8, currPos % 8, 'n'));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -264,7 +219,10 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos % 8 + 1).append(currPos % 8).append("qP").append(currPos % 8 + 1).append(currPos % 8).append("rP").append(currPos % 8 + 1).append(currPos % 8).append("bP").append(currPos % 8 + 1).append(currPos % 8).append("nP");
+            moves.add(new Move(currPos / 8 - 1, currPos % 8 + 1, currPos / 8, currPos % 8, 'q'));
+            moves.add(new Move(currPos / 8 - 1, currPos % 8 + 1, currPos / 8, currPos % 8, 'r'));
+            moves.add(new Move(currPos / 8 - 1, currPos % 8 + 1, currPos / 8, currPos % 8, 'b'));
+            moves.add(new Move(currPos / 8 - 1, currPos % 8 + 1, currPos / 8, currPos % 8, 'n'));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -274,7 +232,10 @@ public class PossibleMoves {
         possibility = pawnMoves & -pawnMoves;
         while (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos % 8 - 1).append(currPos % 8).append("qP").append(currPos % 8 - 1).append(currPos % 8).append("rP").append(currPos % 8 - 1).append(currPos % 8).append("bP").append(currPos % 8 - 1).append(currPos % 8).append("nP");
+            moves.add(new Move(currPos / 8 - 1, currPos % 8 - 1, currPos / 8, currPos % 8, 'q'));
+            moves.add(new Move(currPos / 8 - 1, currPos % 8 - 1, currPos / 8, currPos % 8, 'r'));
+            moves.add(new Move(currPos / 8 - 1, currPos % 8 - 1, currPos / 8, currPos % 8, 'b'));
+            moves.add(new Move(currPos / 8 - 1, currPos % 8 - 1, currPos / 8, currPos % 8, 'n'));
             pawnMoves &= ~possibility;
             possibility = pawnMoves & -pawnMoves;
         }
@@ -283,31 +244,28 @@ public class PossibleMoves {
         possibility = (bp >> 1) & wp & RANK_4 & ~FILE_H & ep;
         if (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos % 8 + 1).append(currPos % 8).append("BE");
+            moves.add(new Move(currPos / 8, currPos % 8 + 1, currPos / 8 + 1, currPos % 8, true));
         }
 
         // En passant capture left
         possibility = (bp << 1) & wp & RANK_4 & ~FILE_A & ep;
         if (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.append(currPos % 8 - 1).append(currPos % 8).append("BE");
+            moves.add(new Move(currPos / 8, currPos % 8 - 1, currPos / 8 + 1, currPos % 8, true));
         }
 
-        return moves.toString();
+        return moves;
     }
 
     /**
-     * Returns a string with all possible moves for the knights.<br>
+     * Returns a list with all possible moves for the knights.<br>
      *
      * @param knight The knight bitboard.
-     * @return A string with all possible moves for the knights.<br>
-     * - The moves are sorted from top to bottom and left to right.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
-     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - Capturing moves are included with similar format.<br>
+     * @return A list with all possible moves for the knights.
+     * The moves are sorted from top to bottom and left to right.
      */
-    protected static String possibleN(long knight) {
-        StringBuilder moves = new StringBuilder();
+    public List<Move> possibleN(long knight) {
+        List<Move> moves = new ArrayList<>();
         long i = knight & -knight;
         long possibility;
 
@@ -328,7 +286,7 @@ public class PossibleMoves {
             long j = possibility & -possibility;
             while (j != 0) {
                 int index = Long.numberOfTrailingZeros(j);
-                moves.append(currPos / 8).append(currPos % 8).append(index / 8).append(index % 8);
+                moves.add(new Move(currPos / 8, currPos % 8, index / 8, index % 8));
                 possibility &= ~j;
                 j = possibility & -possibility;
             }
@@ -336,21 +294,18 @@ public class PossibleMoves {
             i = knight & -knight;
         }
 
-        return moves.toString();
+        return moves;
     }
 
     /**
      * Returns all possible bishop moves.
      *
      * @param bishop the rook bitboard
-     * @return a String with all possible bishop moves.<br>
-     * - The moves are sorted from top to bottom and left to right.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
-     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - Capturing moves are included with similar format.<br>
+     * @return a list with all possible bishop moves.
+     * The moves are sorted from top to bottom and left to right.
      */
-    protected static String possibleB(long bishop) {
-        StringBuilder moves = new StringBuilder();
+    public List<Move> possibleB(long bishop) {
+        List<Move> moves = new ArrayList<>();
         long i = bishop & -bishop;
         long possibility;
 
@@ -360,7 +315,7 @@ public class PossibleMoves {
             long j = possibility & -possibility;
             while (j != 0) {
                 int index = Long.numberOfTrailingZeros(j);
-                moves.append(currPos / 8).append(currPos % 8).append(index / 8).append(index % 8);
+                moves.add(new Move(currPos / 8, currPos % 8, index / 8, index % 8));
                 possibility &= ~j;
                 j = possibility & -possibility;
             }
@@ -368,21 +323,18 @@ public class PossibleMoves {
             i = bishop & -bishop;
         }
 
-        return moves.toString();
+        return moves;
     }
 
     /**
      * Returns all possible rook moves.
      *
      * @param rook the rook bitboard
-     * @return a String with all possible rook moves.<br>
-     * - The moves are sorted from top to bottom and left to right.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
-     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - Capturing moves are included with similar format.<br>
+     * @return a list with all possible rook moves.
+     * The moves are sorted from top to bottom and left to right.
      */
-    protected static String possibleR(long rook) {
-        StringBuilder moves = new StringBuilder();
+    public List<Move> possibleR(long rook) {
+        List<Move> moves = new ArrayList<>();
         long i = rook & -rook;
         long possibility;
 
@@ -392,7 +344,7 @@ public class PossibleMoves {
             long j = possibility & -possibility;
             while (j != 0) {
                 int index = Long.numberOfTrailingZeros(j);
-                moves.append(currPos / 8).append(currPos % 8).append(index / 8).append(index % 8);
+                moves.add(new Move(currPos / 8, currPos % 8, index / 8, index % 8));
                 possibility &= ~j;
                 j = possibility & -possibility;
             }
@@ -400,37 +352,33 @@ public class PossibleMoves {
             i = rook & -rook;
         }
 
-        return moves.toString();
+        return moves;
     }
 
     /**
      * Returns all possible queen moves.
      *
      * @param queen the queen bitboard
-     * @return a String with all possible queen moves.<br>
-     * - The primary move order is: diagonal moves then horizontal/vertical moves.<br>
-     * - The moves are further sorted from top to bottom and left to right.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
-     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - Capturing moves are included with similar format.<br>
+     * @return a list with all possible queen moves.<br>
+     * - The primary move order is: diagonal moves then horizontal/vertical moves.
+     * The moves are further sorted from top to bottom and left to right.
      */
-    protected static String possibleQ(long queen) {
-        return possibleB(queen) + possibleR(queen);
+    public List<Move> possibleQ(long queen) {
+        List<Move> moves = possibleB(queen);
+        moves.addAll(possibleR(queen));
+        return moves;
     }
 
     /**
      * Returns all possible non-castling king moves.
      *
      * @param king the king bitboard.
-     * @return a String with all possible non-castling king moves.<br>
+     * @return a list with all possible non-castling king moves.<br>
      * - The moves are sorted from top to bottom and left to right.<br>
-     * - The string is filled with 4 character moves, so the length of the string is always a multiple of 4.<br>
-     * - The characters are: origin rank, origin file, destination rank, destination file.<br>
-     * - Capturing moves are included with similar format.<br>
-     * - Castling moves are not included.<br>
+     * - Castling moves are not included.
      */
-    protected static String possibleK(long king) {
-        StringBuilder moves = new StringBuilder();
+    public List<Move> possibleK(long king) {
+        List<Move> moves = new ArrayList<>();
         long possibility;
 
         int currPos = Long.numberOfTrailingZeros(king);
@@ -449,28 +397,26 @@ public class PossibleMoves {
         long j = possibility & -possibility;
         while (j != 0) {
             int index = Long.numberOfTrailingZeros(j);
-            moves.append(currPos / 8).append(currPos % 8).append(index / 8).append(index % 8);
+            moves.add(new Move(currPos / 8, currPos % 8, index / 8, index % 8));
             possibility &= ~j;
             j = possibility & -possibility;
         }
 
-        return moves.toString();
+        return moves;
     }
 
-    protected static String possibleCW(long wp, long wn, long wb, long wr, long wq, long wk,
-                                       long bp, long bn, long bb, long br, long bq, long bk,
-                                       boolean cwk, boolean cwq) {
-        StringBuilder moves = new StringBuilder();
+    public List<Move> possibleCW(Position position) {
+        // TODO: change the parameter to not take Position object
+        List<Move> moves = new ArrayList<>();
         // TODO (#8): Implement white castling moves
-        return moves.toString();
+        return moves;
     }
 
-    protected static String possibleCB(long wp, long wn, long wb, long wr, long wq, long wk,
-                                       long bp, long bn, long bb, long br, long bq, long bk,
-                                       boolean cwk, boolean cwq) {
-        StringBuilder moves = new StringBuilder();
+    public List<Move> possibleCB(Position position) {
+        // TODO: change the parameter to not take Position object
+        List<Move> moves = new ArrayList<>();
         // TODO (#8): Implement black castling moves
-        return moves.toString();
+        return moves;
     }
 
     /**
@@ -479,10 +425,9 @@ public class PossibleMoves {
      * @param s the square to move from
      * @return bitboard of all possible vertical and horizontal moves from the square,
      * the destination squares are marked with a 1
-     * <p>
-     * Credit: Logic Crazy Chess
+     * @credit Jonathan Warkentin
      */
-    private static long horizontalAndVerticalMoves(int s) {
+    private long horizontalAndVerticalMoves(int s) {
         long binaryS = 1L << s;
         long possibilitiesHorizontal = (occupiedSquares - 2 * binaryS) ^
                 Long.reverse(Long.reverse(occupiedSquares) - 2 * Long.reverse(binaryS));
@@ -496,16 +441,16 @@ public class PossibleMoves {
      *
      * @param s the square to move from
      * @return bitboard of all possible diagonal moves from the square, the destination squares are marked with a 1
-     * <p>
-     * Credit: Logic Crazy Chess
+     * @credit Jonathan Warkentin
      */
-    private static long diagonalMoves(int s) {
+    private long diagonalMoves(int s) {
         long binaryS = 1L << s;
         long possibilitiesDiagonal = ((occupiedSquares & diagonals[(s / 8) + (s % 8)]) - (2 * binaryS)) ^
                 Long.reverse(Long.reverse(occupiedSquares & diagonals[(s / 8) + (s % 8)]) - (2 * Long.reverse(binaryS)));
         long possibilitiesAntiDiagonal = ((occupiedSquares & antiDiagonals[(s / 8) + 7 - (s % 8)]) - (2 * binaryS)) ^
                 Long.reverse(Long.reverse(occupiedSquares & antiDiagonals[(s / 8) + 7 - (s % 8)]) - (2 * Long.reverse(binaryS)));
-        return (possibilitiesDiagonal & diagonals[(s / 8) + (s % 8)]) | (possibilitiesAntiDiagonal & antiDiagonals[(s / 8) + 7 - (s % 8)]);
+        return (possibilitiesDiagonal & diagonals[(s / 8) + (s % 8)]) |
+                (possibilitiesAntiDiagonal & antiDiagonals[(s / 8) + 7 - (s % 8)]);
     }
 
 }

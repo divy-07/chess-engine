@@ -1,11 +1,11 @@
 package chess.communications;
 
-import chess.board.Board;
+import chess.board.Position;
 import chess.engine.Hari;
-import chess.moves.MoveGeneration;
-import chess.moves.PossibleMoves;
+import chess.moves.Move;
 import chess.moves.MoveConversion;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static chess.Constants.*;
@@ -65,51 +65,51 @@ public class UCI {
     }
 
     /**
-     * Sets the position of the board to the specified position.
+     * Sets the position of the board to the specified position
+     * and makes the specified moves.
      *
      * @param input the input string from the GUI
      */
     private static void inputPosition(String input) {
         input = input.substring(9).concat(" ");
+        Position position = Position.emptyPosition();
         if (input.contains("startpos ")) {
             input = input.substring(9);
-            Board.importFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+            position = Position.startingPosition();
         } else if (input.contains("fen")) {
             input = input.substring(4);
-            Board.importFEN(input);
+            position = Position.fenToPosition(input);
         }
 
-        // apply moves
+        // get moves
         if (input.contains("moves")) {
             input = input.substring(input.indexOf("moves") + 6);
             while (input.length() > 0) {
-                // TODO: make move
-                String moves;
-                if (Hari.whiteToMove) {
-                    moves = PossibleMoves.possibleMovesW(Hari.WP, Hari.WN, Hari.WB, Hari.WR, Hari.WQ, Hari.WK, Hari.BP, Hari.BN, Hari.BB, Hari.BR, Hari.BQ, Hari.BK, Hari.EP, Hari.CWK, Hari.CWQ, Hari.CBK, Hari.CBQ);
-                } else {
-                    moves = PossibleMoves.possibleMovesB(Hari.WP, Hari.WN, Hari.WB, Hari.WR, Hari.WQ, Hari.WK, Hari.BP, Hari.BN, Hari.BB, Hari.BR, Hari.BQ, Hari.BK, Hari.EP, Hari.CWK, Hari.CWQ, Hari.CBK, Hari.CBQ);
-                }
-                MoveConversion.algebraToMove(input, moves);
+                // convert and apply moves
+                List<Move> moves = position.getLegalMoves();
+                position = MoveConversion.applyAlgebraMoves(input, moves, position);
                 input = input.substring(input.indexOf(' ') + 1);
             }
         }
+
+        // set position in Hari
+        Hari.position = position;
     }
 
     /**
-     * Starts the search for the best move.
+     * Starts the search for the best move and prints the best move when found.
      */
     private static void inputGo() {
-        String move = MoveGeneration.basicPlySearch(Hari.WP, Hari.WN, Hari.WB, Hari.WR, Hari.WQ, Hari.WK,
-                Hari.BP, Hari.BN, Hari.BB, Hari.BR, Hari.BQ, Hari.BK, Hari.EP, Hari.CWK, Hari.CWQ, Hari.CBK, Hari.CBQ,
-                Hari.whiteToMove, MAX_DEPTH);
-        System.out.println("bestmove " + MoveConversion.moveToAlgebra(move));
+        Move bestMove = Hari.position.getBestMove();
+        System.out.println("bestmove " + bestMove.toAlgebraicNotation());
     }
 
     /**
-     * Quits the engine.
+     * Exits the program.
+     * This will only execute once the program is finished searching for the best move.
      */
     private static void inputQuit() {
+        // TODO: parallelize the search so that this can be called at any time
         System.exit(0);
     }
 
