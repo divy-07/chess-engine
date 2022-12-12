@@ -46,7 +46,7 @@ public class MakeMove {
         } else if (move.isEnPassant) {
             // en passant
             int start, end;
-            if (move.sourceRank == 5) {
+            if (move.sourceRank == 3) {
                 // white
                 start = Long.numberOfTrailingZeros(files[move.sourceFile] & ranks[3]);
                 end = Long.numberOfTrailingZeros(files[move.destFile] & ranks[2]);

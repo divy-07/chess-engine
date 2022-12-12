@@ -46,7 +46,7 @@ public class MoveGeneration {
             currentVal = position.whiteToMove ? min(newPosition, depth - 1) : max(newPosition, depth - 1);
 
             // update highest/lowest value
-            if (newPosition.whiteToMove) {
+            if (position.whiteToMove) {
                 if (currentVal > highestVal) {
                     highestVal = currentVal;
                     bestMove = move;

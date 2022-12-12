@@ -2,10 +2,10 @@ package chess.moves;
 
 /**
  * An immutable class that represents a chess move.
- * A move is represented by: 1) from square, 2) to square, and 2) optional promotion piece.<br>
+ * A move is represented by: 1) from square, 2) to square, and 2) optional promotion piece.<p>
  * The standard notation of files and ranks is used.
- * But ranks are numbered from 1 to 8 instead of a to h.
- * And files are numbered from 1 to 8 as usual.
+ * But ranks are numbered from 0 to 7 instead of a to h.
+ * And files are numbered from 0 to 7 instead of 8 to 1. (NOTE THE INVERSION)
  */
 public class Move {
 

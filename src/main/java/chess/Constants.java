@@ -4,7 +4,7 @@ public final class Constants {
 
     // Engine name
     public static final String ENGINE_NAME = "Hari";
-    public static final int MAX_DEPTH = 4;
+    public static final int MAX_DEPTH = 5;
 
     // board constants
     public static final long FILE_A = 72340172838076673L;
