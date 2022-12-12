@@ -7,35 +7,36 @@ public class Evaluation {
     /**
      * Evaluates the current position.
      *
+     * @param position the position to evaluate
      * @return the evaluation of the current position.
      * Positive values are good for white, negative values are good for black.<br>
-     * Integer.MIN_VALUE < return value < Integer.MAX_VALUE
+     * Integer.MIN_VALUE <= return value <= Integer.MAX_VALUE
      */
-    public static int evaluate(long wp, long wn, long wb, long wr, long wq, long wk,
-                               long bp, long bn, long bb, long br, long bq, long bk,
-                               long ep, boolean cwk, boolean cwq, boolean cbk, boolean cbq) {
-        return evaluateMaterial(wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk);
+    public static int evaluate(Position position) {
+        return evaluateMaterial(position);
     }
 
     /**
      * Evaluates the current position based on number of pieces.
      *
+     * @param position the position to evaluate
      * @return the material evaluation of the current position.
      */
-    private static int evaluateMaterial(long wp, long wn, long wb, long wr, long wq, long wk,
-                                        long bp, long bn, long bb, long br, long bq, long bk) {
+    private static int evaluateMaterial(Position position) {
         // add up the number of pieces * their value
         // positive for white, negative for black
-        return Long.bitCount(wp) * PAWN_VALUE
-                + Long.bitCount(wn) * KNIGHT_VALUE
-                + Long.bitCount(wb) * BISHOP_VALUE
-                + Long.bitCount(wr) * ROOK_VALUE
-                + Long.bitCount(wq) * QUEEN_VALUE
-                - Long.bitCount(bp) * PAWN_VALUE
-                - Long.bitCount(wn) * KNIGHT_VALUE
-                - Long.bitCount(wb) * BISHOP_VALUE
-                - Long.bitCount(wr) * ROOK_VALUE
-                - Long.bitCount(wq) * QUEEN_VALUE;
+        return Long.bitCount(position.wp) * PAWN_VALUE
+                + Long.bitCount(position.wn) * KNIGHT_VALUE
+                + Long.bitCount(position.wb) * BISHOP_VALUE
+                + Long.bitCount(position.wr) * ROOK_VALUE
+                + Long.bitCount(position.wq) * QUEEN_VALUE
+                + Long.bitCount(position.wk) * KING_VALUE
+                - Long.bitCount(position.bp) * PAWN_VALUE
+                - Long.bitCount(position.bn) * KNIGHT_VALUE
+                - Long.bitCount(position.bb) * BISHOP_VALUE
+                - Long.bitCount(position.br) * ROOK_VALUE
+                - Long.bitCount(position.bq) * QUEEN_VALUE
+                - Long.bitCount(position.bk) * KING_VALUE;
     }
 
 }

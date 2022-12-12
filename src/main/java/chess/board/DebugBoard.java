@@ -1,25 +1,24 @@
 package chess.board;
 
-import chess.moves.PossibleMoves;
-
-// Credit: Logic Crazy Chess
 public class DebugBoard {
 
     public static void main(String[] args) {
         long wp = 0L, wn = 0L, wb = 0L, wr = 0L, wq = 0L, wk = 0L, bp = 0L, bn = 0L, bb = 0L, br = 0L, bq = 0L, bk = 0L;
-        String[][] stringBoard = get2dStringBoard();
+        String[][] stringBoard = get2dStringStartingBoard();
         long[] boardArray = arrayToBitboards(stringBoard);
-        drawArray(boardArray);
+        Position pos = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3], boardArray[4],
+                boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9], boardArray[10],
+                boardArray[11], 0L, true, true, true, true, true);
+        System.out.println(pos);
 
-        drawArray(new long[]{wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk});
-
-        String possMoves = PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
-                boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        System.out.println("WP moves:" + possMoves);
+        Position position = Position.startingPosition();
+        System.out.println(position);
     }
 
-    public static String[][] get2dStringBoard() {
+    /**
+     * Returns a 2d String array of the starting board.
+     */
+    public static String[][] get2dStringStartingBoard() {
         // edit this method to change the starting board
         return new String[][]{
                 {"r", "n", "b", "q", "k", "b", "n", "r"},
@@ -32,11 +31,14 @@ public class DebugBoard {
                 {"R", "N", "B", "Q", "K", "B", "N", "R"}};
     }
 
-    public static void drawArray(long[] boardArray) {
-        Board.drawBoard(boardArray[0], boardArray[1], boardArray[2], boardArray[3], boardArray[4], boardArray[5],
-                boardArray[6], boardArray[7], boardArray[8], boardArray[9], boardArray[10], boardArray[11]);
-    }
-
+    /**
+     * Converts a 2d String array to a long array of bitboards.
+     *
+     * @param chessBoard the 2d String array of the chess board
+     *                   must be 8x8
+     * @return array of 12 bitboards in this order: wp, wn, wb, wr, wq, wk, bp, bn, bb, br, bq, bk
+     * @credit Jonathan Warkentin
+     */
     public static long[] arrayToBitboards(String[][] chessBoard) {
         long wp = 0L, wn = 0L, wb = 0L, wr = 0L, wq = 0L, wk = 0L,
                 bp = 0L, bn = 0L, bb = 0L, br = 0L, bq = 0L, bk = 0L;

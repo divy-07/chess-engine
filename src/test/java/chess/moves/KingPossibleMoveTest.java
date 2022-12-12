@@ -1,7 +1,11 @@
 package chess.moves;
 
 import chess.board.DebugBoard;
+import chess.board.Position;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,11 +24,11 @@ public class KingPossibleMoveTest {
                 {" ", " ", " ", " ", " ", "B", "B", "Q"},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String actual = PossibleMoves.possibleK(boardArray[5]);
-        String expected = "";
+                boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        List<Move> actual = position.possibleMoves.possibleK(boardArray[5]);
+        List<Move> expected = new ArrayList<>();
 
         assertEquals(expected, actual);
     }
@@ -41,20 +45,20 @@ public class KingPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        PossibleMoves.possibleMovesB(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String actual = PossibleMoves.possibleK(boardArray[11]);
+                boardArray[10], boardArray[11], 0L, false, false, false, false, false);
+        List<Move> actual = position.possibleMoves.possibleK(boardArray[11]);
 
-        assertTrue(actual.contains("3120"));
-        assertTrue(actual.contains("3121"));
-        assertTrue(actual.contains("3122"));
-        assertTrue(actual.contains("3130"));
-        assertTrue(actual.contains("3132"));
-        assertTrue(actual.contains("3140"));
-        assertTrue(actual.contains("3141"));
-        assertTrue(actual.contains("3142"));
-        assertEquals(32, actual.length());
+        assertTrue(actual.contains(new Move(3, 1, 2, 0)));
+        assertTrue(actual.contains(new Move(3, 1, 2, 1)));
+        assertTrue(actual.contains(new Move(3, 1, 2, 2)));
+        assertTrue(actual.contains(new Move(3, 1, 3, 0)));
+        assertTrue(actual.contains(new Move(3, 1, 3, 2)));
+        assertTrue(actual.contains(new Move(3, 1, 4, 0)));
+        assertTrue(actual.contains(new Move(3, 1, 4, 1)));
+        assertTrue(actual.contains(new Move(3, 1, 4, 2)));
+        assertEquals(8, actual.size());
     }
 
     @Test
@@ -69,20 +73,20 @@ public class KingPossibleMoveTest {
                 {" ", " ", " ", " ", " ", " ", " ", " "},
                 {" ", " ", " ", " ", " ", " ", " ", " "}};
         long[] boardArray = DebugBoard.arrayToBitboards(stringBoard);
-        PossibleMoves.possibleMovesW(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
+        Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
-                boardArray[10], boardArray[11], 0L, false, false, false, false);
-        String actual = PossibleMoves.possibleK(boardArray[5]);
+                boardArray[10], boardArray[11], 0L, false, false, false, false, true);
+        List<Move> actual = position.possibleMoves.possibleK(boardArray[5]);
 
-        assertTrue(actual.contains("3120"));
-        assertTrue(actual.contains("3121"));
-        assertTrue(actual.contains("3122"));
-        assertTrue(actual.contains("3130"));
-        assertTrue(actual.contains("3132"));
-        assertTrue(actual.contains("3140"));
-        assertTrue(actual.contains("3141"));
-        assertTrue(actual.contains("3142"));
-        assertEquals(32, actual.length());
+        assertTrue(actual.contains(new Move(3, 1, 2, 0)));
+        assertTrue(actual.contains(new Move(3, 1, 2, 1)));
+        assertTrue(actual.contains(new Move(3, 1, 2, 2)));
+        assertTrue(actual.contains(new Move(3, 1, 3, 0)));
+        assertTrue(actual.contains(new Move(3, 1, 3, 2)));
+        assertTrue(actual.contains(new Move(3, 1, 4, 0)));
+        assertTrue(actual.contains(new Move(3, 1, 4, 1)));
+        assertTrue(actual.contains(new Move(3, 1, 4, 2)));
+        assertEquals(8, actual.size());
     }
 
 }
