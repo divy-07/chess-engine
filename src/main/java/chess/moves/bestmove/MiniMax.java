@@ -1,24 +1,12 @@
-package chess.moves;
+package chess.moves.bestmove;
 
 import chess.board.Position;
+import chess.moves.Move;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static chess.Constants.*;
-
-public class MoveGeneration {
-
-    /**
-     * Calculates the best move for the current position.
-     *
-     * @param position the position to calculate the best move for
-     * @return the best move
-     */
-    public static Move getBestMove(Position position) {
-        int depth = MAX_DEPTH;
-        return simpleMiniMaxSearch(position, depth);
-    }
+public class MiniMax {
 
     /**
      * Calculates the best move for given position.
@@ -28,13 +16,10 @@ public class MoveGeneration {
      * @return the best move found with basic mini-max search
      * @author Divy Patel
      */
-    private static Move simpleMiniMaxSearch(@NotNull Position position, int depth) {
+    public static Move miniMaxSearch(@NotNull Position position, int depth) {
         int highestVal = Integer.MIN_VALUE;
         int lowestVal = Integer.MAX_VALUE;
-        int currentVal;
-
-        int alpha = Integer.MIN_VALUE;
-        int beta = Integer.MAX_VALUE;
+        int score;
 
         Move bestMove = null;
 
@@ -47,18 +32,17 @@ public class MoveGeneration {
             Position newPosition = position.makeMove(move);
 
             // if white minimize, if black maximize
-            currentVal = position.whiteToMove ? min(newPosition, depth - 1, alpha, beta) :
-                    max(newPosition, depth - 1, alpha, beta);
+            score = position.whiteToMove ? min(newPosition, depth - 1) : max(newPosition, depth - 1);
 
             // update highest/lowest value
             if (position.whiteToMove) {
-                if (currentVal > highestVal) {
-                    highestVal = currentVal;
+                if (score > highestVal) {
+                    highestVal = score;
                     bestMove = move;
                 }
             } else {
-                if (currentVal < lowestVal) {
-                    lowestVal = currentVal;
+                if (score < lowestVal) {
+                    lowestVal = score;
                     bestMove = move;
                 }
             }
@@ -74,7 +58,7 @@ public class MoveGeneration {
      * @return the minimized value of the position
      * @author Divy Patel
      */
-    private static int min(Position position, int depth, int alpha, int beta) {
+    private static int min(Position position, int depth) {
         if (depth == 0) {
             return position.getEvaluation();
         }
@@ -87,12 +71,8 @@ public class MoveGeneration {
             // update position
             Position newPosition = position.makeMove(move);
             // score the new position
-            int score = max(newPosition, depth - 1, alpha, beta);
+            int score = max(newPosition, depth - 1);
             lowestScore = Math.min(lowestScore, score);
-            beta = Math.min(beta, score);
-            if (beta <= alpha) {
-                break;
-            }
         }
         return lowestScore;
     }
@@ -105,7 +85,7 @@ public class MoveGeneration {
      * @return the maximized value of the position
      * @author Divy Patel
      */
-    private static int max(Position position, int depth, int alpha, int beta) {
+    private static int max(Position position, int depth) {
         if (depth == 0) {
             return position.getEvaluation();
         }
@@ -118,12 +98,8 @@ public class MoveGeneration {
             // update position
             Position newPosition = position.makeMove(move);
             // score the new position
-            int score = min(newPosition, depth - 1, alpha, beta);
+            int score = min(newPosition, depth - 1);
             highestScore = Math.max(highestScore, score);
-            alpha = Math.max(alpha, score);
-            if (beta <= alpha) {
-                break;
-            }
         }
         return highestScore;
     }

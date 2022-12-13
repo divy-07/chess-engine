@@ -2,7 +2,7 @@ package chess.board;
 
 import chess.moves.Move;
 import chess.moves.MoveConversion;
-import chess.moves.MoveGeneration;
+import chess.moves.bestmove.MoveGeneration;
 import chess.moves.PossibleMoves;
 
 import java.util.*;
@@ -105,12 +105,11 @@ public class Position {
 
         // set useful bitboards
         if (whiteToMove) {
-            notMyPieces = ~(wp | wn | wb | wr | wq | wk | bk);
-            myPieces = wp | wn | wb | wr | wq;
+            myPieces = wp | wn | wb | wr | wq | wk;
         } else {
-            notMyPieces = ~(bp | bn | bb | br | bq | bk | wk);
-            myPieces = bp | bn | bb | br | bq;
+            myPieces = bp | bn | bb | br | bq | bk;
         }
+        notMyPieces = ~myPieces;
         occupiedSquares = wp | wn | wb | wr | wq | wk | bp | bn | bb | br | bq | bk;
         emptySquares = ~occupiedSquares;
 
