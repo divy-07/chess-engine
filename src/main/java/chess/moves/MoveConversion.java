@@ -1,7 +1,7 @@
 package chess.moves;
 
 import chess.board.Position;
-import chess.engine.MakeMove;
+import chess.board.MakeMove;
 
 import java.util.List;
 
@@ -111,7 +111,7 @@ public class MoveConversion {
                 }
             } else if (move.isEnPassant) {
                 // en passant
-                if (move.sourceRank == 5) {
+                if (move.sourceRank == 3) {
                     // white
                     start = Long.numberOfTrailingZeros(files[move.sourceFile] & ranks[3]);
                     end = Long.numberOfTrailingZeros(files[move.destFile] & ranks[2]);
