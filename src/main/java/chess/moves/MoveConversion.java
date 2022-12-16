@@ -24,7 +24,7 @@ public class MoveConversion {
             // normal move
             start = (Character.getNumericValue(move.charAt(0)) * 8) + (Character.getNumericValue(move.charAt(1)));
             end = (Character.getNumericValue(move.charAt(2)) * 8) + (Character.getNumericValue(move.charAt(3)));
-        } else if (move.charAt(3) == 'P') {
+        } else if (move.charAt(3) == 'P' || move.charAt(3) == 'p') {
             // pawn promotion
             if (Character.isUpperCase(move.charAt(2))) {
                 start = Long.numberOfTrailingZeros(files[move.charAt(0) - '0'] & ranks[1]);

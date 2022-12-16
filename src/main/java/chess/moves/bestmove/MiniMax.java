@@ -1,23 +1,12 @@
-package chess.moves;
+package chess.moves.bestmove;
 
 import chess.board.Position;
+import chess.moves.Move;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static chess.Constants.*;
-
-public class MoveGeneration {
-
-    /**
-     * Calculates the best move for the current position.
-     *
-     * @param position the position to calculate the best move for
-     * @return the best move
-     */
-    public static Move getBestMove(Position position) {
-        int depth = MAX_DEPTH;
-        return simpleMiniMaxSearch(position, depth);
-    }
+public class MiniMax {
 
     /**
      * Calculates the best move for given position.
@@ -27,10 +16,10 @@ public class MoveGeneration {
      * @return the best move found with basic mini-max search
      * @author Divy Patel
      */
-    private static Move simpleMiniMaxSearch(Position position, int depth) {
+    public static Move miniMaxSearch(@NotNull Position position, int depth) {
         int highestVal = Integer.MIN_VALUE;
         int lowestVal = Integer.MAX_VALUE;
-        int currentVal;
+        int score;
 
         Move bestMove = null;
 
@@ -43,17 +32,17 @@ public class MoveGeneration {
             Position newPosition = position.makeMove(move);
 
             // if white minimize, if black maximize
-            currentVal = position.whiteToMove ? min(newPosition, depth - 1) : max(newPosition, depth - 1);
+            score = position.whiteToMove ? min(newPosition, depth - 1) : max(newPosition, depth - 1);
 
             // update highest/lowest value
             if (position.whiteToMove) {
-                if (currentVal > highestVal) {
-                    highestVal = currentVal;
+                if (score > highestVal) {
+                    highestVal = score;
                     bestMove = move;
                 }
             } else {
-                if (currentVal < lowestVal) {
-                    lowestVal = currentVal;
+                if (score < lowestVal) {
+                    lowestVal = score;
                     bestMove = move;
                 }
             }
@@ -83,9 +72,7 @@ public class MoveGeneration {
             Position newPosition = position.makeMove(move);
             // score the new position
             int score = max(newPosition, depth - 1);
-            if (score < lowestScore) {
-                lowestScore = score;
-            }
+            lowestScore = Math.min(lowestScore, score);
         }
         return lowestScore;
     }
@@ -112,9 +99,7 @@ public class MoveGeneration {
             Position newPosition = position.makeMove(move);
             // score the new position
             int score = min(newPosition, depth - 1);
-            if (score > highestScore) {
-                highestScore = score;
-            }
+            highestScore = Math.max(highestScore, score);
         }
         return highestScore;
     }
