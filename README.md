@@ -2,6 +2,8 @@
 
 Current rating: WIP
 
+lichess account: [lichess.org/@/hari_the_chess_bot](https://lichess.org/@/hari_the_chess_bot)
+
 ### Jump to:
 
 1. [Contributors](#contributors)

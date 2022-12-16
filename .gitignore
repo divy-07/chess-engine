@@ -42,3 +42,5 @@ gradlew
 soln.txt
 *hprof*
 config/
+
+secure/*
