@@ -6,20 +6,23 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class MiniMax {
+public class SequentialAlphaBeta {
 
     /**
      * Calculates the best move for given position.
-     * Uses a basic <a href="https://www.chessprogramming.org/Minimax">minimax algorithm</a>
+     * Uses a basic <a href="https://www.chessprogramming.org/Alpha-Beta">alpha-beta algorithm</a>
      *
      * @param position the position to calculate the best move for.
-     * @return the best move found with basic mini-max search
+     * @return the best move found with basic mini-max search with alpha-beta pruning
      * @author Divy Patel
      */
-    public static Move miniMaxSearch(@NotNull Position position, int depth) {
+    public static Move find(@NotNull Position position, int depth) {
         int highestVal = Integer.MIN_VALUE;
         int lowestVal = Integer.MAX_VALUE;
         int score;
+
+        int alpha = Integer.MIN_VALUE;
+        int beta = Integer.MAX_VALUE;
 
         Move bestMove = null;
 
@@ -32,19 +35,24 @@ public class MiniMax {
             Position newPosition = position.makeMove(move);
 
             // if white minimize, if black maximize
-            score = position.whiteToMove ? min(newPosition, depth - 1) : max(newPosition, depth - 1);
+            score = position.whiteToMove ? min(newPosition, depth - 1, alpha, beta) :
+                    max(newPosition, depth - 1, alpha, beta);
 
-            // update highest/lowest value
+            System.out.println("  " + move + " = " + score);
+
+            // update highest/lowest and alpha/beta values
             if (position.whiteToMove) {
                 if (score > highestVal) {
                     highestVal = score;
                     bestMove = move;
                 }
+                alpha = Math.max(alpha, score);
             } else {
                 if (score < lowestVal) {
                     lowestVal = score;
                     bestMove = move;
                 }
+                beta = Math.min(beta, score);
             }
         }
         return bestMove;
@@ -58,7 +66,7 @@ public class MiniMax {
      * @return the minimized value of the position
      * @author Divy Patel
      */
-    private static int min(Position position, int depth) {
+    private static int min(Position position, int depth, int alpha, int beta) {
         if (depth == 0) {
             return position.getEvaluation();
         }
@@ -71,8 +79,13 @@ public class MiniMax {
             // update position
             Position newPosition = position.makeMove(move);
             // score the new position
-            int score = max(newPosition, depth - 1);
+            int score = max(newPosition, depth - 1, alpha, beta);
             lowestScore = Math.min(lowestScore, score);
+            // update beta
+            beta = Math.min(beta, score);
+            if (beta <= alpha) {
+                break;
+            }
         }
         return lowestScore;
     }
@@ -85,7 +98,7 @@ public class MiniMax {
      * @return the maximized value of the position
      * @author Divy Patel
      */
-    private static int max(Position position, int depth) {
+    private static int max(Position position, int depth, int alpha, int beta) {
         if (depth == 0) {
             return position.getEvaluation();
         }
@@ -98,8 +111,13 @@ public class MiniMax {
             // update position
             Position newPosition = position.makeMove(move);
             // score the new position
-            int score = min(newPosition, depth - 1);
+            int score = min(newPosition, depth - 1, alpha, beta);
             highestScore = Math.max(highestScore, score);
+            // update alpha
+            alpha = Math.max(alpha, score);
+            if (beta <= alpha) {
+                break;
+            }
         }
         return highestScore;
     }

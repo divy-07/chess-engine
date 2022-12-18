@@ -16,7 +16,7 @@ public class MoveGeneration {
      */
     public static Move getBestMove(Position position) {
         int depth = MAX_DEPTH;
-        return AlphaBeta.alphaBetaSearch(position, depth);
+        return ThreadedMiniMax.find(position, depth);
     }
 
 }
