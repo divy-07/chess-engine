@@ -12,6 +12,8 @@ import static chess.Constants.*;
 
 public class ThreadedMiniMax extends  RecursiveTask<Integer> {
 
+    public static final int SEQUENTIAL_CUTOFF = 2;
+
     /**
      * Calculates the best move for given position.
      * Uses a basic <a href="https://www.chessprogramming.org/Minimax">minimax algorithm</a>
@@ -84,6 +86,7 @@ public class ThreadedMiniMax extends  RecursiveTask<Integer> {
 
     /**
      * Minimizer for the mini-max search algorithm.
+     * Switches to sequential mini-max when depth is 2.
      *
      * @param position the position to minimize the score for.
      * @param depth the depth remaining to search
@@ -93,6 +96,8 @@ public class ThreadedMiniMax extends  RecursiveTask<Integer> {
     private int min(Position position, int depth) {
         if (depth == 0) {
             return position.getEvaluation();
+        } else if (depth == SEQUENTIAL_CUTOFF) {
+            return SequentialMiniMax.min(position, depth);
         }
 
         int lowestScore = Integer.MAX_VALUE;
@@ -119,6 +124,7 @@ public class ThreadedMiniMax extends  RecursiveTask<Integer> {
 
     /**
      * Maximizer for the mini-max search algorithm.
+     * Switches to sequential mini-max when depth is 2.
      *
      * @param position the position to maximize the score for.
      * @param depth the depth remaining to search
@@ -128,6 +134,8 @@ public class ThreadedMiniMax extends  RecursiveTask<Integer> {
     private int max(Position position, int depth) {
         if (depth == 0) {
             return position.getEvaluation();
+        } else if (depth <= SEQUENTIAL_CUTOFF) {
+            return SequentialMiniMax.max(position, depth);
         }
 
         int highestScore = Integer.MIN_VALUE;

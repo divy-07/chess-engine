@@ -58,7 +58,7 @@ public class SequentialMiniMax {
      * @return the minimized value of the position
      * @author Divy Patel
      */
-    private static int min(Position position, int depth) {
+    protected static int min(Position position, int depth) {
         if (depth == 0) {
             return position.getEvaluation();
         }
@@ -85,7 +85,7 @@ public class SequentialMiniMax {
      * @return the maximized value of the position
      * @author Divy Patel
      */
-    private static int max(Position position, int depth) {
+    protected static int max(Position position, int depth) {
         if (depth == 0) {
             return position.getEvaluation();
         }
