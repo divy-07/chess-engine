@@ -140,6 +140,7 @@ public class Position {
     /**
      * Makes a move on the current position.
      * Does not change this position object.
+     * Also changes the side to move.
      *
      * @param move the move to make.
      * @return the new position after the move.
