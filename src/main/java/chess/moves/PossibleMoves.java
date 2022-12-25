@@ -405,17 +405,67 @@ public class PossibleMoves {
         return moves;
     }
 
+    /**
+     * Returns all possible castling moves for white.
+     *
+     * @param position the current position
+     * @return a list with all possible castling moves for white.
+     * The king side castling is always before the queen side castling in the list, if it exists.
+     * The list will at most contain two moves.
+     */
     public List<Move> possibleCW(Position position) {
         // TODO: change the parameter to not take Position object
         List<Move> moves = new ArrayList<>();
-        // TODO (#8): Implement white castling moves
+        long unsafe = unsafeForWhite(position);
+
+        if ((unsafe & position.wk) == 0) {
+            // king-side castle
+            if (position.cwk && (((1L << CASTLE_ROOKS[0]) & position.wr) != 0)) {
+                if (((occupiedSquares | unsafe) & ((1L << 61) | (1L << 62))) == 0) {
+                    moves.add(new Move(7, 4, 7, 6));
+                }
+            }
+
+            // queen-side castle
+            if (position.cwq && (((1L << CASTLE_ROOKS[1]) & position.wr) != 0)) {
+                if (((occupiedSquares | (unsafe & ~(1L << 57))) & ((1L << 57) | (1L << 58) | (1L << 59))) == 0) {
+                    moves.add(new Move(7, 4, 7, 2));
+                }
+            }
+        }
+
         return moves;
     }
 
+    /**
+     * Returns all possible castling moves for black.
+     *
+     * @param position the current position
+     * @return a list with all possible castling moves for black.
+     * The king side castling is always before the queen side castling in the list, if it exists.
+     * The list will at most contain two moves.
+     */
     public List<Move> possibleCB(Position position) {
         // TODO: change the parameter to not take Position object
         List<Move> moves = new ArrayList<>();
-        // TODO (#8): Implement black castling moves
+        long unsafe = unsafeForBlack(position);
+
+        if ((unsafe & position.bk) == 0) {
+            // king-side castle
+            if (position.cbk && (((1L << CASTLE_ROOKS[2]) & position.br) != 0)) {
+                if (((occupiedSquares | unsafe) & ((1L << 5) | (1L << 6))) == 0) {
+                    moves.add(new Move(0, 4, 0, 6));
+                }
+            }
+
+            // queen-side castle
+            if (position.cbq && (((1L << CASTLE_ROOKS[3]) & position.br) != 0)) {
+                if (((occupiedSquares | (unsafe & ~(1L << 1))) & ((1L << 1) | (1L << 2) | (1L << 3))) == 0) {
+                    moves.add(new Move(0, 4, 0, 2));
+                }
+            }
+        }
+
         return moves;
     }
 
@@ -451,6 +501,154 @@ public class PossibleMoves {
                 Long.reverse(Long.reverse(occupiedSquares & antiDiagonals[(s / 8) + 7 - (s % 8)]) - (2 * Long.reverse(binaryS)));
         return (possibilitiesDiagonal & diagonals[(s / 8) + (s % 8)]) |
                 (possibilitiesAntiDiagonal & antiDiagonals[(s / 8) + 7 - (s % 8)]);
+    }
+
+    /**
+     * Calculates the bitboard of all squares that are unsafe for the white king.
+     *
+     * @param position the current position
+     * @return the bitboard of all squares that are unsafe for the white king.
+     * @credit Jonathan Warkentin
+     */
+    private long unsafeForWhite(Position position) {
+        long unsafe;
+        long possibility;
+
+        // pawn
+        unsafe = ((position.bp << 7) & ~FILE_H); // pawn capture right
+        unsafe |= ((position.bp << 9) & ~FILE_A); // pawn capture left
+
+        // knight
+        long bn = position.bn;
+        long i = bn & -bn;
+        while (i != 0) {
+            int index = Long.numberOfTrailingZeros(i);
+            if (index > 18) {
+                possibility = KNIGHT_SPAN << (index - 18);
+            } else {
+                possibility = KNIGHT_SPAN >> (18 - index);
+            }
+            if (index % 8 < 4) {
+                possibility &= ~FILE_GH;
+            } else {
+                possibility &= ~FILE_AB;
+            }
+            unsafe |= possibility;
+            bn &= ~i;
+            i = bn & -bn;
+        }
+
+        // bishop and queen diagonal
+        long qb = position.bq | position.bb;
+        i = qb & -qb;
+        while (i != 0) {
+            int index = Long.numberOfTrailingZeros(i);
+            possibility = diagonalMoves(index);
+            unsafe |= possibility;
+            qb &= ~i;
+            i = qb & -qb;
+        }
+
+        // rook and queen h/v moves
+        long qr = position.bq | position.br;
+        i = qr & -qr;
+        while (i != 0) {
+            int index = Long.numberOfTrailingZeros(i);
+            possibility = horizontalAndVerticalMoves(index);
+            unsafe |= possibility;
+            qr &= ~i;
+            i = qr & -qr;
+        }
+
+        // king
+        int index = Long.numberOfTrailingZeros(position.bk);
+        if (index > 9) {
+            possibility = KING_SPAN << (index - 9);
+        } else {
+            possibility = KING_SPAN >> (9 - index);
+        }
+        if (index % 8 < 4) {
+            possibility &= ~FILE_GH;
+        } else {
+            possibility &= ~FILE_AB;
+        }
+        unsafe |= possibility;
+
+        return unsafe;
+    }
+
+    /**
+     * Calculates the bitboard of all squares that are unsafe for the black king.
+     *
+     * @param position the current position
+     * @return the bitboard of all squares that are unsafe for the black king.
+     * @credit Jonathan Warkentin
+     */
+    private long unsafeForBlack(Position position) {
+        long unsafe;
+        long possibility;
+
+        // pawn
+        unsafe = ((position.wp >>> 7) & ~FILE_A); // pawn capture right
+        unsafe |= ((position.wp >>> 9) & ~FILE_H); // pawn capture left
+
+        // knight
+        long wn = position.wn;
+        long i = wn & -wn;
+        while (i != 0) {
+            int index = Long.numberOfTrailingZeros(i);
+            if (index > 18) {
+                possibility = KNIGHT_SPAN << (index - 18);
+            } else {
+                possibility = KNIGHT_SPAN >> (18 - index);
+            }
+            if (index % 8 < 4) {
+                possibility &= ~FILE_GH;
+            } else {
+                possibility &= ~FILE_AB;
+            }
+            unsafe |= possibility;
+            wn &= ~i;
+            i = wn & -wn;
+        }
+
+        // bishop and queen diagonal
+        long qb = position.wq | position.wb;
+        i = qb & -qb;
+        while (i != 0) {
+            int index = Long.numberOfTrailingZeros(i);
+            possibility = diagonalMoves(index);
+            unsafe |= possibility;
+            qb &= ~i;
+            i = qb & -qb;
+        }
+
+        // rook and queen h/v moves
+        long qr = position.wq | position.wr;
+        i = qr & -qr;
+        while (i != 0) {
+            int index = Long.numberOfTrailingZeros(i);
+            possibility = horizontalAndVerticalMoves(index);
+            unsafe |= possibility;
+            qr &= ~i;
+            i = qr & -qr;
+        }
+
+        // king
+        int index = Long.numberOfTrailingZeros(position.wk);
+        if (index > 9) {
+            possibility = KING_SPAN << (index - 9);
+        } else {
+            possibility = KING_SPAN >> (9 - index);
+        }
+        if (index % 8 < 4) {
+            possibility &= ~FILE_GH;
+        } else {
+            possibility &= ~FILE_AB;
+        }
+        unsafe |= possibility;
+
+        return unsafe;
     }
 
 }

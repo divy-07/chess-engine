@@ -54,7 +54,7 @@ public class SequentialMiniMax {
      * Minimizer for the mini-max search algorithm.
      *
      * @param position the position to minimize the score for.
-     * @param depth the depth remaining to search
+     * @param depth    the depth remaining to search
      * @return the minimized value of the position
      * @author Divy Patel
      */
@@ -81,7 +81,7 @@ public class SequentialMiniMax {
      * Maximizer for the mini-max search algorithm.
      *
      * @param position the position to maximize the score for.
-     * @param depth the depth remaining to search
+     * @param depth    the depth remaining to search
      * @return the maximized value of the position
      * @author Divy Patel
      */

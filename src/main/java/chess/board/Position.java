@@ -161,9 +161,9 @@ public class Position {
         long new_ep = MakeMove.makeMoveEP(wp | bp, move);
 
         return new Position(new_wp, new_wn, new_wb, new_wr, new_wq, new_wk,
-                            new_bp, new_bn, new_bb, new_br, new_bq, new_bk,
-                            new_ep, cwk, cwq, cbk, cbq, !whiteToMove,
-                            halfMoveCount + 1, fullMoveCount + 1);
+                new_bp, new_bn, new_bb, new_br, new_bq, new_bk,
+                new_ep, cwk, cwq, cbk, cbq, !whiteToMove,
+                halfMoveCount + 1, fullMoveCount + 1);
     }
 
     /**
