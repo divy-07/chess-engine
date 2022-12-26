@@ -114,6 +114,22 @@ public class Move {
     }
 
     /**
+     * @return whether this move is king side castling
+     */
+    public boolean isKingSideCastling() {
+        return (sourceRank == 0 && sourceFile == 4 && destRank == 0 && destFile == 6) ||
+                (sourceRank == 7 && sourceFile == 4 && destRank == 7 && destFile == 6);
+    }
+
+    /**
+     * @return whether this move is queen side castling
+     */
+    public boolean isQueenSideCastling() {
+        return (sourceRank == 0 && sourceFile == 4 && destRank == 0 && destFile == 2) ||
+                (sourceRank == 7 && sourceFile == 4 && destRank == 7 && destFile == 2);
+    }
+
+    /**
      * Compares this move to given object.
      * If the given object is a move, then the comparison is based on:
      * 1) source square, 2) destination square, 3) promotion piece, and 4) en passant boolean.

@@ -27,7 +27,7 @@ public class KingPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
-        List<Move> actual = position.possibleMoves.possibleK(boardArray[5]);
+        List<Move> actual = position.possibleMoves.possibleK(position);
         List<Move> expected = new ArrayList<>();
 
         assertEquals(expected, actual);
@@ -48,7 +48,7 @@ public class KingPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, false);
-        List<Move> actual = position.possibleMoves.possibleK(boardArray[11]);
+        List<Move> actual = position.possibleMoves.possibleK(position);
 
         assertTrue(actual.contains(new Move(3, 1, 2, 0)));
         assertTrue(actual.contains(new Move(3, 1, 2, 1)));
@@ -76,7 +76,7 @@ public class KingPossibleMoveTest {
         Position position = new Position(boardArray[0], boardArray[1], boardArray[2], boardArray[3],
                 boardArray[4], boardArray[5], boardArray[6], boardArray[7], boardArray[8], boardArray[9],
                 boardArray[10], boardArray[11], 0L, false, false, false, false, true);
-        List<Move> actual = position.possibleMoves.possibleK(boardArray[5]);
+        List<Move> actual = position.possibleMoves.possibleK(position);
 
         assertTrue(actual.contains(new Move(3, 1, 2, 0)));
         assertTrue(actual.contains(new Move(3, 1, 2, 1)));
@@ -84,9 +84,7 @@ public class KingPossibleMoveTest {
         assertTrue(actual.contains(new Move(3, 1, 3, 0)));
         assertTrue(actual.contains(new Move(3, 1, 3, 2)));
         assertTrue(actual.contains(new Move(3, 1, 4, 0)));
-        assertTrue(actual.contains(new Move(3, 1, 4, 1)));
-        assertTrue(actual.contains(new Move(3, 1, 4, 2)));
-        assertEquals(8, actual.size());
+        assertEquals(6, actual.size());
     }
 
 }

@@ -160,9 +160,37 @@ public class Position {
         long new_bk = MakeMove.makeMove(bk, move, 'k');
         long new_ep = MakeMove.makeMoveEP(wp | bp, move);
 
+        boolean new_cwk = cwk;
+        boolean new_cwq = cwq;
+        boolean new_cbk = cbk;
+        boolean new_cbq = cbq;
+
+        // update castling rights
+        if (move.isKingSideCastling()) {
+            if (whiteToMove) {
+                // white king side castling
+                new_cwk = false;
+                new_cwq = false;
+            } else {
+                // black king side castling
+                new_cbk = false;
+                new_cbq = false;
+            }
+        } else if (move.isQueenSideCastling()) {
+            if (whiteToMove) {
+                // white queen side castling
+                new_cwk = false;
+                new_cwq = false;
+            } else {
+                // black queen side castling
+                new_cbk = false;
+                new_cbq = false;
+            }
+        }
+
         return new Position(new_wp, new_wn, new_wb, new_wr, new_wq, new_wk,
                 new_bp, new_bn, new_bb, new_br, new_bq, new_bk,
-                new_ep, cwk, cwq, cbk, cbq, !whiteToMove,
+                new_ep, new_cwk, new_cwq, new_cbk, new_cbq, !whiteToMove,
                 halfMoveCount + 1, fullMoveCount + 1);
     }
 
@@ -199,7 +227,7 @@ public class Position {
         move.addAll(possibleMoves.possibleB(wb));
         move.addAll(possibleMoves.possibleR(wr));
         move.addAll(possibleMoves.possibleQ(wq));
-        move.addAll(possibleMoves.possibleK(wk));
+        move.addAll(possibleMoves.possibleK(this));
         move.addAll(possibleMoves.possibleCW(this));
         return move;
     }
@@ -218,7 +246,7 @@ public class Position {
         move.addAll(possibleMoves.possibleB(bb));
         move.addAll(possibleMoves.possibleR(br));
         move.addAll(possibleMoves.possibleQ(bq));
-        move.addAll(possibleMoves.possibleK(bk));
+        move.addAll(possibleMoves.possibleK(this));
         move.addAll(possibleMoves.possibleCB(this));
         return move;
     }

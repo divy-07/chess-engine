@@ -67,7 +67,7 @@ public class SequentialAlphaBeta {
      * @author Divy Patel
      */
     protected static int min(Position position, int depth, int alpha, int beta) {
-        if (depth == 0) {
+        if (depth <= 0) {
             return position.getEvaluation();
         }
 
@@ -99,7 +99,7 @@ public class SequentialAlphaBeta {
      * @author Divy Patel
      */
     protected static int max(Position position, int depth, int alpha, int beta) {
-        if (depth == 0) {
+        if (depth <= 0) {
             return position.getEvaluation();
         }
 

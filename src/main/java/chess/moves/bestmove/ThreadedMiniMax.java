@@ -121,7 +121,7 @@ public class ThreadedMiniMax extends RecursiveTask<Integer> {
      * @author Divy Patel
      */
     private int min(Position position, int depth, int alpha, int beta) {
-        if (depth == 0) {
+        if (depth <= 0) {
             return position.getEvaluation();
         } else if (depth <= SEQUENTIAL_CUTOFF) {
             return SequentialAlphaBeta.min(position, depth, alpha, beta);
@@ -162,7 +162,7 @@ public class ThreadedMiniMax extends RecursiveTask<Integer> {
      * @author Divy Patel
      */
     private int max(Position position, int depth, int alpha, int beta) {
-        if (depth == 0) {
+        if (depth <= 0) {
             return position.getEvaluation();
         } else if (depth <= SEQUENTIAL_CUTOFF) {
             return SequentialAlphaBeta.max(position, depth, alpha, beta);
