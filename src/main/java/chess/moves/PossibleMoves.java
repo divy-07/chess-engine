@@ -372,16 +372,18 @@ public class PossibleMoves {
     /**
      * Returns all possible non-castling king moves.
      *
-     * @param king the king bitboard.
+     * @param position the current position
      * @return a list with all possible non-castling king moves.<br>
      * - The moves are sorted from top to bottom and left to right.<br>
      * - Castling moves are not included.
      */
-    public List<Move> possibleK(long king) {
+    public List<Move> possibleK(Position position) {
         List<Move> moves = new ArrayList<>();
         long possibility;
+        long unsafe = position.whiteToMove ? unsafeForWhite(position) : unsafeForBlack(position);
 
-        int currPos = Long.numberOfTrailingZeros(king);
+        int currPos = position.whiteToMove ? Long.numberOfTrailingZeros(position.wk) :
+                Long.numberOfTrailingZeros(position.bk);
         if (currPos > 9) {
             // if not in the 8th rank
             possibility = KING_SPAN << (currPos - 9);
@@ -393,6 +395,8 @@ public class PossibleMoves {
         } else {
             possibility &= ~FILE_AB & notMyPieces;
         }
+
+        possibility &= ~unsafe;
 
         long j = possibility & -possibility;
         while (j != 0) {
