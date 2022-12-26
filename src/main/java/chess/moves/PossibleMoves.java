@@ -241,17 +241,17 @@ public class PossibleMoves {
         }
 
         // En passant capture right
-        possibility = (bp >> 1) & wp & RANK_4 & ~FILE_H & ep;
-        if (possibility != 0) {
-            int currPos = Long.numberOfTrailingZeros(possibility);
-            moves.add(new Move(currPos / 8, currPos % 8 + 1, currPos / 8 + 1, currPos % 8, true));
-        }
-
-        // En passant capture left
         possibility = (bp << 1) & wp & RANK_4 & ~FILE_A & ep;
         if (possibility != 0) {
             int currPos = Long.numberOfTrailingZeros(possibility);
             moves.add(new Move(currPos / 8, currPos % 8 - 1, currPos / 8 + 1, currPos % 8, true));
+        }
+
+        // En passant capture left
+        possibility = (bp >> 1) & wp & RANK_4 & ~FILE_H & ep;
+        if (possibility != 0) {
+            int currPos = Long.numberOfTrailingZeros(possibility);
+            moves.add(new Move(currPos / 8, currPos % 8 + 1, currPos / 8 + 1, currPos % 8, true));
         }
 
         return moves;

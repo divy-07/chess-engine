@@ -229,6 +229,14 @@ public class Position {
         move.addAll(possibleMoves.possibleQ(wq));
         move.addAll(possibleMoves.possibleK(this));
         move.addAll(possibleMoves.possibleCW(this));
+
+        // sort moves by evaluation of position after move is applied
+        move.sort((m1, m2) -> {
+            Position p1 = makeMove(m1);
+            Position p2 = makeMove(m2);
+            return p2.getEvaluation() - p1.getEvaluation();
+        });
+
         return move;
     }
 
@@ -248,6 +256,14 @@ public class Position {
         move.addAll(possibleMoves.possibleQ(bq));
         move.addAll(possibleMoves.possibleK(this));
         move.addAll(possibleMoves.possibleCB(this));
+
+        // sort moves by evaluation of position after move is applied
+        move.sort((m1, m2) -> {
+            Position p1 = makeMove(m1);
+            Position p2 = makeMove(m2);
+            return p1.getEvaluation() - p2.getEvaluation();
+        });
+
         return move;
     }
 

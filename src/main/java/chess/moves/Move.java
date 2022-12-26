@@ -98,7 +98,7 @@ public class Move {
             sb.append(sourceFile);
             sb.append(destFile);
             sb.append(sourceRank == 3 ? 'W' : 'B');
-            sb.append('e');
+            sb.append('E');
         }
         return sb.toString();
     }
