@@ -62,12 +62,12 @@ public class SequentialAlphaBeta {
      * Minimizer for the mini-max search algorithm.
      *
      * @param position the position to minimize the score for.
-     * @param depth the depth remaining to search
+     * @param depth    the depth remaining to search
      * @return the minimized value of the position
      * @author Divy Patel
      */
     protected static int min(Position position, int depth, int alpha, int beta) {
-        if (depth == 0) {
+        if (depth <= 0) {
             return position.getEvaluation();
         }
 
@@ -94,12 +94,12 @@ public class SequentialAlphaBeta {
      * Maximizer for the mini-max search algorithm.
      *
      * @param position the position to maximize the score for.
-     * @param depth the depth remaining to search
+     * @param depth    the depth remaining to search
      * @return the maximized value of the position
      * @author Divy Patel
      */
     protected static int max(Position position, int depth, int alpha, int beta) {
-        if (depth == 0) {
+        if (depth <= 0) {
             return position.getEvaluation();
         }
 

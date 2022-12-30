@@ -10,7 +10,7 @@ import java.util.concurrent.RecursiveTask;
 
 import static chess.Constants.*;
 
-public class ThreadedMiniMax extends  RecursiveTask<Integer> {
+public class ThreadedMiniMax extends RecursiveTask<Integer> {
 
     public static final int SEQUENTIAL_CUTOFF = 3;
 
@@ -79,10 +79,10 @@ public class ThreadedMiniMax extends  RecursiveTask<Integer> {
      * Constructor for the threaded mini-max search algorithm with alpha-beta pruning.
      *
      * @param position the position to evaluate the score for.
-     * @param depth the depth remaining to search.
-     *              Before passing depth, subtract 1 from it.
-     * @param alpha the alpha value.
-     * @param beta the beta value.
+     * @param depth    the depth remaining to search.
+     *                 Before passing depth, subtract 1 from it.
+     * @param alpha    the alpha value.
+     * @param beta     the beta value.
      */
     private ThreadedMiniMax(@NotNull Position position, int depth, int alpha, int beta) {
         this.position = position;
@@ -96,8 +96,8 @@ public class ThreadedMiniMax extends  RecursiveTask<Integer> {
      * The alpha-beta pruning values are set to the default values.
      *
      * @param position the position to evaluate the score for.
-     * @param depth the depth remaining to search.
-     *              Before passing depth, subtract 1 from it.
+     * @param depth    the depth remaining to search.
+     *                 Before passing depth, subtract 1 from it.
      */
     private ThreadedMiniMax(@NotNull Position position, int depth) {
         this.position = position;
@@ -116,12 +116,12 @@ public class ThreadedMiniMax extends  RecursiveTask<Integer> {
      * Switches to sequential mini-max when depth is 2.
      *
      * @param position the position to minimize the score for.
-     * @param depth the depth remaining to search
+     * @param depth    the depth remaining to search
      * @return the minimized value of the position
      * @author Divy Patel
      */
     private int min(Position position, int depth, int alpha, int beta) {
-        if (depth == 0) {
+        if (depth <= 0) {
             return position.getEvaluation();
         } else if (depth <= SEQUENTIAL_CUTOFF) {
             return SequentialAlphaBeta.min(position, depth, alpha, beta);
@@ -157,12 +157,12 @@ public class ThreadedMiniMax extends  RecursiveTask<Integer> {
      * Switches to sequential mini-max when depth is 2.
      *
      * @param position the position to maximize the score for.
-     * @param depth the depth remaining to search
+     * @param depth    the depth remaining to search
      * @return the maximized value of the position
      * @author Divy Patel
      */
     private int max(Position position, int depth, int alpha, int beta) {
-        if (depth == 0) {
+        if (depth <= 0) {
             return position.getEvaluation();
         } else if (depth <= SEQUENTIAL_CUTOFF) {
             return SequentialAlphaBeta.max(position, depth, alpha, beta);

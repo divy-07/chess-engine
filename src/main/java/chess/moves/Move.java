@@ -98,7 +98,7 @@ public class Move {
             sb.append(sourceFile);
             sb.append(destFile);
             sb.append(sourceRank == 3 ? 'W' : 'B');
-            sb.append('e');
+            sb.append('E');
         }
         return sb.toString();
     }
@@ -111,6 +111,22 @@ public class Move {
      */
     public String toAlgebraicNotation() {
         return MoveConversion.moveToAlgebra(toEngineNotation());
+    }
+
+    /**
+     * @return whether this move is king side castling
+     */
+    public boolean isKingSideCastling() {
+        return (sourceRank == 0 && sourceFile == 4 && destRank == 0 && destFile == 6) ||
+                (sourceRank == 7 && sourceFile == 4 && destRank == 7 && destFile == 6);
+    }
+
+    /**
+     * @return whether this move is queen side castling
+     */
+    public boolean isQueenSideCastling() {
+        return (sourceRank == 0 && sourceFile == 4 && destRank == 0 && destFile == 2) ||
+                (sourceRank == 7 && sourceFile == 4 && destRank == 7 && destFile == 2);
     }
 
     /**

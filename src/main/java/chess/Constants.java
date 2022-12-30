@@ -24,6 +24,7 @@ public final class Constants {
     public static final long EXTENDED_CENTRE = 66229406269440L;
     public static final long KING_SIDE = -1085102592571150096L;
     public static final long QUEEN_SIDE = 1085102592571150095L;
+    public static final long[] CASTLE_ROOKS = {63, 56, 7, 0};
 
     // destination squares for king and knight moves
     public static final long KING_SPAN = 460039L;

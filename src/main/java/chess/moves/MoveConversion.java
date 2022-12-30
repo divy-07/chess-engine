@@ -57,7 +57,7 @@ public class MoveConversion {
     /**
      * Parses algebraic moves and applies them to the given position.
      *
-     * @param input the input string from the GUI; the moves to be made
+     * @param input         the input string from the GUI; the moves to be made
      * @param possibleMoves the list of possible moves from the current position
      * @return the position after the moves have been applied to the position
      */
@@ -93,7 +93,7 @@ public class MoveConversion {
         int start = 0, end = 0;
         int from = (sourceFile) + (8 * (sourceRank));
         int to = (destFile) + (8 * (destRank));
-        
+
         // check if the given move is valid, if so make it
         for (Move move : possibleMoves) {
             if (!move.isEnPassant && !move.isPromotion) {

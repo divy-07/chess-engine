@@ -27,6 +27,12 @@ public class MakeMove {
             } else {
                 board &= ~(1L << end);
             }
+
+            // castling rook move
+            if ((type == 'R' || type == 'r') && (move.isKingSideCastling() || move.isQueenSideCastling())) {
+                board = makeRookCastlingMove(board, move);
+            }
+
         } else if (move.isPromotion) {
             // pawn promotion
             int start, end;
@@ -43,6 +49,7 @@ public class MakeMove {
                 board &= ~(1L << start);
                 board &= ~(1L << end);
             }
+
         } else if (move.isEnPassant) {
             // en passant
             int start, end;
@@ -64,6 +71,34 @@ public class MakeMove {
             System.out.print("ERROR: Invalid move type");
         }
         return board;
+    }
+
+    /**
+     * Makes a castling move on rook bitboard and returns the new bitboard.
+     *
+     * @param board the rook bitboard to make the move on
+     * @param move  the move to make
+     * @return the new rook bitboard after the move has been made
+     * @author Divy Patel
+     */
+    private static long makeRookCastlingMove(long board, Move move) {
+        if (move.isKingSideCastling()) {
+            if (move.sourceRank == 7) {
+                // white king side castling
+                return makeMove(board, new Move(7, 7, 7, 5), 'R');
+            } else {
+                // black king side castling
+                return makeMove(board, new Move(0, 7, 0, 5), 'r');
+            }
+        } else {
+            if (move.sourceRank == 7) {
+                // white queen side castling
+                return makeMove(board, new Move(7, 0, 7, 3), 'R');
+            } else {
+                // black queen side castling
+                return makeMove(board, new Move(0, 0, 0, 3), 'r');
+            }
+        }
     }
 
     /**
