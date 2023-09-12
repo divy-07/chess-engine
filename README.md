@@ -123,7 +123,7 @@ As a reward, you will be added to the contributors list.
 
 Any questions or concerns? Feel free to contact each of us at:
 
-- Divy Patel: www.divy07.com/contact
+- Divy Patel: [contact@divy07.com](mailto:contact@divy07.com)
 - Arnav Prasad: [arnavpd@gmail.com](mailto:arnavpd@gmail.com)
 
 [Back to top](#hari--the-chess-engine)
